@@ -1,0 +1,93 @@
+body {
+	font-family: 'ROBOTO-LIGHT'
+}
+
+.x-toolbar.x-docked-top {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.toolbar-icon-home {
+  background-image: url('../images/icons/ic-home.png');
+  background-size: contain;
+}
+
+.toolbar-icon-list {
+  background-image: url('../images/icons/ic-list.png');
+  background-size: contain;
+  width: 28px;
+  height: 28px;
+}
+
+.toolbar-icon-ketsat {
+  background-image: url('../images/icons/ic-ketsat.png');
+  background-size: contain;
+  width: 29px;
+  height: 27px;
+}
+
+.toolbar-icon-more {
+  background-image: url('../images/icons/ic-more.png');
+  background-size: contain;
+  right: -14px;
+}
+
+.toolbar-icon-menu {
+  background-image: url('../images/icons/ic-menu.png');
+  background-size: contain;
+  border: 2px solid transparent;
+  left: -8px;
+}
+
+.toolbar-icon-previous {
+  background-image: url('../images/icons/ic-previous.png');
+  background-size: contain;
+}
+
+.toolbar-icon-next {
+  background-image: url('../images/icons/ic-next.png');
+  background-size: contain;
+}
+
+.toolbar-button-add {
+  background-image: url('../images/buttons/btn-add.png');
+  width: 38px;
+  height: 38px;
+}
+
+.toolbar-button-viewtype {
+  background-image: url('../images/buttons/btn-viewtype.png');
+  width: 30px;
+  height: 30px;
+}
+
+
+.viewbase .x-toolbar {
+	background-color: #fff;
+	border-bottom: 1px solid #d4d0cf;
+}
+
+.viewbase .x-toolbar .x-title {
+	color: #898e91;
+}
+
+/*.viewbase-container .x-toolbar {
+	background-color: #414141;
+}*/
+
+.viewbase-toolbar-bottom {
+	background-color: #414141;
+	height: 40px;
+	padding-right: 12px;
+	padding-left: 12px;
+}
+
+.button-icon {
+	background-color: transparent;
+	border: 0;
+	background-size: contain;
+	background-repeat: no-repeat;
+	border-radius: 0;
+}
+	
+

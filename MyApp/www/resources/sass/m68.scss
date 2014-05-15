@@ -1,0 +1,19 @@
+//$ios7-blue: #fff;
+$fontName: 'ROBOTO-LIGHT';
+
+@import 'sencha-touch/cupertino';
+@import 'sencha-touch/cupertino/all';
+
+//@include icon('menu');
+@include st-loading-spinner;
+
+//embed fonts
+//@include font-face('ROBOTO-THIN', inline-font-files('roboto/Roboto-Thin.ttf', opentype));
+@include font-face('ROBOTO-BOLD', inline-font-files('roboto/Roboto-Bold.ttf', opentype));
+//@include font-face('ROBOTO-BLACK', inline-font-files('roboto/Roboto-Black.ttf', opentype));
+//@include font-face('ROBOTO-MEDIUM', inline-font-files('roboto/Roboto-Medium.ttf', opentype));
+@include font-face('ROBOTO-LIGHT', inline-font-files('roboto/Roboto-Light.ttf', opentype));
+//@include font-face('ROBOTO-MD', inline-font-files('other/ITCAVANTGARDESTD-MD.OTF', opentype));
+//@include font-face('ROBOTO-BK', inline-font-files('other/ITCAVANTGARDESTD-BK.OTF', opentype));
+
+
