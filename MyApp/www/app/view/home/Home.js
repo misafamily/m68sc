@@ -3,6 +3,8 @@ Ext.define('MyApp.view.home.Home', {
 	xtype : 'home',
 	requires : [
 	//'MyApp.view.tab.home.HomeChart'
+	//	'MyApp.view.comp.MoneyInputer'
+		'MyApp.view.home.HomeChart'
 	],
 	config : {
 		navigationBar : {
@@ -30,7 +32,148 @@ Ext.define('MyApp.view.home.Home', {
 			},
 			cls: 'viewbase-container',
 			items : [
-				{xtype:'spacer'},
+				{
+					xtype: 'container',
+					layout: {
+						type: 'hbox',
+						pack: 'end',
+						align: 'center'
+					},
+					height: 50,
+					style: {
+						'background-color': '#f1f3f2'
+					},
+					items: [
+						{
+							xtype: 'container',
+		                	layout: {
+		                		type: 'vbox',
+		                		pack: 'center',
+		                		align: 'center'
+		                	},
+		                	cls: 'label-income',
+		                	style: {            				
+                				'margin-left': '10px'
+                			},
+							items: [
+								{
+	                				xtype: 'label',
+	                				html: '12 trieu'
+	                			},
+	                			{
+	                				xtype: 'label',
+	                				html: 'Tien mat',
+	                				cls: 'label-expense-title'
+	                			}
+							]
+						},
+						{
+							xtype: 'spacer'
+						},
+						{
+							xtype: 'label',
+                			html: '01.05.2014 - 31.05.2014',
+                			style: {
+                				'color': '#898e92',
+                				'margin-right': '10px'
+                			}
+						}
+					]
+				},
+				{
+					xtype:'home_homechart',
+					flex: 1,
+					style: {
+						'background-color': '#f1f3f2'
+					}
+				},
+				{
+	                //xtype: 'toolbar',
+	                //docked: 'bottom',  
+	                xtype: 'container', 
+	                layout: {
+	                	type:'hbox',
+	                	align: 'center'	
+	                },      
+	                height: 105,
+	                defaults: {
+	                	xtype: 'container',
+	                	layout: {
+	                		type: 'vbox',
+	                		pack: 'center',
+	                		align: 'center'
+	                	},
+	                	flex: 1,
+	                	height: '100%',
+	                	style: {
+	                		'border-top': '1px solid #e5e5e5',
+	                		'border-right': '1px solid #e5e5e5'
+	                	}
+	                },
+	                items:[
+	                	{
+	                		cls: 'label-income',
+	                		items:[
+	                			{
+	                				xtype: 'label',
+	                				html: '20 trieu'
+	                			},
+	                			{
+	                				xtype: 'label',
+	                				html: 'Tong thu',
+	                				cls: 'label-expense-title'
+	                			},
+	                			{
+	                				xtype: 'image',
+	                				src: 'resources/images/income-legend.png',
+	                				width: 71,
+	                				height: 14,
+	                				cls: 'img-expense-legend'
+	                			}
+	                		]
+	                	},
+	                	{
+	                		cls: 'label-income',
+	                		items:[
+	                			{
+	                				xtype: 'label',
+	                				html: '15 trieu'
+	                			},
+	                			{
+	                				xtype: 'label',
+	                				html: 'Con lai',
+	                				cls: 'label-expense-title'
+	                			}
+	                			
+	                		]
+	                	},
+	                	{
+	                		cls: 'label-outcome',
+	                		style: {
+		                		'border-top': '1px solid #e5e5e5',
+		                		'border-right': '0px solid #e5e5e5'
+		                	},
+	                		items:[
+	                			{
+	                				xtype: 'label',
+	                				html: '5 trieu'
+	                			},
+	                			{
+	                				xtype: 'label',
+	                				html: 'Tong chi',
+	                				cls: 'label-expense-title'
+	                			},
+	                			{
+	                				xtype: 'image',
+	                				src: 'resources/images/outcome-legend.png',
+	                				width: 71,
+	                				height: 14,
+	                				cls: 'img-expense-legend'
+	                			}
+	                		]
+	                	}
+	                ]
+	            },
 				{
 	                //xtype: 'toolbar',
 	                //docked: 'bottom',  

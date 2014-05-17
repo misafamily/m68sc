@@ -147,8 +147,8 @@ window.Chart = function(context){
 	//Variables global to the chart
 	var width = context.canvas.width;
 	var height = context.canvas.height;
-	var heightBottom = 38;
-	var todayCircleRadius = 20;
+	var heightBottom = 18;//38
+	var todayCircleRadius = 15;
 	
 	var dashedLine = function(ctx, x1, y1, x2, y2, dashLen) {
 	    if (dashLen == undefined) dashLen = 2;
@@ -808,6 +808,7 @@ window.Chart = function(context){
 	};
 
 	var Line = function(data,config,ctx){
+		
 		try{
 		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString, valueHop,widestXLabel, xAxisLength,yAxisPosX,xAxisPosY, rotateLabels = 0;
 			
@@ -832,7 +833,8 @@ window.Chart = function(context){
 		
 		scaleHop = Math.floor(scaleHeight/calculatedScale.steps);
 		calculateXAxisSize();
-		animationLoop(config,drawScale,drawLines,ctx);		
+		animationLoop(config,drawScale,drawLines,ctx);	
+		return this;	
 		}catch(e){
 			console.log(e.message);
 		}
@@ -844,15 +846,25 @@ window.Chart = function(context){
 				ctx.moveTo(yAxisPosX, xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[0],calculatedScale,scaleHop)));
 
 				for (var j=1; j<data.datasets[i].data.length; j++){
-					if (config.bezierCurve){
-						ctx.bezierCurveTo(xPos(j-0.5),yPos(i,j-1),xPos(j-0.5),yPos(i,j),xPos(j),yPos(i,j));
-					}
-					else{
-						ctx.lineTo(xPos(j),yPos(i,j));
-					}
+					if (data.datasets[i].type) {
+						//ctx.moveTo(0, yPos(i,j));
+						//ctx.lineTo(width, yPos(i,j));
+						ctx.lineWidth = 1;
+						dashedLine(ctx, 0, yPos(i,j), width, yPos(i,j), 3);
+						//load pig png
+					    ctx.drawImage(AppConfig.targetArrowImage, width - 10, yPos(i,j) - 6.4);
+						break;
+					} else {
+						if (config.bezierCurve){
+							ctx.bezierCurveTo(xPos(j-0.5),yPos(i,j-1),xPos(j-0.5),yPos(i,j),xPos(j),yPos(i,j));
+						}
+						else{
+							ctx.lineTo(xPos(j),yPos(i,j));
+						}
+					}				
 				}
 				ctx.stroke();
-				if (config.datasetFill){
+				if (config.datasetFill && !data.datasets[i].type){
 					ctx.lineTo(yAxisPosX + (valueHop*(data.datasets[i].data.length-1)),xAxisPosY);
 					ctx.lineTo(yAxisPosX,xAxisPosY);
 					ctx.closePath();
@@ -862,16 +874,26 @@ window.Chart = function(context){
 				else{
 					ctx.closePath();
 				}
-				if(config.pointDot){
+				if(config.pointDot && !data.datasets[i].type){
 					ctx.fillStyle = data.datasets[i].pointColor;
 					ctx.strokeStyle = data.datasets[i].pointStrokeColor;
 					ctx.lineWidth = config.pointDotStrokeWidth;
-					for (var k=0; k<data.datasets[i].data.length; k++){
-						ctx.beginPath();
-						ctx.arc(yAxisPosX + (valueHop *k),xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k],calculatedScale,scaleHop)),config.pointDotRadius,0,Math.PI*2,true);
-						ctx.fill();
-						ctx.stroke();
+					
+					if (data.datasets[i].data.length > 0) {
+						var lastValue = data.datasets[i].data[0];
+						for (var k=0; k<data.datasets[i].data.length; k++){
+							if (k == 0 || (k > 0 && data.datasets[i].data[k] != lastValue)) {
+								ctx.beginPath();
+								ctx.arc(yAxisPosX + (valueHop *k),xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k],calculatedScale,scaleHop)),config.pointDotRadius,0,Math.PI*2,true);
+								ctx.fill();
+								ctx.stroke();
+							}
+							
+							lastValue = data.datasets[i].data[k]; 
+							
+						}
 					}
+					
 				}
 			}
 			
@@ -889,8 +911,8 @@ window.Chart = function(context){
 			ctx.beginPath();
 			//ctx.moveTo(width-widestXLabel/2+5,xAxisPosY);
 			//ctx.lineTo(width-(widestXLabel/2)-xAxisLength-5,xAxisPosY);
-			ctx.moveTo(width-widestXLabel/2-5,xAxisPosY);
-			ctx.lineTo(width-(widestXLabel/2)-xAxisLength-0,xAxisPosY);
+			ctx.moveTo(width,xAxisPosY);
+			ctx.lineTo(0,xAxisPosY);
 			ctx.stroke();
 			
 			
@@ -909,7 +931,7 @@ window.Chart = function(context){
 			
 			ctx.fillStyle = config.scaleFontColor;
 			
-			ctx.font = "16px ROBOTO-LIGHT";
+			ctx.font = "12px ROBOTO-LIGHT"; //cheat to fix the position bug
 			ctx.fillText('0', yAxisPosX-1000, xAxisPosY + config.scaleFontSize+3 + 23 +5);
 			ctx.restore();
 			for (var i=0; i<data.labels.length; i++){
@@ -925,38 +947,36 @@ window.Chart = function(context){
 					
 					else{
 						var posx = yAxisPosX + i*valueHop;
-						var posy = xAxisPosY + config.scaleFontSize+3 + 23;
+						var posy = xAxisPosY + config.scaleFontSize+3 + 6;//23;
 						//AppUtil.log(posy);
 						var sf = ctx.font;
 						if (i == currentDate) {
 							//draw vertical line
-							
+							/*
 							ctx.beginPath();
 							dashedLine(ctx, posx, 0, posx, height-15, 5);
-							
-							//ctx.lineWidth = 1;
 							ctx.strokeStyle = 'rgba(0,0,0,1)';
 							ctx.stroke();
-							ctx.closePath();
+							ctx.closePath();*/
 						
 							//draw circle around today date
-							/*ctx.beginPath();
+							ctx.beginPath();
 							ctx.arc(posx, posy, todayCircleRadius, (Math.PI/180)*0, (Math.PI/180)*360, false);
-							ctx.fillStyle = 'rgba(2,98,77,1)';
+							ctx.fillStyle = 'rgba(253,59,49,1)';
 							ctx.fill();
-							ctx.closePath();*/
+							ctx.closePath();
 							//load pig png
-					        ctx.drawImage(AppConfig.pigImage, posx-22, posy-20);
+					        //ctx.drawImage(AppConfig.pigImage, posx-22, posy-20);
 							//show today date
 							
 							ctx.fillStyle = "white"; // switch to black for text fill
 							ctx.font = "18px ROBOTO-LIGHT";
-							ctx.fillText(data.labels[i], posx, posy + 4);
+							ctx.fillText(data.labels[i], posx, posy + 7);
 	
 						} else {
 							//if (i > 0) {
 								ctx.restore();
-								ctx.font = "16px ROBOTO-LIGHT";
+								ctx.font = "12px ROBOTO-LIGHT";
 								ctx.fillText(data.labels[i], posx, posy+5);
 							//}
 							
@@ -978,7 +998,7 @@ window.Chart = function(context){
 						ctx.lineTo(yAxisPosX + i * valueHop, 5);
 					}
 					else{
-						ctx.lineTo(yAxisPosX + i * valueHop, xAxisPosY-0);//3				
+						if (i != currentDate) ctx.lineTo(yAxisPosX + i * valueHop, xAxisPosY-0);//3				
 					}
 					ctx.stroke();
 					
@@ -994,10 +1014,10 @@ window.Chart = function(context){
 			ctx.lineTo(yAxisPosX,5);
 			ctx.stroke();*/
 			
-			ctx.textAlign = "right";
+			ctx.textAlign = "left";
 			ctx.textBaseline = "middle";
 			
-			ctx.fillText('0 đ',yAxisPosX-8,xAxisPosY);
+			//ctx.fillText('0',yAxisPosX-8,xAxisPosY);
 			
 			for (var j=0; j<calculatedScale.steps; j++){
 				/*if (j == calculatedScale.steps - 1) { //Gioi han
@@ -1009,21 +1029,26 @@ window.Chart = function(context){
 					ctx.strokeStyle = 'rgba(173,34,40,1)';
 					ctx.stroke();	
 				}*/
-				/*ctx.beginPath();
-				ctx.moveTo(yAxisPosX-3,xAxisPosY - ((j+1) * scaleHop));
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX-130,xAxisPosY - ((j+1) * scaleHop));
 				if (config.scaleShowGridLines){
 					ctx.lineWidth = config.scaleGridLineWidth;
 					ctx.strokeStyle = config.scaleGridLineColor;
 					ctx.lineTo(yAxisPosX + xAxisLength + 5,xAxisPosY - ((j+1) * scaleHop));					
 				}
 				else{
-					ctx.lineTo(yAxisPosX-0.5,xAxisPosY - ((j+1) * scaleHop));
+					//ctx.lineTo(yAxisPosX-0.5,xAxisPosY - ((j+1) * scaleHop));
+					ctx.lineWidth = config.scaleGridLineWidth;
+					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.lineTo(yAxisPosX + xAxisLength + 5,xAxisPosY - ((j+1) * scaleHop));				
 				}
 				
-				ctx.stroke();*/
+				ctx.stroke();
 				
 				if (config.scaleShowLabels){
-					ctx.fillText(calculatedScale.labels[j],yAxisPosX-8,xAxisPosY - ((j+1) * scaleHop));
+					//show money legend
+					var money = AppUtil.formatShortMoney(calculatedScale.labels[j]);
+					ctx.fillText(money,yAxisPosX-8 + 0,xAxisPosY - ((j+1) * scaleHop) + 10);
 				}
 			}
 			
@@ -1041,10 +1066,11 @@ window.Chart = function(context){
 				//Add a little extra padding from the y axis
 				longestText +=10;
 			}
-			xAxisLength = width - longestText - widestXLabel;
+			//xAxisLength = width - longestText - widestXLabel;
+			xAxisLength = width - 25;//longestText - widestXLabel;
 			valueHop = Math.floor(xAxisLength/(data.labels.length-1));	
 				
-			yAxisPosX = width-widestXLabel/2-xAxisLength;
+			yAxisPosX = 20;//width-widestXLabel/2-xAxisLength;
 			xAxisPosY = scaleHeight + config.scaleFontSize/2;				
 		};	
 		function calculateDrawingSizes(){
@@ -1109,7 +1135,7 @@ window.Chart = function(context){
 	
 		}
 
-		
+		//return this;
 	};
 	
 	var Bar = function(data,config,ctx){
