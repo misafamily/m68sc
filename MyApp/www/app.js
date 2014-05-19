@@ -15,7 +15,7 @@ Ext.application({
 
     requires : ['MyApp.override.picker.Date', 'MyApp.util.AppUtil', 'MyApp.util.offline.Connection', 'MyApp.util.offline.Proxy', 'MyApp.util.offline.PagingLocalStorageProxy', 'MyApp.util.offline.Data'],
     
-    controllers: ['Main'],
+    controllers: ['Main','Home'],
 
     views: [
         'Main'
@@ -41,12 +41,53 @@ Ext.application({
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
-        Ext.fly('appLoadingIndicator').destroy();
-
+       
+		
+		if(!AppUtil.runningDevice()){
+			this.onDeviceReady();
+		}else{
+			document.addEventListener("deviceready", this.onDeviceReady, false);
+		}
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('MyApp.view.Main'));
+       
     },
-
+	
+	onDeviceReady: function() {
+		 Ext.fly('appLoadingIndicator').destroy();	
+		 Ext.Viewport.add(Ext.create('MyApp.view.Main'));
+		 
+		 //return;
+		 if( window.plugins && window.plugins.AdMob ) {
+		    var admob_ios_key = 'ca-app-pub-2676331971568981/2132554150';
+		    var admob_android_key = 'ca-app-pub-2676331971568981/2132554150';
+		    var adId = (navigator.userAgent.indexOf('Android') >=0) ? admob_android_key : admob_ios_key;
+		    var am = window.plugins.AdMob;
+		
+		    am.createBannerView( 
+		        {
+		        'publisherId': adId,
+		        'adSize': am.AD_SIZE.BANNER,
+		        'bannerAtTop': false
+		        }, 
+		        function() {
+		        	Ext.defer(function(){
+		        		am.requestAd(
+			                { 'isTesting':true }, 
+			                function(){
+			                    am.showAd( true );
+			                }, 
+			                function(){ alert('failed to request ad'); }
+			            );
+		        	},2000);
+		            
+		        }, 
+		        function(){ alert('failed to create banner view'); }
+		    );
+		} else {
+		  //alert('AdMob plugin not available/ready.');
+		}
+	}/*,
+	
     onUpdated: function() {
         Ext.Msg.confirm(
             "Application Update",
@@ -57,5 +98,5 @@ Ext.application({
                 }
             }
         );
-    }
+    }*/
 });

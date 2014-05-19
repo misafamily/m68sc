@@ -138,5 +138,5 @@ Ext.define('MyApp.view.comp.ViewBase', {
    		if (!me._delBtn) me._delBtn = me.down('button[title="delete"]');
    		me._editBtn.show();
    		me._delBtn.show();
-   },
+   }
 });

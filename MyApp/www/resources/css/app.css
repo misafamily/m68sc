@@ -1,6 +1,10 @@
 body {
 	font-family: 'ROBOTO-LIGHT'
 }
+/*
+/*.x-layout-card, .x-dock > .x-dock-body, .x-carousel-inner, body.x-desktop {
+	overflow: visible;
+}*/
 /*ICONS*/
 .x-toolbar.x-docked-top {
 	border-top-left-radius: 0px;
@@ -51,14 +55,20 @@ body {
 
 .toolbar-button-add {
   background-image: url('../images/buttons/btn-add.png');
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
+}
+
+.toolbar-button-back {
+  background-image: url('../images/icons/ic-previous.png');
+  width: 24px;
+  height: 24px;
 }
 
 .toolbar-button-viewtype {
   background-image: url('../images/buttons/btn-viewtype.png');
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
 }
 /*VIEW BASE*/
 
@@ -77,7 +87,7 @@ body {
 
 .viewbase-toolbar-bottom {
 	background-color: #414141;
-	height: 40px;
+	height: 46px;
 	padding-right: 12px;
 	padding-left: 12px;
 }

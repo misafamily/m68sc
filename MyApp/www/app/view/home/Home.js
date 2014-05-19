@@ -2,8 +2,6 @@ Ext.define('MyApp.view.home.Home', {
 	extend : 'MyApp.view.comp.ViewBase',
 	xtype : 'home',
 	requires : [
-	//'MyApp.view.tab.home.HomeChart'
-	//	'MyApp.view.comp.MoneyInputer'
 		'MyApp.view.home.HomeChart'
 	],
 	config : {
@@ -191,7 +189,8 @@ Ext.define('MyApp.view.home.Home', {
 	                	{xtype:'spacer'},
 	       				{
 	       					xtype: 'button',
-	       					cls: 'button-icon toolbar-button-add' 
+	       					cls: 'button-icon toolbar-button-add',
+	       					title: 'addexpensebutton' 
 	       				},
 	       				{xtype:'spacer'},
 	       				{

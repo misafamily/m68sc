@@ -638,7 +638,33 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "MyApp.view.Main": []
+  "MyApp.controller.Main": [],
+  "MyApp.model.Atm": [],
+  "MyApp.model.AtmHistory": [],
+  "MyApp.model.Expense": [],
+  "MyApp.model.Insurance": [],
+  "MyApp.model.InsuranceHistory": [],
+  "MyApp.model.SavedVar": [],
+  "MyApp.model.Saving": [],
+  "MyApp.model.SavingHistory": [],
+  "MyApp.model.System": [],
+  "MyApp.override.picker.Date": [],
+  "MyApp.util.AppUtil": [
+    "AppUtil"
+  ],
+  "MyApp.util.offline.Connection": [],
+  "MyApp.util.offline.Data": [],
+  "MyApp.util.offline.PagingLocalStorageProxy": [
+    "Ext.data.proxy.PagingLocalStorage"
+  ],
+  "MyApp.util.offline.Proxy": [
+    "Ext.data.SqliteStorageProxy"
+  ],
+  "MyApp.view.Main": [],
+  "MyApp.view.comp.MoneyInputer": [],
+  "MyApp.view.comp.ViewBase": [],
+  "MyApp.view.home.Home": [],
+  "MyApp.view.home.HomeChart": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1357,7 +1383,39 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "MyApp.controller.Main": [],
+  "MyApp.model.Atm": [],
+  "MyApp.model.AtmHistory": [],
+  "MyApp.model.Expense": [],
+  "MyApp.model.Insurance": [],
+  "MyApp.model.InsuranceHistory": [],
+  "MyApp.model.SavedVar": [],
+  "MyApp.model.Saving": [],
+  "MyApp.model.SavingHistory": [],
+  "MyApp.model.System": [],
+  "MyApp.override.picker.Date": [],
+  "MyApp.util.AppUtil": [],
+  "MyApp.util.offline.Connection": [],
+  "MyApp.util.offline.Data": [
+    "data"
+  ],
+  "MyApp.util.offline.PagingLocalStorageProxy": [
+    "proxy.localstoragepaging"
+  ],
+  "MyApp.util.offline.Proxy": [
+    "proxy.sqlitestorage"
+  ],
   "MyApp.view.Main": [
     "widget.main"
+  ],
+  "MyApp.view.comp.MoneyInputer": [
+    "widget.comp_moneyinputer"
+  ],
+  "MyApp.view.comp.ViewBase": [],
+  "MyApp.view.home.Home": [
+    "widget.home"
+  ],
+  "MyApp.view.home.HomeChart": [
+    "widget.home_homechart"
   ]
 });
