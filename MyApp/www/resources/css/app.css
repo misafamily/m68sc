@@ -6,6 +6,11 @@ body {
 	overflow: visible;
 }*/
 /*ICONS*/
+
+.x-field {
+	min-height: 43px;
+	background: transparent;
+}
 .x-toolbar.x-docked-top {
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
@@ -60,10 +65,17 @@ body {
 }
 
 .toolbar-button-back {
-  background-image: url('../images/icons/ic-previous.png');
-  width: 24px;
-  height: 24px;
+  background-image: url('../images/buttons/btn-back.png');
+  width: 30px;
+  height: 26px;
 }
+
+.toolbar-button-done {
+  background-image: url('../images/buttons/btn-done.png');
+  width: 44px;
+  height: 44px;
+}
+
 
 .toolbar-button-viewtype {
   background-image: url('../images/buttons/btn-viewtype.png');
@@ -85,11 +97,44 @@ body {
 	background-color: #414141;
 }*/
 
-.viewbase-toolbar-bottom {
-	background-color: #414141;
-	height: 46px;
+.viewbase-toolbar-top, .viewbase-toolbar-bottom {
+	background-color: #0c71a5;
+	height: 45px;
 	padding-right: 12px;
 	padding-left: 12px;
+	width: 100%;
+}
+
+.viewbase-toolbar-bottom {
+	background-color: #414141;
+}
+
+/*SEGMENTED BUTTON EXPENSE TYPE*/
+.segmentedbutton.expensetype .x-button.x-button-pressed{
+	background-image: url('../images/bg-trade-active.png');
+	background-size: contain;
+}
+.segmentedbutton.expensetype .x-button {
+	background-image: url('../images/bg-trade-inactive.png');
+	background-size: contain;
+}
+.segmentedbutton.expensetype .x-button.x-button-pressed .x-button-label {
+	color: #fff;
+	font-family: 'ROBOTO-LIGHT';
+}
+.segmentedbutton.expensetype .x-button .x-button-label {
+	color: #b4b4b4;
+	font-family: 'ROBOTO-LIGHT';
+}
+.segmentedbutton.expensetype .x-button {
+	border-right: 1px solid #666;
+}
+
+/*FORM CONTAINER*/
+.form-container {
+	width: 100%;
+	padding: 10px 10px;
+	background-color: #e3e3e3;
 }
 /*BUTTONS*/
 .button-icon {

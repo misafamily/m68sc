@@ -273,7 +273,7 @@ Ext.define('MyApp.util.AppUtil', {
 
 	formatMoney : function(amount) {
 		amount = amount || 0;
-		return parseInt(amount).format(0, 3, ',');
+		return parseInt(amount).format(0, 3, '.');
 	},
 
 	formatMoneyWithUnit : function(amount) {
@@ -283,6 +283,12 @@ Ext.define('MyApp.util.AppUtil', {
 
 	formatRateWithUnit : function(amount) {
 		return amount + ' %/năm';
+	},
+	
+	deformatMoneyWithUnit: function(amountformat) {
+		amountformat = amountformat.split(' ')[0];
+		amountformat = amountformat.split('.').join('');
+		return parseInt(amountformat);
 	},
 
 	setLang : function(lang) {
@@ -304,7 +310,7 @@ Ext.define('MyApp.util.AppUtil', {
 	 },*/
 	runningDevice : function() {
 		//alert('Ext.os.deviceType: ' + Ext.os.deviceType);
-		if (Ext.os.deviceType == "Desktop") {
+		if (Ext.os.deviceType == "Desktop" || Ext.os.deviceType == "Phone") {
 			return false;
 		}
 		return true;

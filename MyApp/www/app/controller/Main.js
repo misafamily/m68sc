@@ -1,6 +1,6 @@
 Ext.define('MyApp.controller.Main', {
 	extend : 'Ext.app.Controller',
-	requires : [],
+	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade'],
 	config : {
 		refs : {
 			main : 'main',
@@ -11,7 +11,8 @@ Ext.define('MyApp.controller.Main', {
 			main : {
 				initialize : function() {
 					var me = this;
-
+					MyApp.app.on(AppConfig.eventData.SHOW_INPUTER, me.onShowInputer, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_TRADE, me.onShowTrade, me);
 				}
 			},
 
@@ -48,5 +49,37 @@ Ext.define('MyApp.controller.Main', {
 
 	onToggleMenu : function() {
 		Ext.Viewport.toggleMenu("left");
+	},
+
+	onShowInputer : function(defaultValue, callback) {
+		var me = this;
+		var value = defaultValue || '0';
+		value = AppUtil.deformatMoneyWithUnit(value);
+		var view = me.getMoneyInputerView();
+		Ext.Viewport.add(view);
+		view.showView(value, callback);
+	},
+
+	onShowTrade : function(callback) {
+		var me = this;
+		var view = me.getTradeView();
+		Ext.Viewport.add(view);
+		view.showView(callback);
+	},
+
+	//GET FUNCS
+	getMoneyInputerView : function() {
+		var me = this;
+		if (!me._inputer)
+			me._inputer = Ext.create('MyApp.view.apppopup.MoneyInputer');
+
+		return me._inputer;
+	},
+	getTradeView : function() {
+		var me = this;
+		if (!me._trade)
+			me._trade = Ext.create('MyApp.view.apppopup.Trade');
+
+		return me._trade;
 	}
-}); 
+});

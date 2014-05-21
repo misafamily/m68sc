@@ -1,3 +1,7 @@
+.inputer-container {
+	z-index: 6;
+}
+
 .moneyinputer-button {
 	background-color: #f27935;
 	color: #FFFFFF;

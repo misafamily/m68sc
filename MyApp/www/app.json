@@ -41,7 +41,7 @@
     "js": [
         {
             "path": "libs/sencha-touch-all.js",
-	    "update": "delta"
+	    	"update": "delta"
         },
         {
 	    	"path":"config.js",
@@ -89,6 +89,10 @@
         },
          {
             "path": "resources/css/moneyinputer.css",
+            "update": "delta"
+        },
+         {
+            "path": "resources/css/apppopup.css",
             "update": "delta"
         }
     ],

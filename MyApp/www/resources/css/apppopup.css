@@ -1,0 +1,28 @@
+/* TRADE */
+.apppopup-line {
+	width: 1px;
+	height: 80%;
+	background-color: #43809d;
+	margin-right: 15px;
+}
+
+.apppopup-title {
+	color: #fff;
+}
+
+/*fields*/
+.expensetype .x-input-text {
+    background: #fff url('../images/fields/f-user.png') no-repeat 15px 5px;
+    background-size: 27px;
+}
+
+.amount .x-input-text {
+    background: #fff url('../images/fields/f-user.png') no-repeat 15px 5px;
+    background-size: 27px;
+    color: #ec1f24;
+}
+
+.verhical .x-input-text {
+    background: #fff url('../images/fields/f-xeco.png') no-repeat 15px 5px;
+    background-size: 27px;
+}

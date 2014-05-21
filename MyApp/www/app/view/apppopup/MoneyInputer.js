@@ -1,44 +1,35 @@
-Ext.define('MyApp.view.comp.MoneyInputer', {
+Ext.define('MyApp.view.apppopup.MoneyInputer', {
 	extend : 'Ext.Container',
-	xtype : 'comp_moneyinputer',
+	xtype : 'apppopup_moneyinputer',
 	config : {
 		layout : {
 			type : 'vbox',
 			pacK : 'center',
 			align : 'center'
 		},
+		cls : 'inputer-container',
 		items : [{
 			//xtype: 'toolbar',
 			//docked: 'bottom',
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				pack : 'center',
-				align: 'center'
+				align : 'center'
 			},
-			cls : 'viewbase-toolbar-bottom',
+			cls : 'viewbase-toolbar-top',
 			width : '100%',
 			items : [{
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-back',
 				title : 'backbtn'
-			},{
-				xtype : 'spacer'
-			},{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-add',
-				title : 'doneaddexpensebutton'
-
+			}, {
+				xtype : 'container',
+				cls : 'apppopup-line'
+			}, {
+				xtype : 'label',
+				html : AppConfig.textData.NHAP_SO_TIEN,
+				cls : 'apppopup-title'
 			}]
-		}, {
-			xtype : 'label',
-			html : 'SO TIEN',
-			cls : 'label-income',
-			style : {
-				'margin' : '15px',
-				'margin-bottom' : '5px',
-				'width' : '100%'
-			}
 		}, {
 			xtype : 'container',
 			layout : {
@@ -47,6 +38,7 @@ Ext.define('MyApp.view.comp.MoneyInputer', {
 				align : 'center'
 			},
 			style : {
+				'margin-top' : '10px',
 				'margin-bottom' : '10px'
 			},
 			items : [{
@@ -183,20 +175,34 @@ Ext.define('MyApp.view.comp.MoneyInputer', {
 				}
 			}]
 		}, {
-			xtype : 'spacer'
-
+			xtype : 'spacer',
+		}, {
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center',
+				pack : 'center'
+			},
+			cls : 'viewbase-toolbar-bottom',
+			items : [{
+				xtype : 'button',
+				cls : 'button-icon toolbar-button-done',
+				title : 'donebutton'
+			}]
 		}],
 		control : {
 			'button' : {
 				tap : 'onButtonClicked'
 			},
 
-			'button[title="doneaddexpensebutton"]' : {
+			'button[title="donebutton"]' : {
 				tap : 'onDoneButtonClicked'
 			},
-			
-			'button[title="backbtn"]': {
-				tap: function() {
+
+			'button[title="backbtn"]' : {
+				tap : function() {
 					this.hide();
 				}
 			}
@@ -254,10 +260,10 @@ Ext.define('MyApp.view.comp.MoneyInputer', {
 		me._valueString = me._valueNumber.toString();
 	},
 
-	showInputer : function(callback) {
+	showView : function(value, callback) {
 		var me = this;
 		//me._valueNumber = 0;
-		me._valueString = '0';
+		me._valueString = value.toString();
 		me.displayValueFormat();
 		me._callback = callback;
 		me.show();

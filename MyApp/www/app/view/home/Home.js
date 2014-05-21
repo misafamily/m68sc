@@ -178,19 +178,20 @@ Ext.define('MyApp.view.home.Home', {
 	                xtype: 'container', 
 	                layout: {
 	                	type:'hbox',
-	                	align: 'center'	
+	                	align: 'center',
+	                	pack: 'center'	
 	                },      
 	                cls:'viewbase-toolbar-bottom',    
 	                items: [
 	                	{
 	       					xtype: 'spacer',
-	       					width: 30
+	       					width: 36
 	       				},
 	                	{xtype:'spacer'},
 	       				{
 	       					xtype: 'button',
 	       					cls: 'button-icon toolbar-button-add',
-	       					title: 'addexpensebutton' 
+	       					title: 'addtradebutton' 
 	       				},
 	       				{xtype:'spacer'},
 	       				{

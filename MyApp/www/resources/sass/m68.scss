@@ -30,7 +30,7 @@ $fontBoldName: 'ROBOTO-BOLD';
     }
     .x-input-el {
       font-family: $fontBoldName;
-      color: #000;
+      color: #544b40;
       text-align:right;
       background-color: #fff;
      // padding-top: 7px;
@@ -39,6 +39,31 @@ $fontBoldName: 'ROBOTO-BOLD';
       border-radius: 10px;
       padding: 2px 5px;
       width: 260px;
+      -webkit-appearance: none;
+    }
+}
+
+.form-textfield { 
+    .x-input-text{
+      font-family: $fontName;
+       color: #434446;
+        font-size: 16px;
+        padding-left: 55px;
+        background-color: #fff;        
+        padding-bottom: 5px;
+        resize: none !important;
+    }
+    .x-field-input {
+      border-radius: 0px;
+    }
+    .x-input-el {
+      font-family: $fontName;
+      color: #434446;
+      text-align:left;
+      background-color: #fff;
+      padding-top: 7px;
+      min-height: 38px;//$form-field-height;
+      border-width: 0;
       -webkit-appearance: none;
     }
 }
