@@ -11,9 +11,21 @@ body {
 	min-height: 43px;
 	background: transparent;
 }
-.x-toolbar.x-docked-top {
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
+
+.x-toolbar {
+	height: 46px;
+}
+
+.x-toolbar .x-button  {
+	height: 46px;
+	margin:0px;
+	background-image: url('../images/bg-tabbar.png');
+	background-size: contain;
+	border-radius: 0px;
+}
+
+.x-toolbar.x-docked-top .x-button {
+	padding-top: 0em;
 }
 
 .toolbar-icon-home {
@@ -93,13 +105,17 @@ body {
 	color: #898e91;
 }
 
-/*.viewbase-container .x-toolbar {
-	background-color: #414141;
+/*
+.viewbase-container {
+	 background-image: url('../images/bg-main.png');
 }*/
 
+.popup-container {
+	z-index: 5;
+}
 .viewbase-toolbar-top, .viewbase-toolbar-bottom {
 	background-color: #0c71a5;
-	height: 45px;
+	height: 46px;
 	padding-right: 12px;
 	padding-left: 12px;
 	width: 100%;
@@ -109,6 +125,33 @@ body {
 	background-color: #414141;
 }
 
+
+/*SEGMENTED BUTTON EXPENSE TYPE*/
+
+.x-segmentedbutton {
+ border: 0px;
+}
+.segmentedbutton.tabbar .x-button.x-button-pressed{
+	background-image: url('../images/bg-tabbar-active.png');
+	background-size: contain;
+}
+.segmentedbutton.tabbar .x-button  {
+	/*background-color: transparent;*/
+	height: 46px;
+}
+/*
+.segmentedbutton.tabbar .x-button.x-button-pressed .x-button-label {
+	color: #fff;
+	font-family: 'ROBOTO-LIGHT';
+}
+.segmentedbutton.tabbar .x-button .x-button-label {
+	color: #b4b4b4;
+	font-family: 'ROBOTO-LIGHT';
+}
+.segmentedbutton.tabbar .x-button {
+	border-right: 1px solid #666;
+}
+*/
 /*SEGMENTED BUTTON EXPENSE TYPE*/
 .segmentedbutton.expensetype .x-button.x-button-pressed{
 	background-image: url('../images/bg-trade-active.png');
@@ -152,4 +195,42 @@ body {
 	color: white;
 	font-family: 'ROBOTO-LIGHT';
 }
+
+/*HOME*/
+.chart-container {
+	background-image: url('../images/bg-main.png');
+	background-size: contain;
+	color: #fff;
+}
+
+.expenseinfo-container {
+	margin: 4px;
+}
+
+.expenseinfo-income, .expenseinfo-outcome, .expenseinfo-balance {
+	color: #fff;
+	font-size: 26px;
+	
+}
+
+.expenseinfo-income {
+	background-color: #6bc63a;
+	margin-right: 2px;
+}
+
+.expenseinfo-outcome {
+	background-color: #ff4f5a;
+	margin-left: 2px;
+}
+
+.expenseinfo-text {
+	font-size: 14px;
+	color: #fff;
+}
+
+.expenseinfo-balance-date {
+	font-size: 12px;
+}
+
+
 

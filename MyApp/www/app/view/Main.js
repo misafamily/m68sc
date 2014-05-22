@@ -11,20 +11,15 @@ Ext.define('MyApp.view.Main', {
 		},
 		items : [{
 			xtype : 'toolbar',
-			ui : 'light',
-			docked : 'top',
-			scrollable : {
-				direction : 'horizontal',
-				indicators : false
-			},
+			//ui : 'light',
+			//docked : 'top',
 			items : [{
-				//text: 'Back',
-				// ui: 'back',
 				iconCls : 'toolbar-icon-menu',
-				//hidden: (Ext.theme.name == "Blackberry") ? true : false
+				cls: 'toolbar-button'
 			}, {
 				xtype : 'segmentedbutton',
 				flex:1,
+				cls: 'segmentedbutton tabbar',
 				items : [{
 					//text: 'Option 1',
 					pressed : true,

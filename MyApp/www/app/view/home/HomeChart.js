@@ -12,7 +12,7 @@ Ext.define('MyApp.view.home.HomeChart', {
 			'target': [1000,1000,1000,1000,1000,1000]
 			//'bad_cholesterol': [2,3,1,5]
 		},
-		minHeight: 190
+		minHeight: 170
         //html:'<canvas id="home_chart_canvas_id" width="310" height="170"></canvas>',
 		//height: 220
      },
@@ -22,13 +22,13 @@ Ext.define('MyApp.view.home.HomeChart', {
      	Ext.defer(function() {
      		me._screenWidth = me.element.dom.offsetWidth;
 	     	me._screenHeight = me.element.dom.offsetHeight;
-	     	if (me._screenHeight < 190)
-	     		me._screenHeight = 190;
+	     	if (me._screenHeight < 170)
+	     		me._screenHeight = 170;
 	     	
 	     	//fix duplicate canvas on Android webview
-	     	var html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
+	     	//var html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
 	     	
-	     	//var html = '<canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas>';
+	     	var html = '<canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas>';
 	     	html = Ext.util.Format.format(html, me._screenWidth, me._screenHeight);
 	     	me.setHtml(html);
 	     	//AppUtil.log(me);
@@ -47,17 +47,18 @@ Ext.define('MyApp.view.home.HomeChart', {
 				//scaleShowLabels : true,
 				scaleShowGridLines : false,
 				scaleLabel : "<%=value%>",
-				pointDot: true,
+				pointDot: false,
+				datasetFill : false,
+				datasetStrokeWidth : 6,
 				bezierCurve : false,
 				animation : false,
 				pointDotRadius : 3,
-				scaleFontColor: "#898d90",
+				scaleFontColor: "#99c0df",
 				pointDotStrokeWidth : .5,
 				scaleGridLineWidth : .5,
-				scaleGridLineColor : "rgba(225,225,225,1)",
-				scaleLineColor : "rgba(111,104,95,.6)",
+				scaleGridLineColor :  "rgba(49,144,190,1)",
+				scaleLineColor : "rgba(49,144,190,1)",
 				scaleFontFamily : 'ROBOTO-LIGHT',
-				scaleFontColor : "#9e9fa1",
 				scaleFontSize : 12,
 			};
 	
@@ -288,17 +289,11 @@ Ext.define('MyApp.view.home.HomeChart', {
 			labels : me.getData()['labels'],
 			datasets : [
 				{
-					fillColor : "rgba(125,176,242,1)",
-					strokeColor : "rgba(14,122,255,1)",
-					pointColor : "rgba(14,122,255,1)",
-					pointStrokeColor : "#fff",
+					strokeColor : "rgba(139,246,78,1)",
 					data : me.getData()['incomes']
 				},
 				{
-					fillColor : "rgba(241,155,154,1)",
-					strokeColor : "rgba(255,60,46,1)",
-					pointColor : "rgba(255,60,46,1)",
-					pointStrokeColor : "#fff",
+					strokeColor : "rgba(252,42,51,1)",
 					data : this.getData()['expenses']
 				},
 				{

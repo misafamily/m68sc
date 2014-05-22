@@ -1,206 +1,118 @@
 Ext.define('MyApp.view.home.Home', {
-	extend : 'MyApp.view.comp.ViewBase',
+	extend : 'Ext.Container',
 	xtype : 'home',
-	requires : [
-		'MyApp.view.home.HomeChart'
-	],
+	requires : ['MyApp.view.home.HomeChart'],
 	config : {
-		navigationBar : {
-
-			items : [{
-				iconCls : 'toolbar-icon-previous',
-				align : 'left',
-				hideAnimation : null,
-				showAnimation : null,
-				title : 'previousbtn'
-			}, {
-				iconCls : 'toolbar-icon-next',
-				align : 'right',
-				hideAnimation : null,
-				showAnimation : null,
-				title : 'nextbtn'
-			}]
+		layout : {
+			type : 'vbox'
 		},
 		items : [{
 			xtype : 'container',
-			title : 'MAY 2014',
-			flex : 1,
+			flex : 3.25,
 			layout : {
 				type : 'vbox'
 			},
-			cls: 'viewbase-container',
-			items : [
-				{
-					xtype: 'container',
-					layout: {
-						type: 'hbox',
-						pack: 'end',
-						align: 'center'
-					},
-					height: 50,
-					style: {
-						'background-color': '#f1f3f2'
-					},
-					items: [
-						{
-							xtype: 'container',
-		                	layout: {
-		                		type: 'vbox',
-		                		pack: 'center',
-		                		align: 'center'
-		                	},
-		                	cls: 'label-income',
-		                	style: {            				
-                				'margin-left': '10px'
-                			},
-							items: [
-								{
-	                				xtype: 'label',
-	                				html: '12 trieu'
-	                			},
-	                			{
-	                				xtype: 'label',
-	                				html: 'Tien mat',
-	                				cls: 'label-expense-title'
-	                			}
-							]
-						},
-						{
-							xtype: 'spacer'
-						},
-						{
-							xtype: 'label',
-                			html: '01.05.2014 - 31.05.2014',
-                			style: {
-                				'color': '#898e92',
-                				'margin-right': '10px'
-                			}
-						}
-					]
+			cls : 'chart-container',
+			items : [{
+				xtype : 'container',
+				layout : {
+					type : 'vbox',
+					pack : 'center',
+					align : 'center'
 				},
-				{
-					xtype:'home_homechart',
-					flex: 1,
+				flex : 1,
+
+				items : [{
+					xtype : 'container',
+					layout : {
+						type : 'vbox',
+						pack : 'center',
+						align : 'center'
+					},
 					style: {
-						'background-color': '#f1f3f2'
-					}
+						'line-height': '26px',
+						'margin-top': '5px'
+					},
+					items : [{
+						xtype : 'label',
+						html : '25.THANG 5.2014',
+						cls: 'expenseinfo-balance-date'
+					}, {
+						xtype : 'label',
+						html : '3.500.000 d',
+						cls: 'expenseinfo-balance'
+					}]
+				}]
+			}, {
+				xtype : 'home_homechart',
+				flex : 2
+			}]
+		}, {
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center'
+			},
+			flex : .75,
+			cls : 'expenseinfo-container',
+			defaults : {
+				xtype : 'container',
+				layout : {
+					type : 'vbox',
+					pack : 'center',
+					align : 'center'
 				},
-				{
-	                //xtype: 'toolbar',
-	                //docked: 'bottom',  
-	                xtype: 'container', 
-	                layout: {
-	                	type:'hbox',
-	                	align: 'center'	
-	                },      
-	                height: 105,
-	                defaults: {
-	                	xtype: 'container',
-	                	layout: {
-	                		type: 'vbox',
-	                		pack: 'center',
-	                		align: 'center'
-	                	},
-	                	flex: 1,
-	                	height: '100%',
-	                	style: {
-	                		'border-top': '1px solid #e5e5e5',
-	                		'border-right': '1px solid #e5e5e5'
-	                	}
-	                },
-	                items:[
-	                	{
-	                		cls: 'label-income',
-	                		items:[
-	                			{
-	                				xtype: 'label',
-	                				html: '20 trieu'
-	                			},
-	                			{
-	                				xtype: 'label',
-	                				html: 'Tong thu',
-	                				cls: 'label-expense-title'
-	                			},
-	                			{
-	                				xtype: 'image',
-	                				src: 'resources/images/income-legend.png',
-	                				width: 71,
-	                				height: 14,
-	                				cls: 'img-expense-legend'
-	                			}
-	                		]
-	                	},
-	                	{
-	                		cls: 'label-income',
-	                		items:[
-	                			{
-	                				xtype: 'label',
-	                				html: '15 trieu'
-	                			},
-	                			{
-	                				xtype: 'label',
-	                				html: 'Con lai',
-	                				cls: 'label-expense-title'
-	                			}
-	                			
-	                		]
-	                	},
-	                	{
-	                		cls: 'label-outcome',
-	                		style: {
-		                		'border-top': '1px solid #e5e5e5',
-		                		'border-right': '0px solid #e5e5e5'
-		                	},
-	                		items:[
-	                			{
-	                				xtype: 'label',
-	                				html: '5 trieu'
-	                			},
-	                			{
-	                				xtype: 'label',
-	                				html: 'Tong chi',
-	                				cls: 'label-expense-title'
-	                			},
-	                			{
-	                				xtype: 'image',
-	                				src: 'resources/images/outcome-legend.png',
-	                				width: 71,
-	                				height: 14,
-	                				cls: 'img-expense-legend'
-	                			}
-	                		]
-	                	}
-	                ]
-	            },
-				{
-	                //xtype: 'toolbar',
-	                //docked: 'bottom',  
-	                xtype: 'container', 
-	                layout: {
-	                	type:'hbox',
-	                	align: 'center',
-	                	pack: 'center'	
-	                },      
-	                cls:'viewbase-toolbar-bottom',    
-	                items: [
-	                	{
-	       					xtype: 'spacer',
-	       					width: 36
-	       				},
-	                	{xtype:'spacer'},
-	       				{
-	       					xtype: 'button',
-	       					cls: 'button-icon toolbar-button-add',
-	       					title: 'addtradebutton' 
-	       				},
-	       				{xtype:'spacer'},
-	       				{
-	       					xtype: 'button',
-	       					cls: 'button-icon toolbar-button-viewtype' 
-	       				}
-	                ]
-	            }
-			]
+				flex : 1,
+				height : '100%'
+			},
+			items : [{
+				cls : 'expenseinfo-income',
+				items : [{
+					xtype : 'label',
+					html : '+120.000.000'
+				}, {
+					xtype : 'label',
+					html : 'Tong thu',
+					cls : 'expenseinfo-text'
+				}]
+			}, {
+				cls : 'expenseinfo-outcome',
+				items : [{
+					xtype : 'label',
+					html : '-15.000.000'
+				}, {
+					xtype : 'label',
+					html : 'Tong chi',
+					cls : 'expenseinfo-text'
+				}]
+			}]
+		}, {
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center',
+				pack : 'center'
+			},
+			cls : 'viewbase-toolbar-bottom',
+			items : [{
+				xtype : 'spacer',
+				width : 36
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'button',
+				cls : 'button-icon toolbar-button-add',
+				title : 'addtradebutton'
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'button',
+				cls : 'button-icon toolbar-button-viewtype'
+			}]
 		}]
 	},
 

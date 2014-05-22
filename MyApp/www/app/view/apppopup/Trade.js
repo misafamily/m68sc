@@ -2,6 +2,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	extend : 'Ext.Container',
 	xtype : 'apppopup_trade',
 	config : {
+		cls:'popup-container',
 		layout : {
 			type : 'vbox',
 			pacK : 'center',
