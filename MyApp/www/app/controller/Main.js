@@ -38,10 +38,11 @@ Ext.define('MyApp.controller.Main', {
 			},
 			'main carousel' : {
 				activeitemchange : function(carousel, value, oldValue, eOpts) {
-					//console.log(arguments);
+					//log('activeitemchange');
 					var me = this;
 					var sb = me.getMainSegmentedButton();
 					sb.setPressedButtons(carousel.activeIndex);
+					MyApp.app.fireEvent(AppConfig.eventData.MAIN_VIEW_CHANGED, carousel.activeIndex);
 				}
 			}
 		}

@@ -88,6 +88,10 @@
             "update": "delta"
         },
          {
+            "path": "resources/css/pathmenu.css",
+            "update": "delta"
+        },
+         {
             "path": "resources/css/moneyinputer.css",
             "update": "delta"
         },

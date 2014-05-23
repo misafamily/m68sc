@@ -6,8 +6,8 @@ function log(msg) {
 	AppUtil.log(msg);
 }
 
-AppConfig.pigImage = new Image();
-AppConfig.pigImage.src = 'resources/images/pig.png';
+//AppConfig.pigImage = new Image();
+//AppConfig.pigImage.src = 'resources/images/pig.png';
 
 AppConfig.targetArrowImage = new Image();
 AppConfig.targetArrowImage.src = 'resources/images/target-arrow.png';
@@ -16,6 +16,10 @@ AppConfig.targetArrowImage.src = 'resources/images/target-arrow.png';
 AppConfig.eventData = {};
 AppConfig.eventData.SHOW_INPUTER = 'SHOW_INPUTER';
 AppConfig.eventData.SHOW_TRADE = 'SHOW_TRADE';
+AppConfig.eventData.MAIN_VIEW_CHANGED = 'MAIN_VIEW_CHANGED';
+AppConfig.eventData.TRADE_ADDED = 'TRADE_ADDED';
+
+
 
 
 AppConfig.placeholderData = {};
@@ -26,7 +30,22 @@ AppConfig.textData = {};
 AppConfig.textData.THEM_GIAO_DICH = 'THÊM GIAO DỊCH';
 AppConfig.textData.CHI_TIEU = 'CHI TIÊU';
 AppConfig.textData.THU_NHAP = 'THU NHẬP';
-AppConfig.textData.NHAP_SO_TIEN = 'NHẬP SỐ TIỀN'
+AppConfig.textData.NHAP_SO_TIEN = 'NHẬP SỐ TIỀN';
+
+AppConfig.type = {};
+AppConfig.type.THU = 'thu';
+AppConfig.type.CHI = 'chi';
+
+AppConfig.type.TIEN_MAT = 'tien_mat';
+AppConfig.type.ATM = 'atm';
+
+//chi
+AppConfig.type.DI_CHO = 'Đi chợ';
+AppConfig.type.CHO_VAY = 'Cho vay';
+
+//thu
+AppConfig.type.LUONG = 'Lương';
+
 /*
 AppConfig.expenseType = [													
 							{text: 'Đi chợ hàng ngày',  value: 'di_cho'},

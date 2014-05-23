@@ -14,6 +14,13 @@ Ext.define('MyApp.controller.Home', {
 						log('trade done');
 					});
 				}
+			},
+			'record button[title="addtradebutton"]': {
+				tap: function() {
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, function() {
+						log('trade done');
+					});
+				}
 			}
 		}
     }

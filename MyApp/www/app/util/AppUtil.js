@@ -4,9 +4,10 @@ Ext.define('MyApp.util.AppUtil', {
 	singleton : true,
 	dbConnection : null,
 	_lang : 'en',
-	moneyUnit : '(đ)',
+	moneyUnit : 'đ',
 	CASH : 0,
 	CASH_MODEL : null,
+	RELEASE: false,
 	//TYPE
 	//chuyen_tien, rut_tien, nap_tien, tao_moi, nhan_luong, sua_thong_tin
 	//TYPE_ATM_CHUYEN_TIEN: 'chuyen_tien',
@@ -83,8 +84,13 @@ Ext.define('MyApp.util.AppUtil', {
 
 	constructor : function() {
 		var me = this;
-		//me.getDbConnection();
-		//me.initLocalStorage();
+		me.RELEASE = false;
+		me.log('RELEASE MODE: '+ me.RELEASE);
+		
+		
+		me.getDbConnection();
+		me.initLocalStorage();
+		
 	},
 
 	initLocalStorage : function() {
@@ -111,8 +117,16 @@ Ext.define('MyApp.util.AppUtil', {
 	initSettings : function() {
 		var me = this;
 		if (!me.getLocalVar('auto_add_tiendu_to_nextmonth')) {
-			me.saveLocalVar('auto_add_tiendu_to_nextmonth', 'true');
+			me.saveLocalVar('auto_add_tiendu_to_nextmonth', true);
 		}
+		if (!me.getLocalVar('CASH')) {
+			me.saveLocalVar('CASH', 100000000000);
+		}
+		if (!me.getLocalVar('installed_date')) {
+			me.saveLocalVar('installed_date', Ext.Date.now());
+		}
+		
+		me.CASH = me.getLocalVar('CASH');
 	},
 
 	getLocalVar : function(name) {
@@ -174,45 +188,40 @@ Ext.define('MyApp.util.AppUtil', {
 
 	},
 
-	saveExpenseModel : function(expensetype, amount, externalid, buyingwhat, buyingtype, frombank, tradedate, note, source) {
-		var now = tradedate || new Date();
-		note = note || '';
-		source = source || 'tien_mat';
-		var expenseId = 'expensive_' + now.getTime();
-		var expenseData = {
-			expense_id : expenseId,
-			amount : amount,
-			type : expensetype,
-			buyingwhat : buyingwhat,
-			buyingtype : buyingtype,
-			source : source,
-			external_id : externalid,
-			frombank : frombank,
-			note : note,
+	doTrade : function(title, type, amount, trade_with, trade_note, time, hunter_id) {
+		//log('doTrade');
+		//log(arguments);
+		var now = time || new Date();
+		trade_note = trade_note || '';
+		hunter_id = hunter_id || 'CASH';
+		trade_with = trade_with || AppConfig.type.TIEN_MAT;
+		var sign_amount = (type == AppConfig.type.THU) ? amount : -amount;
+		var id = 'trade_' + now.getTime();
+		var data = {
+			trade_id : id,
+			title: title,
+			amount : amount.toString(),
+			sign_amount: sign_amount.toString(),
+			type : type,
+			//trade_what : trade_what,
+			trade_with : trade_with,
+			trade_note : trade_note,
 			time : now.getTime(),
-			week : Ext.Date.getWeekOfYear(now),
+			hunter_id : hunter_id,
 			dd : now.getDate(),
 			mm : now.getMonth(),
 			yy : now.getFullYear()
 		};
-
-		var model = Ext.create('MyApp.model.Expense', expenseData);
+		//log(data);
+		var model = Ext.create('MyApp.model.Trade', data);
 		model.save(function() {
-			MyApp.app.fireEvent('expense_changed', now);
+			MyApp.app.fireEvent(AppConfig.eventData.TRADE_ADDED, now);
 		});
 	},
 
 	saveCashModel : function() {
 		var me = this;
-		if (!me.CASH_MODEL) {
-			me.CASH_MODEL = Ext.create('MyApp.model.System', {
-				name : 'cash',
-				value : '0'
-			});
-		}
-
-		me.CASH_MODEL.data.value = me.CASH.toString();
-		me.CASH_MODEL.save();
+		me.saveLocalVar('CASH', me.CASH);
 	},
 
 	getCashFormat : function() {
@@ -244,6 +253,14 @@ Ext.define('MyApp.util.AppUtil', {
 		me.saveCashModel();
 		MyApp.app.fireEvent('cash_changed', me.CASH, amount);
 	},
+	
+	checkAmount: function(amount) {
+		if (!amount) {
+			log('Nhap tien di ku');
+			return false;
+		}
+		return true;
+	},
 
 	formatDateTime : function(date) {
 		return date.dateFormat();
@@ -252,17 +269,17 @@ Ext.define('MyApp.util.AppUtil', {
 	formatShortMoney : function(amount) {
 		amount = amount || 0;
 		amount = parseInt(amount);
-		if (amount > 1000000) {
+		if (amount >= 1000000) {
 			amount = Math.round(amount / 1000000);
 
 			amount = amount.toString() + ' triệu';
-		} else if (amount > 100000) {
+		} else if (amount >= 100000) {
 			amount = Math.round(amount / 100000);
 			amount = amount.toString() + ' trăm ngàn';
-		} else if (amount > 10000) {
+		} else if (amount >= 10000) {
 			amount = Math.round(amount / 10000);
 			amount = amount.toString() + ' chục ngàn';
-		} else if (amount > 1000) {
+		} else if (amount >= 1000) {
 			amount = Math.round(amount / 1000);
 			amount = amount.toString() + ' ngàn';
 		} else {
@@ -291,42 +308,13 @@ Ext.define('MyApp.util.AppUtil', {
 		return parseInt(amountformat);
 	},
 
-	setLang : function(lang) {
-		this._lang = lang;
-	},
-	getLang : function() {
-		return this._lang;
-	},
-
-	/*isOnline: function() { //not work
-	 if(navigator.connection != undefined){
-
-	 var networkState = navigator.connection.type;
-	 if(networkState == "none"){
-	 return false;
-	 }
-	 } else if (navigator.onLine != undefined) return navigator.onLine;
-	 return false;
-	 },*/
-	runningDevice : function() {
+	onDevice : function() {
+		if (this.RELEASE) return true;
 		//alert('Ext.os.deviceType: ' + Ext.os.deviceType);
 		if (Ext.os.deviceType == "Desktop" || Ext.os.deviceType == "Phone") {
 			return false;
 		}
 		return true;
-	},
-
-	preferredLanguage : function() {
-		try {
-			navigator.globalization.getPreferredLanguage(function(language) {
-				this.setLang(language.value);
-			}, function() {
-				alert('Error getting language\n');
-			});
-		} catch(e) {
-			var language = navigator.language ? navigator.language.split('-')[0] : navigator.userLanguage.split('-')[0];
-			this.setLang(language);
-		}
 	},
 
 	log : function(msg) {

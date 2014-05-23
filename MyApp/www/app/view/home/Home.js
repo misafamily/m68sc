@@ -12,7 +12,7 @@ Ext.define('MyApp.view.home.Home', {
 			layout : {
 				type : 'vbox'
 			},
-			cls : 'chart-container',
+			cls : 'app-container',
 			items : [{
 				xtype : 'container',
 				layout : {
@@ -20,7 +20,7 @@ Ext.define('MyApp.view.home.Home', {
 					pack : 'center',
 					align : 'center'
 				},
-				flex : 1,
+				flex : 2,
 
 				items : [{
 					xtype : 'container',
@@ -35,7 +35,7 @@ Ext.define('MyApp.view.home.Home', {
 					},
 					items : [{
 						xtype : 'label',
-						html : '25.THANG 5.2014',
+						//html : '25.THANG 5.2014',
 						cls: 'expenseinfo-balance-date'
 					}, {
 						xtype : 'label',
@@ -45,7 +45,7 @@ Ext.define('MyApp.view.home.Home', {
 				}]
 			}, {
 				xtype : 'home_homechart',
-				flex : 2
+				flex : 1.25
 			}]
 		}, {
 			//xtype: 'toolbar',
@@ -113,16 +113,36 @@ Ext.define('MyApp.view.home.Home', {
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-viewtype'
 			}]
-		}]
+		}],
+		
+		control: {
+			/*'home': {
+				
+			}*/
+		}
 	},
-
+	
 	initialize : function() {
 		var me = this;
 		me.callParent(arguments);
-
+		log('home init');
+		Ext.defer(function(){
+			me.showToday();
+		},400);
 		//MyApp.app.on('expense_changed', me.onExpenseChanged, me);
 		//MyApp.app.on('thuchi_changed', me.onThuChiChanged, me);
-	}/*,
+	},
+
+	showToday: function() {
+		var me = this;
+		var now = new Date();
+		
+		if (!me._todayLbl) me._todayLbl = me.down('label[cls = "expenseinfo-balance-date"]');
+		me._todayLbl.setHtml(now.homeDateFormat());
+	}
+	
+	
+	/*,
 	 onThuChiChanged: function(thu, chi) {
 	 var me = this;
 	 if (!me._thuLbl) me._thuLbl = me.down('label[title="thulbl"]');

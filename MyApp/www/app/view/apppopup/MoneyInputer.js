@@ -3,10 +3,9 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 	xtype : 'apppopup_moneyinputer',
 	config : {
 		layout : {
-			type : 'vbox',
-			pacK : 'center',
-			align : 'center'
+			type : 'vbox'
 		},
+		flex:1,
 		cls : 'inputer-container',
 		items : [{
 			//xtype: 'toolbar',
@@ -26,156 +25,145 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 				xtype : 'container',
 				cls : 'apppopup-line'
 			}, {
+				xtype : 'spacer'
+			}, {
 				xtype : 'label',
 				html : AppConfig.textData.NHAP_SO_TIEN,
 				cls : 'apppopup-title'
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'spacer',
+				width : 45
 			}]
 		}, {
 			xtype : 'container',
+			cls : 'main',
 			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
+				type : 'vbox'
 			},
 			style : {
-				'margin-top' : '10px',
-				'margin-bottom' : '10px'
+				'width' : '100%',
+				'min-height': '150px'
 			},
+			flex : 1,
 			items : [{
-				xtype : 'textfield',
+				xtype : 'container',
+				layout : {
+					type : 'hbox',
+					pacK : 'center',
+					align : 'center'
+				},
 				flex : 1,
-				clearIcon : false,
-				readOnly : true,
-				autoComplete : false,
-				autoCorrect : false,
-				cls : 'b-textfield-moneyinput',
-				value : '0'
+				cls : 'moneyinputer-amount-container',
+				items : [{
+					xtype : 'textfield',
+					flex : 1,
+					clearIcon : false,
+					readOnly : true,
+					autoComplete : false,
+					autoCorrect : false,
+					cls : 'b-textfield-moneyinput',
+					value : '0'
+				}]
 			}, {
-				xtype : 'label',
-				html : 'd',
-				style : {
-					'margin-left' : '10px'
-				}
+				xtype : 'container',
+				layout : {
+					type : 'vbox',
+					pacK : 'center',
+					align : 'center'
+				},
+				flex : 2,
+				defaults:{
+					cls: 'fullwidth-container',
+					flex: 1
+				},
+				items : [{
+					xtype : 'container',
+					layout : {
+						type : 'hbox',
+						pacK : 'center',
+						align : 'center'
+					},
+					defaults : {
+						xtype : 'button',
+						cls : 'moneyinputer-button',
+						flex: 1
+					},
+
+					items : [{
+						text : '1',
+						style : {
+							'margin-right' : '0px'
+						}
+					}, {
+						text : '2',
+						style : {
+							'margin-right' : '0px'
+						}
+					}, {
+						text : '3'
+					}]
+				}, {
+					xtype : 'container',
+					layout : {
+						type : 'hbox',
+						pacK : 'center',
+						align : 'center'
+					},
+					defaults : {
+						xtype : 'button',
+						cls : 'moneyinputer-button',
+						flex: 1
+					},
+					items : [{
+						text : '4'
+					}, {
+						text : '5'
+					}, {
+						text : '6'
+					}]
+				}, {
+					xtype : 'container',
+					layout : {
+						type : 'hbox',
+						pacK : 'center',
+						align : 'center'
+					},
+					defaults : {
+						xtype : 'button',
+						cls : 'moneyinputer-button',
+						flex: 1
+					},
+					items : [{
+						text : '7'
+					}, {
+						text : '8'
+					}, {
+						text : '9'
+					}]
+				}, {
+					xtype : 'container',
+					layout : {
+						type : 'hbox',
+						pacK : 'center',
+						align : 'center'
+					},
+					defaults : {
+						xtype : 'button',
+						cls : 'moneyinputer-button',
+						flex: 1
+					},
+					items : [{
+						text : '000'
+					}, {
+						text : '0'
+					}, {
+						text : '',
+						iconCls: 'moneyinputer-delete-icon'
+					}]
+				}]
 			}]
-		}, {
-			xtype : 'container',
-			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
-			},
-			defaults : {
-				xtype : 'button',
-				cls : 'moneyinputer-button',
-				width : 90,
-				height : 80
-			},
-			style : {
-				'margin-bottom' : '10px'
-			},
-			items : [{
-				text : '1',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '2',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '3'
-			}]
-		}, {
-			xtype : 'container',
-			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
-			},
-			defaults : {
-				xtype : 'button',
-				cls : 'moneyinputer-button',
-				width : 90,
-				height : 80
-			},
-			style : {
-				'margin-bottom' : '10px'
-			},
-			items : [{
-				text : '4',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '5',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '6'
-			}]
-		}, {
-			xtype : 'container',
-			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
-			},
-			defaults : {
-				xtype : 'button',
-				cls : 'moneyinputer-button',
-				width : 90,
-				height : 80
-			},
-			style : {
-				'margin-bottom' : '10px'
-			},
-			items : [{
-				text : '7',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '8',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : '9'
-			}]
-		}, {
-			xtype : 'container',
-			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
-			},
-			defaults : {
-				xtype : 'button',
-				cls : 'moneyinputer-button',
-				width : 90,
-				height : 80
-			},
-			items : [{
-				text : '000',
-				style : {
-					'margin-right' : '10px',
-					'font-size' : '44px'
-				}
-			}, {
-				text : '0',
-				style : {
-					'margin-right' : '10px'
-				}
-			}, {
-				text : 'del',
-				style : {
-					'font-size' : '44px'
-				}
-			}]
-		}, {
-			xtype : 'spacer',
 		}, {
 			//xtype: 'toolbar',
 			//docked: 'bottom',
@@ -188,7 +176,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done',
+				cls : 'button-icon toolbar-button-done2',
 				title : 'donebutton'
 			}]
 		}],
@@ -221,7 +209,8 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 	onButtonClicked : function(btn) {
 		var me = this;
 		var value = btn.getText();
-		if (value == 'del') {
+		if (me._valueString == '0') me._valueString = '';
+		if (value == '') { //del
 			if (me._valueString.length > 1) {
 				me._valueString = me._valueString.substring(0, me._valueString.length - 1);
 			} else
@@ -238,6 +227,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 		} else if (Ext.isNumber(parseInt(value))) {
 			if (me._valueString.length < 12) {
 				me._valueString += value.toString();
+				
 				me.displayValueFormat();
 			}
 
