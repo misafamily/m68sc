@@ -56,7 +56,7 @@ Ext.application({
 		 Ext.fly('appLoadingIndicator').destroy();	
 		 Ext.Viewport.add(Ext.create('MyApp.view.Main'));
 		 
-		 //return;
+		 //return;banner height: 48px
 		 if( window.plugins && window.plugins.AdMob ) {
 		    var admob_ios_key = 'ca-app-pub-2676331971568981/2132554150';
 		    var admob_android_key = 'ca-app-pub-2676331971568981/2132554150';

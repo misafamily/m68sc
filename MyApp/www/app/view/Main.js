@@ -3,7 +3,8 @@ Ext.define('MyApp.view.Main', {
 	xtype : 'main',
 	requires : [
 		'Ext.carousel.Carousel',
-		'MyApp.view.home.Home'
+		'MyApp.view.home.Home',
+		'MyApp.view.record.Record'
 	],
 	config : {
 		layout : {
@@ -50,8 +51,7 @@ Ext.define('MyApp.view.Main', {
 					xtype: 'home'
 				},
 				{
-					xtype: 'container',
-					html: 'View 2'
+					xtype: 'record'
 				},
 				{
 					xtype: 'container',

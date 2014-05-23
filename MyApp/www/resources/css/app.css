@@ -94,6 +94,16 @@ body {
   width: 36px;
   height: 36px;
 }
+.toolbar-button-tag {
+  background-image: url('../images/buttons/btn-tag.png');
+  width: 36px;
+  height: 36px;
+}
+.toolbar-button-search{
+  background-image: url('../images/buttons/btn-search.png');
+  width: 36px;
+  height: 36px;
+}
 /*VIEW BASE*/
 
 .viewbase .x-toolbar {
@@ -104,6 +114,7 @@ body {
 .viewbase .x-toolbar .x-title {
 	color: #898e91;
 }
+
 
 /*
 .viewbase-container {
@@ -197,7 +208,7 @@ body {
 }
 
 /*HOME*/
-.chart-container {
+.app-container {
 	background-image: url('../images/bg-main.png');
 	background-size: contain;
 	color: #fff;
@@ -231,6 +242,23 @@ body {
 .expenseinfo-balance-date {
 	font-size: 12px;
 }
+/*RECORD*/
+.record-date-container {	
+	padding-bottom: 13px;
+	border-bottom: 1px solid #579cc3;
+	margin-left: 12px;
+	margin-right: 12px;
+}
 
+.record-date {
+	font-size: 17px;
+	color: #fff;
+	margin-top: 15px;
 
+}
+
+.record-list .x-list {
+	background-color: transparent;
+	margin-right: 12px;
+}
 

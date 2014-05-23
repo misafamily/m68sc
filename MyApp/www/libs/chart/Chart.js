@@ -147,7 +147,7 @@ window.Chart = function(context){
 	//Variables global to the chart
 	var width = context.canvas.width;
 	var height = context.canvas.height;
-	var heightBottom = 18;//38
+	var heightBottom = 0;//18;//38
 	var todayCircleRadius = 15;
 	
 	var dashedLine = function(ctx, x1, y1, x2, y2, dashLen) {
@@ -307,6 +307,7 @@ window.Chart = function(context){
 	this.Line = function(data,options){
 	
 		chart.Line.defaults = {
+			selectedDate:new Date(),
 			scaleOverlay : false,
 			scaleOverride : false,
 			scaleSteps : null,
@@ -318,6 +319,7 @@ window.Chart = function(context){
 			scaleLabel : "<%=value%>",
 			scaleFontFamily : "'Arial'",
 			scaleFontSize : 12,
+			scaleXFontSize : 10,
 			scaleFontStyle : "normal",
 			scaleFontColor : "#666",
 			scaleShowGridLines : true,
@@ -833,6 +835,7 @@ window.Chart = function(context){
 		
 		scaleHop = Math.floor(scaleHeight/calculatedScale.steps);
 		calculateXAxisSize();
+				
 		animationLoop(config,drawScale,drawLines,ctx);	
 		return this;	
 		}catch(e){
@@ -927,6 +930,12 @@ window.Chart = function(context){
 			ctx.textAlign = "center";
 			
 			var now = new Date();
+			now = Ext.Date.clearTime(now);
+			var selectedDate = config.selectedDate;
+			selectedDate = Ext.Date.clearTime(selectedDate);
+			
+			var isSameMonth = selectedDate.sameMonthWith(now);
+			var isFuture = Ext.Date.diff(selectedDate, now) > 0;
 			var currentDate = now.getDate() - 1;
 			
 			ctx.fillStyle = config.scaleFontColor;
@@ -937,7 +946,8 @@ window.Chart = function(context){
 			for (var i=0; i<data.labels.length; i++){
 				ctx.save();
 				ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
-				if ((i == 0) || (i == currentDate) || ((i+1) % 5 == 0 && i < 27) || (i == data.labels.length - 1)) {
+				//if ((i == 0) || (i == currentDate) || ((i+1) % 5 == 0 && i < 27) || (i == data.labels.length - 1)) {
+				if (i >= 0) {
 					if (rotateLabels > 0){
 						/*ctx.translate(yAxisPosX + i*valueHop,xAxisPosY + config.scaleFontSize);
 						ctx.rotate(-(rotateLabels * (Math.PI/180)));
@@ -948,9 +958,10 @@ window.Chart = function(context){
 					else{
 						var posx = yAxisPosX + i*valueHop;
 						var posy = xAxisPosY + config.scaleFontSize+3 + 6;//23;
+						var rectY1 = xAxisPosY - (calculatedScale.steps * scaleHop);
 						//AppUtil.log(posy);
 						var sf = ctx.font;
-						if (i == currentDate) {
+						if (i == currentDate && isSameMonth) {
 							//draw vertical line
 							/*
 							ctx.beginPath();
@@ -958,30 +969,43 @@ window.Chart = function(context){
 							ctx.strokeStyle = 'rgba(0,0,0,1)';
 							ctx.stroke();
 							ctx.closePath();*/
-						
+							
 							//draw circle around today date
-							ctx.beginPath();
-							ctx.arc(posx, posy, todayCircleRadius, (Math.PI/180)*0, (Math.PI/180)*360, false);
-							ctx.fillStyle = 'rgba(253,59,49,1)';
-							ctx.fill();
-							ctx.closePath();
+							//ctx.beginPath();
+							//ctx.arc(posx, posy, todayCircleRadius, (Math.PI/180)*0, (Math.PI/180)*360, false);
+							//ctx.fillStyle = config.todayBgColor;
+							//ctx.fill();							
+							ctx.fillStyle  = config.todayBgColor;
+							ctx.fillRect(posx - valueHop/2, rectY1 - config.scaleXFontSize*1.8, valueHop, config.scaleXFontSize*1.8);
+							
+							
+							
+							ctx.fillStyle  = config.todayBarFillColor;
+							ctx.fillRect(posx - valueHop/2, rectY1, valueHop, xAxisPosY - rectY1);
+							//ctx.stroke();
+							//ctx.closePath();
 							//load pig png
 					        //ctx.drawImage(AppConfig.pigImage, posx-22, posy-20);
 							//show today date
 							
-							ctx.fillStyle = "white"; // switch to black for text fill
-							ctx.font = "18px ROBOTO-LIGHT";
-							ctx.fillText(data.labels[i], posx, posy + 7);
+							//ctx.fillStyle = config.passedFontColor;
+							//ctx.font = config.scaleXFontSize+"px " + config.scaleFontFamily;
+							//ctx.fillText(data.labels[i], posx, posy+5);
 	
-						} else {
-							//if (i > 0) {
-								ctx.restore();
-								ctx.font = "12px ROBOTO-LIGHT";
-								ctx.fillText(data.labels[i], posx, posy+5);
-							//}
+						}	
 							
-							
-						}
+						ctx.restore();
+						ctx.font = config.scaleXFontSize+"px " + config.scaleFontFamily;
+						if (isFuture) {
+							ctx.fillStyle = config.futureFontColor;
+						} else if (isSameMonth) {
+							if (i > currentDate) {
+								ctx.fillStyle = config.futureFontColor;
+							} else ctx.fillStyle = config.passedFontColor;
+						} else ctx.fillStyle = config.passedFontColor;
+														
+						ctx.fillText(data.labels[i], posx, rectY1 - config.scaleXFontSize/2);
+						
 						ctx.restore();	
 						ctx.font = sf;
 					}
@@ -989,17 +1013,24 @@ window.Chart = function(context){
 					//ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
 							
 					ctx.beginPath();
-					ctx.moveTo(yAxisPosX + i * valueHop, xAxisPosY+3);
+					ctx.moveTo(yAxisPosX + i * valueHop - valueHop/2 , xAxisPosY);
 					
 					//Check i isnt 0, so we dont go over the Y axis twice.
-					if(config.scaleShowGridLines && i>0){
+					if(config.scaleShowGridLines && i>=0){
 						ctx.lineWidth = config.scaleGridLineWidth;
 						ctx.strokeStyle = config.scaleGridLineColor;					
-						ctx.lineTo(yAxisPosX + i * valueHop, 5);
+						ctx.lineTo(yAxisPosX + i * valueHop - valueHop/2, rectY1);
+						
+						if (i == data.labels.length -1 ) { //the last
+							
+							ctx.moveTo(yAxisPosX + i * valueHop + valueHop/2 , xAxisPosY);								
+							ctx.lineTo(yAxisPosX + i * valueHop + valueHop/2, rectY1);
+						}
 					}
 					else{
 						if (i != currentDate) ctx.lineTo(yAxisPosX + i * valueHop, xAxisPosY-0);//3				
 					}
+					
 					ctx.stroke();
 					
 				}
@@ -1014,10 +1045,10 @@ window.Chart = function(context){
 			ctx.lineTo(yAxisPosX,5);
 			ctx.stroke();*/
 			
-			ctx.textAlign = "left";
+			ctx.textAlign = "right";
 			ctx.textBaseline = "middle";
-			
-			//ctx.fillText('0',yAxisPosX-8,xAxisPosY);
+			ctx.fillStyle = config.scaleFontColor;
+			ctx.fillText('0', xAxisLength - 7,xAxisPosY+config.scaleXFontSize);
 			
 			for (var j=0; j<calculatedScale.steps; j++){
 				/*if (j == calculatedScale.steps - 1) { //Gioi han
@@ -1048,7 +1079,8 @@ window.Chart = function(context){
 				if (config.scaleShowLabels){
 					//show money legend
 					var money = AppUtil.formatShortMoney(calculatedScale.labels[j]);
-					ctx.fillText(money,yAxisPosX-8 + 0,xAxisPosY - ((j+1) * scaleHop) + 10);
+					ctx.fillStyle = config.scaleFontColor;
+					ctx.fillText(money,xAxisLength - 7,xAxisPosY - ((j+1) * scaleHop) + config.scaleXFontSize);
 				}
 			}
 			
@@ -1067,11 +1099,12 @@ window.Chart = function(context){
 				longestText +=10;
 			}
 			//xAxisLength = width - longestText - widestXLabel;
-			xAxisLength = width - 25;//longestText - widestXLabel;
-			valueHop = Math.floor(xAxisLength/(data.labels.length-1));	
+			xAxisLength = width;//longestText - widestXLabel;
+			valueHop = Math.floor(xAxisLength/(data.labels.length));	
 				
-			yAxisPosX = 20;//width-widestXLabel/2-xAxisLength;
-			xAxisPosY = scaleHeight + config.scaleFontSize/2;				
+			yAxisPosX = valueHop + (width - valueHop*(data.labels.length+1))/2;//(width - valueHop*data.labels.length)/2;//width-widestXLabel/2-xAxisLength;
+			
+			xAxisPosY = scaleHeight + config.scaleXFontSize + config.scaleFontSize/2;				
 		};	
 		function calculateDrawingSizes(){
 			maxSize = height - heightBottom;
@@ -1095,11 +1128,11 @@ window.Chart = function(context){
 				}
 			}
 			else{
-				maxSize -= config.scaleFontSize;
+				maxSize -= config.scaleXFontSize;
 			}
 			
 			//Add a little padding between the x line and the text
-			maxSize -= 5;
+			maxSize -= config.scaleXFontSize;
 			
 			
 			labelHeight = config.scaleFontSize;

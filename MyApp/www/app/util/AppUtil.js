@@ -252,17 +252,17 @@ Ext.define('MyApp.util.AppUtil', {
 	formatShortMoney : function(amount) {
 		amount = amount || 0;
 		amount = parseInt(amount);
-		if (amount > 1000000) {
+		if (amount >= 1000000) {
 			amount = Math.round(amount / 1000000);
 
 			amount = amount.toString() + ' triệu';
-		} else if (amount > 100000) {
+		} else if (amount >= 100000) {
 			amount = Math.round(amount / 100000);
 			amount = amount.toString() + ' trăm ngàn';
-		} else if (amount > 10000) {
+		} else if (amount >= 10000) {
 			amount = Math.round(amount / 10000);
 			amount = amount.toString() + ' chục ngàn';
-		} else if (amount > 1000) {
+		} else if (amount >= 1000) {
 			amount = Math.round(amount / 1000);
 			amount = amount.toString() + ' ngàn';
 		} else {

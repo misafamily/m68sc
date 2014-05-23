@@ -12,7 +12,7 @@ Ext.define('MyApp.view.home.Home', {
 			layout : {
 				type : 'vbox'
 			},
-			cls : 'chart-container',
+			cls : 'app-container',
 			items : [{
 				xtype : 'container',
 				layout : {
@@ -20,7 +20,7 @@ Ext.define('MyApp.view.home.Home', {
 					pack : 'center',
 					align : 'center'
 				},
-				flex : 1,
+				flex : 2,
 
 				items : [{
 					xtype : 'container',
@@ -45,7 +45,7 @@ Ext.define('MyApp.view.home.Home', {
 				}]
 			}, {
 				xtype : 'home_homechart',
-				flex : 2
+				flex : 1.25
 			}]
 		}, {
 			//xtype: 'toolbar',

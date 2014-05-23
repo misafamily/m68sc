@@ -31,10 +31,11 @@ Ext.define('MyApp.view.home.HomeChart', {
 	     	var html = '<canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas>';
 	     	html = Ext.util.Format.format(html, me._screenWidth, me._screenHeight);
 	     	me.setHtml(html);
-	     	//AppUtil.log(me);
+	     	AppUtil.log(html);
 	     	me._options = {
+	     		selectedDate: new Date(),
 				//Boolean - Whether the line is curved between points
-				scaleOverlay : true,	
+				scaleOverlay : false,	
 				//Boolean - If we want to override with a hard coded scale
 				scaleOverride : true,			
 				//** Required if scaleOverride is true **
@@ -45,29 +46,35 @@ Ext.define('MyApp.view.home.HomeChart', {
 				//Number - The scale starting value
 				scaleStartValue : 0,
 				//scaleShowLabels : true,
-				scaleShowGridLines : false,
+				scaleShowGridLines : true,
 				scaleLabel : "<%=value%>",
 				pointDot: false,
 				datasetFill : false,
-				datasetStrokeWidth : 6,
+				datasetStrokeWidth : 4,
 				bezierCurve : false,
 				animation : false,
 				pointDotRadius : 3,
-				scaleFontColor: "#99c0df",
+				scaleFontColor: "#98bdd8",
 				pointDotStrokeWidth : .5,
+				scaleLineWidth: .5,
 				scaleGridLineWidth : .5,
 				scaleGridLineColor :  "rgba(49,144,190,1)",
 				scaleLineColor : "rgba(49,144,190,1)",
 				scaleFontFamily : 'ROBOTO-LIGHT',
-				scaleFontSize : 12,
+				scaleFontSize : 14,
+				scaleXFontSize: 8,
+				passedFontColor: "#fff",
+				futureFontColor: "#3f93c2",
+				todayBgColor: "#013e5d",
+				todayBarFillColor: "rgba(17,131,191,.5)"
 			};
 	
 			Ext.defer(function() {
 				if (!me._canvas) me._canvas = document.getElementById("home_chart_canvas_id");
 				if (!me._context) me._context = me._canvas.getContext("2d");
 				me.showChart();
-			},500);
-     	}, 500);
+			},200);
+     	}, 200);
      	
 		//MyApp.app.on('day_changed', me.onDayChanged, me);
 		//PatientDiary.app.on('update_progresschart', this.showChart, this);
@@ -289,11 +296,11 @@ Ext.define('MyApp.view.home.HomeChart', {
 			labels : me.getData()['labels'],
 			datasets : [
 				{
-					strokeColor : "rgba(139,246,78,1)",
+					strokeColor : "rgba(139,246,78,.8)",
 					data : me.getData()['incomes']
 				},
 				{
-					strokeColor : "rgba(252,42,51,1)",
+					strokeColor : "rgba(252,42,51,.8)",
 					data : this.getData()['expenses']
 				},
 				{
