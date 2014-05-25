@@ -1,9 +1,9 @@
 Ext.define('MyApp.view.record.Record', {
 	extend : 'Ext.Container',
 	xtype : 'record',
+
 	requires : ['MyApp.view.record.RecordItem', 'MyApp.store.Trades_Month_Day'],
 	config : {
-		
 		layout : {
 			type : 'vbox'
 		},
@@ -29,7 +29,7 @@ Ext.define('MyApp.view.record.Record', {
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
-					html : '01.05.2014 - 31.05.2014',
+					//html : '01.05.2014 - 31.05.2014',
 					cls : 'record-date'
 				}]
 			}, {
@@ -172,6 +172,5 @@ Ext.define('MyApp.view.record.Record', {
 			}, 200);
 		} else 
 			me._expandItem.expand();
-
 	}
 });

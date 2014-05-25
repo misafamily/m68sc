@@ -35,7 +35,7 @@ Ext.define('MyApp.view.home.Home', {
 					},
 					items : [{
 						xtype : 'label',
-						//html : '25.THANG 5.2014',
+						html : '..',
 						cls: 'expenseinfo-balance-date'
 					}, {
 						xtype : 'label',

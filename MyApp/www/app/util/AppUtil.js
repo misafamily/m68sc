@@ -256,7 +256,7 @@ Ext.define('MyApp.util.AppUtil', {
 	
 	checkAmount: function(amount) {
 		if (!amount) {
-			log('Nhap tien di ku');
+			alert('Nhap tien di ku');
 			return false;
 		}
 		return true;

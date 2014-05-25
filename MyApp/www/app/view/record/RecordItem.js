@@ -11,19 +11,6 @@ Ext.define('MyApp.view.record.RecordItem', {
 		}
 	},
 
-	onUpdateStore : function() {
-		var list = this.getList();
-		var itemStore = list.getStore();
-		//get new
-		itemStore.load(function() {
-			list.setHeight(42 * itemStore.data.items.length);
-			if (itemStore.data.items.length == 0) {
-				list.setHeight(42);
-			}
-		});
-
-	},
-
 	onHeaderTap: function() {
 		var me = this;
 		me.fireEvent('headertap', me);
@@ -164,8 +151,8 @@ Ext.define('MyApp.view.record.RecordItem', {
 			});
 		}
 	},
+
 	getHeader : function() {
-		//console.log('getHeader');
 		var me = this;
 		if (!me._header) {
 			var header = Ext.create('Ext.Container', {
@@ -226,7 +213,6 @@ Ext.define('MyApp.view.record.RecordItem', {
 		if (!this._list) {
 			this._list = Ext.create('MyApp.view.comp.AppList', {
 				cls : 'recorditem-list',
-				//store: 'Category_Items',
 				itemTpl : new Ext.XTemplate(
 					'<div class="info">', 
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 

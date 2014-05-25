@@ -55,24 +55,30 @@ Ext.define('MyApp.view.apppopup.Trade', {
 				flex : 1
 			}]
 		}, {
-			xtype : 'container',
-			layout : {
-				type : 'hbox',
-				pacK : 'center',
-				align : 'center'
-			},
+			xtype: 'container',
 			cls : 'trade-amount-container',
-			items : [{
-				xtype : 'textfield',
-				flex : 1,
-				clearIcon : false,
-				readOnly : true,
-				autoComplete : false,
-				autoCorrect : false,
-				cls : 'b-textfield-moneyinput',
-				value : '0',
-				name : 'amount'
-			}]
+			items: [
+				{
+					xtype : 'container',
+					layout : {
+						type : 'hbox',
+						pacK : 'center',
+						align : 'center'
+					},					
+					cls: 'trade-amount',
+					items : [{
+						xtype : 'textfield',
+						flex : 1,
+						clearIcon : false,
+						readOnly : true,
+						autoComplete : false,
+						autoCorrect : false,
+						cls : 'b-textfield-moneyinput',
+						value : '0',
+						name : 'amount'
+					}]
+				}
+			]
 		}, {
 			xtype : 'carousel',
 			indicator : false, //hide indicator
@@ -292,7 +298,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	onOutcomeButtonClicked : function() {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outtype.getValue(), new Date(), 'CASH');
+			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), new Date(), 'CASH');
 
 			me.hide();
 		}
@@ -301,19 +307,10 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	onIncomeButtonClicked: function() {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._intype.getValue(), new Date(), 'CASH');
+			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), new Date(), 'CASH');
 
 			me.hide();
 		}
-	},
-
-	displayValueFormat : function() {
-		var me = this;
-		if (!me._field)
-			me._field = me.down('textfield');
-		me._valueNumber = parseInt(me._valueString);
-		me._field.setValue(AppUtil.formatMoney(me._valueNumber));
-		me._valueString = me._valueNumber.toString();
 	},
 
 	showView : function() {
@@ -327,6 +324,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		if (!me._amount)
 			me._amount = me.down('textfield[name = "amount"]');
 		me._amount.reset();
+		me.amount = 0;
+		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
 		
 		if (!me._outtype)
 			me._outtype = me.down('textfield[name = "outtype"]');

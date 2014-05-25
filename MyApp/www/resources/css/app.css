@@ -124,6 +124,16 @@ body {
 	width: 36px;
 	height: 36px;
 }
+.toolbar-button-tag {
+  background-image: url('../images/buttons/btn-tag.png');
+  width: 36px;
+  height: 36px;
+}
+.toolbar-button-search{
+  background-image: url('../images/buttons/btn-search.png');
+  width: 36px;
+  height: 36px;
+}
 /*VIEW BASE*/
 
 .viewbase .x-toolbar {
@@ -134,6 +144,7 @@ body {
 .viewbase .x-toolbar .x-title {
 	color: #898e91;
 }
+
 
 /*
  .viewbase-container {
@@ -224,7 +235,6 @@ body {
 }
 
 /*HOME*/
-
 .main {
 	background-image: url('../images/bg-main.png');
 	background-size: contain;
@@ -295,7 +305,7 @@ body {
 }
 
 .recorditem-header-container.active {
-	background-color: #065784;
+	background-color: #054e77;/*#065784*/055683
 }
 
 .recorditem-header {
@@ -330,7 +340,7 @@ body {
 }
 
 .recorditem-list {
-	background-color: #065784;
+	background-color: #055683;/*065784;*/
 }
 
 .recorditem-list .x-list-item {
@@ -382,5 +392,10 @@ body {
 	margin-top: 12px;
 	text-align: right;
 	font-size: 14px;
+}
+
+.record-list .x-list {
+	background-color: transparent;
+	margin-right: 12px;
 }
 
