@@ -1,20 +1,28 @@
 Ext.define('MyApp.view.record.Record', {
 	extend : 'Ext.Container',
 	xtype : 'record',
+<<<<<<< HEAD
 	requires : ['MyApp.view.record.RecordItem', 'MyApp.store.Trades_Month_Day'],
 	config : {
 		
+=======
+	requires : [],
+	config : {
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		layout : {
 			type : 'vbox'
 		},
 		items : [{
 			xtype : 'container',
 			flex : 1,
+<<<<<<< HEAD
 			scrollable : {
 				directionLock : true,
 				direction : 'vertical',
 				indicators: false
 			},
+=======
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 			layout : {
 				type : 'vbox'
 			},
@@ -26,6 +34,7 @@ Ext.define('MyApp.view.record.Record', {
 					pack : 'center',
 					align : 'center'
 				},
+<<<<<<< HEAD
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
@@ -40,6 +49,14 @@ Ext.define('MyApp.view.record.Record', {
 				/*flex : 1,*/
 				height: 'auto',
 				cls : 'record-list-container'
+=======
+				cls: 'record-date-container',
+				items : [{
+					xtype : 'label',
+					html : 'THANG 5.2014',
+					cls : 'record-date'
+				}]
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 			}]
 		}, {
 			//xtype: 'toolbar',
@@ -72,6 +89,7 @@ Ext.define('MyApp.view.record.Record', {
 	initialize : function() {
 		var me = this;
 		me.callParent(arguments);
+<<<<<<< HEAD
 		me._expandItem = null;
 		me._pool = [];
 		me.showMonth(new Date());
@@ -173,5 +191,10 @@ Ext.define('MyApp.view.record.Record', {
 		} else 
 			me._expandItem.expand();
 
+=======
+
+		//MyApp.app.on('expense_changed', me.onExpenseChanged, me);
+		//MyApp.app.on('thuchi_changed', me.onThuChiChanged, me);
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 	}
 });

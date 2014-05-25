@@ -1,7 +1,15 @@
 Ext.define('MyApp.view.Main', {
 	extend : 'Ext.Container',
 	xtype : 'main',
+<<<<<<< HEAD
 	requires : ['Ext.carousel.Carousel', 'MyApp.view.home.Home', 'MyApp.view.record.Record'],
+=======
+	requires : [
+		'Ext.carousel.Carousel',
+		'MyApp.view.home.Home',
+		'MyApp.view.record.Record'
+	],
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 	config : {
 		layout : {
 			type : 'vbox'
@@ -43,6 +51,7 @@ Ext.define('MyApp.view.Main', {
 			layout : {
 				type : 'card'
 			},
+<<<<<<< HEAD
 			cls: 'main',
 			directionLock: true,
 			flex : 1,
@@ -54,6 +63,21 @@ Ext.define('MyApp.view.Main', {
 				xtype : 'container',
 				html : 'View 3'
 			}]
+=======
+			flex: 1,
+			items:[
+				{
+					xtype: 'home'
+				},
+				{
+					xtype: 'record'
+				},
+				{
+					xtype: 'container',
+					html: 'View 3'
+				}
+			]
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		}]
 	}
 });

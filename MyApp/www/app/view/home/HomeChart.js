@@ -33,7 +33,11 @@ Ext.define('MyApp.view.home.HomeChart', {
 	     	//if (AppUtil.RELEASE) html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
 	     	html = Ext.util.Format.format(html, me._screenWidth, me._screenHeight);
 	     	me.setHtml(html);
+<<<<<<< HEAD
 	     	//AppUtil.log(html);
+=======
+	     	AppUtil.log(html);
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 	     	me._options = {
 	     		selectedDate: new Date(),
 				//Boolean - Whether the line is curved between points

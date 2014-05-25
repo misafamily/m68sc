@@ -1,16 +1,50 @@
 Ext.define('MyApp.view.record.RecordItem', {
 	extend : 'Ext.Container',
 	xtype : 'record_recorditem',
+<<<<<<< HEAD
 	requires : ['MyApp.store.Trades_Day'],
 	config : {
 		cls : 'recorditem-container',
 		model : null,
+=======
+	requires : [],
+	config : {
+		cls : 'recorditem-container',
+		data : null,
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		itemStoreList : null,
 		layout : {
 			type : 'vbox'
 		}
 	},
 
+<<<<<<< HEAD
+=======
+	initialize : function() {
+		this.callParent(arguments);
+	},
+
+	updateData : function() {
+		this.removeAll(false);
+		this.createView();
+	},
+
+	getItemCount : function() {
+		var listview = this.getList();
+		var store = listview.getStore();
+		var items = store.data.items;
+		return items.length;
+	},
+
+	removeAllData : function() {
+		var list = this.getList();
+		var store = list.getStore();
+		//var items = store.data.items;
+		store.removeAll();
+		list.setHeight(42);
+	},
+
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 	onUpdateStore : function() {
 		var list = this.getList();
 		var itemStore = list.getStore();
@@ -24,6 +58,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 
 	},
 
+<<<<<<< HEAD
 	onHeaderTap: function() {
 		var me = this;
 		me.fireEvent('headertap', me);
@@ -162,37 +197,99 @@ Ext.define('MyApp.view.record.RecordItem', {
 				
 				
 			});
+=======
+	createView : function() {
+		var data = this.getData();
+		if (data) {
+			var header = this.getHeader();
+			header.setStyle({
+				'background-image' : this.getImage(),//'url(resources/images/grocery/fruit.png)',
+			});
+
+			var title = header.down('container[cls= "food-grocery-item-title"]');
+			title.setHtml((this.getData()['name'] ? this.getData()['name'] : this.getData()['title']).toUpperCase());
+
+			var itemstext = header.down('container[cls= "food-grocery-item-items"]');
+			itemstext.setHtml(this.getData()['total_item'] + ' items');
+
+			var list = this.getList();
+			var itemStore = new PatientConcierge.store.Category_Items();
+			//data.items;
+			itemStore.getProxy().config.dbConfig.dbQuery = PatientConcierge.util.CommonUtil.offline.getDbQueryString("Category_Items", PatientConcierge.util.CommonUtil.getLang(), {
+				category_id : data.category_id
+			});
+			itemStore.load(function() {
+				list.setHeight(42 * itemStore.data.items.length);
+				if (itemStore.data.items.length == 0) {
+					list.setHeight(42);
+				}
+			});
+			this.setItemStoreList(list);
+
+			if (list.getStore())
+				list.getStore().removeAll();
+
+			//list.getScrollable().getScroller().scrollToTop();
+			list.setScrollable(false);
+			list.setStore(itemStore);
+
+			//var buttons = this.getButtons();
+
+			this.add(header);
+			this.add(list);
+			//this.add(buttons);
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		}
 	},
 	getHeader : function() {
 		//console.log('getHeader');
+<<<<<<< HEAD
 		var me = this;
 		if (!me._header) {
 			var header = Ext.create('Ext.Container', {
+=======
+		if (!this._header) {
+			this._header = Ext.create('Ext.Container', {
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 				cls : 'recorditem-header',
 				layout : {
 					type : 'hbox'
 				},
 				items : [{
 					xtype : 'label',
+<<<<<<< HEAD
 					html : '10',
 					cls : 'recorditem-header-date'
+=======
+					html : '10'
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 				}, {
 					xtype : 'container',
 					layout : {
 						type : 'vbox',
 						pack : 'center',
+<<<<<<< HEAD
 						align : 'start'
+=======
+						align : 'center'
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 					},
 					cls : 'recorditem-header-date-info',
 					items : [{
 						xtype : 'label',
+<<<<<<< HEAD
 						html : 'Thu 2',
 						cls : 'recorditem-header-day'
 					}, {
 						xtype : 'label',
 						html : 'Thang 5 2014',
 						cls : 'recorditem-header-month'
+=======
+						html : 'Thu 2'
+					}, {
+						xtype : 'label',
+						html : 'Thang 5 2014'
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 					}]
 				}, //end shape img
 				{
@@ -200,6 +297,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 				}, //end shape img
 				{
 					xtype : 'label',
+<<<<<<< HEAD
 					html : '+900.000',
 					cls : 'recorditem-header-amount'
 				}]
@@ -218,6 +316,11 @@ Ext.define('MyApp.view.record.RecordItem', {
 			        }
 				}
 			});
+=======
+					html : '+900.000'
+				}]
+			});
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		}
 		return this._header;
 	},
@@ -227,6 +330,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 			this._list = Ext.create('MyApp.view.comp.AppList', {
 				cls : 'recorditem-list',
 				//store: 'Category_Items',
+<<<<<<< HEAD
 				itemTpl : new Ext.XTemplate(
 					'<div class="info">', 
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
@@ -250,6 +354,26 @@ Ext.define('MyApp.view.record.RecordItem', {
 				scrollable: false
 			});
 		}
+=======
+				maxHeight: 400,
+				itemTpl : new Ext.XTemplate([
+					'<div class="info">'
+						'<div class= "thumb"></div>', 
+						'<div class="content">',
+							'<div class="title">Luong</div>',
+							'<div class="description">Luong thang 5</div>',
+						'</div>', 
+						'<div class= "total">+10.000.000</div>',
+					'</div>',
+				{
+					
+				})
+			});
+
+			//this._list.on('refresh', this.onListPainted, this);
+		}
+		//console.log(Ext.getStore('Category_Items'));
+>>>>>>> dedf1303aa292f1354485393448f18fa79e75fbd
 		return this._list;
 	}
 });
