@@ -10,15 +10,17 @@ Ext.define('MyApp.controller.Home', {
         control: {
 			'home button[title="addtradebutton"]': {
 				tap: function() {
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, function() {
-						log('trade done');
+					
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
+						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
 					});
+					
 				}
 			},
 			'record button[title="addtradebutton"]': {
 				tap: function() {
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, function() {
-						log('trade done');
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
+						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
 					});
 				}
 			}

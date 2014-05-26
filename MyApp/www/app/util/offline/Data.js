@@ -30,8 +30,16 @@ Ext.define('MyApp.util.offline.Data',{
   			case 'Trades_Month_Day'://for Record
   				var mm = extra.mm;
   				var yy = extra.yy;
-  				queryStr = 'SELECT DISTINCT dd, mm, yy,sum(sign_amount) as total FROM trade WHERE mm={0} AND yy={1} GROUP BY dd,mm,yy ORDER BY dd DESC';
+  				queryStr = 'SELECT DISTINCT dd, mm, yy, sum(sign_amount) as total FROM trade WHERE mm={0} AND yy={1} GROUP BY dd,mm,yy ORDER BY dd DESC';
   				queryStr = Ext.util.Format.format(queryStr, mm, yy);
+  				break;
+  				
+  			case 'Trades_Month_Day_FilterWithDate'://for Record
+  				var dd = extra.dd;
+  				var mm = extra.mm;
+  				var yy = extra.yy;
+  				queryStr = 'SELECT DISTINCT dd, mm, yy, sum(sign_amount) as total FROM trade WHERE dd={0} AND mm={1} AND yy={2} GROUP BY dd,mm,yy';
+  				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
   				break;
   				
   			case 'Trades_Day': //for RecordItem
@@ -45,7 +53,21 @@ Ext.define('MyApp.util.offline.Data',{
   			case 'Trades_Month'://for HomeChart
   				var mm = extra.mm;
   				var yy = extra.yy;
-  				queryStr = 'SELECT dd, mm, yy, type, sign_amount as total FROM trade WHERE mm={1} AND yy={2} ORDER BY dd ASC';
+  				queryStr = 'SELECT dd, mm, yy, type, amount as total FROM trade WHERE mm={1} AND yy={2} AND (type = "thu" OR type ="chi") ORDER BY dd ASC';
+  				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
+  				break;
+  				
+  			case 'Income_Month'://for Home
+  				var mm = extra.mm;
+  				var yy = extra.yy;
+  				queryStr = 'SELECT sum(amount) as total FROM trade WHERE mm={1} AND yy={2} AND type = "thu"';
+  				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
+  				break;
+  				
+  			case 'Outcome_Month'://for Home
+  				var mm = extra.mm;
+  				var yy = extra.yy;
+  				queryStr = 'SELECT sum(amount) as total FROM trade WHERE mm={1} AND yy={2} AND type = "chi"';
   				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
   				break;
   			

@@ -16,6 +16,10 @@ Ext.application({
     requires : ['MyApp.override.picker.Date', 'MyApp.util.AppUtil', 'MyApp.util.offline.Connection', 'MyApp.util.offline.Proxy', 'MyApp.util.offline.PagingLocalStorageProxy', 'MyApp.util.offline.Data'],
     
     controllers: ['Main','Home'],
+    
+    models:['Hunter', 'Trade'],
+    
+    stores:['Hunters', 'Trades'],
 
     views: [
         'Main'
@@ -43,7 +47,7 @@ Ext.application({
         // Destroy the #appLoadingIndicator element
        
 		
-		if(!AppUtil.runningDevice()){
+		if(!AppUtil.onDevice()){
 			this.onDeviceReady();
 		}else{
 			document.addEventListener("deviceready", this.onDeviceReady, false);
@@ -56,7 +60,7 @@ Ext.application({
 		 Ext.fly('appLoadingIndicator').destroy();	
 		 Ext.Viewport.add(Ext.create('MyApp.view.Main'));
 		 
-		 //return;
+		 //return;banner height: 48px
 		 if( window.plugins && window.plugins.AdMob ) {
 		    var admob_ios_key = 'ca-app-pub-2676331971568981/2132554150';
 		    var admob_android_key = 'ca-app-pub-2676331971568981/2132554150';
@@ -66,13 +70,13 @@ Ext.application({
 		    am.createBannerView( 
 		        {
 		        'publisherId': adId,
-		        'adSize': am.AD_SIZE.BANNER,
+		        'adSize': am.AD_SIZE.SMART_BANNER,//SMART_BANNER,//BANNER
 		        'bannerAtTop': false
 		        }, 
 		        function() {
 		        	Ext.defer(function(){
 		        		am.requestAd(
-			                { 'isTesting':true }, 
+			                { 'isTesting':false }, 
 			                function(){
 			                    am.showAd( true );
 			                }, 

@@ -174,15 +174,15 @@
 		var now = new Date();
 		var yesterday = now.yesterday();
 		var tomorrow = now.tomorrow();
-		if (this.getDate() == now.getDate() && this.getMonth() == now.getMonth() && this.getFullYear() == now.getFullYear()) {
-			s += 'Hôm nay, ';
-		} else if (this.getDate() == yesterday.getDate() && this.getMonth() == yesterday.getMonth() && this.getFullYear() == yesterday.getFullYear()) {
-			s += 'Hôm qua, ';
-		} else if (this.getDate() == tomorrow.getDate() && this.getMonth() == yesterday.getMonth() && this.getFullYear() == yesterday.getFullYear()) {
-			s += 'Ngày mai, ';
-		} else s += this.getDayName() + ', ';
+		if (this.sameDateWith(now)) {
+			s += 'Hôm nay';
+		} else if (this.sameDateWith(yesterday)) {
+			s += 'Hôm qua';
+		} else if (this.sameDateWith(tomorrow)) {
+			s += 'Ngày mai';
+		} else s += this.getShortDayName();
 		
-		s += this.getDate() + ' ' + this.getShortMonthName() + ' ' + this.getFullYear(); 
+		//s += this.getDate() + ' ' + this.getShortMonthName() + ' ' + this.getFullYear(); 
 		//s += ', ' + this.format(dateFormat.masks.shortTime);
 		return s;
 	};

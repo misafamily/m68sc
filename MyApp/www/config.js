@@ -18,8 +18,7 @@ AppConfig.eventData.SHOW_INPUTER = 'SHOW_INPUTER';
 AppConfig.eventData.SHOW_TRADE = 'SHOW_TRADE';
 AppConfig.eventData.MAIN_VIEW_CHANGED = 'MAIN_VIEW_CHANGED';
 AppConfig.eventData.TRADE_ADDED = 'TRADE_ADDED';
-
-
+AppConfig.eventData.EXPENSE_CHANGED = 'EXPENSE_CHANGED';
 
 
 AppConfig.placeholderData = {};
@@ -31,6 +30,8 @@ AppConfig.textData.THEM_GIAO_DICH = 'THÊM GIAO DỊCH';
 AppConfig.textData.CHI_TIEU = 'CHI TIÊU';
 AppConfig.textData.THU_NHAP = 'THU NHẬP';
 AppConfig.textData.NHAP_SO_TIEN = 'NHẬP SỐ TIỀN';
+AppConfig.textData.SO_DU = 'Số dư';
+
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';

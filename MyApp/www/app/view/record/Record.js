@@ -28,7 +28,7 @@ Ext.define('MyApp.view.record.Record', {
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
-					//html : '01.05.2014 - 31.05.2014',
+					html : '..',
 					cls : 'record-date'
 				}]
 			}, {
@@ -39,6 +39,25 @@ Ext.define('MyApp.view.record.Record', {
 				/*flex : 1,*/
 				height: 'auto',
 				cls : 'record-list-container'
+			}]
+		}, {
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center'
+			},
+			cls : 'viewbase-balance-box',
+			items : [{
+				xtype : 'label',
+				html: AppConfig.textData.SO_DU
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'label',
+				html: '..',
+				cls: 'balance-lbl'
 			}]
 		}, {
 			//xtype: 'toolbar',
@@ -73,7 +92,7 @@ Ext.define('MyApp.view.record.Record', {
 		me.callParent(arguments);
 		me._expandItem = null;
 		me._pool = [];
-		me.showMonth(new Date());
+		me_currentDate = new Date();	
 		MyApp.app.on(AppConfig.eventData.MAIN_VIEW_CHANGED, me.onMainViewChanged, me);
 	},
 	
@@ -83,8 +102,41 @@ Ext.define('MyApp.view.record.Record', {
 		if (carouselActiveIndex == 1) {
 			if (!me._initView) {
 				me._initView = true;
+				me.showMonth(me_currentDate);
 				me.createView();
+				log('Record init');
+				MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
+		}
+	},
+	
+	onTradeAdded: function(date) {
+		var me = this;
+		log('Record onTradeAdded me._monthRecords.length: ' + me._monthRecords.length);
+		//search to check if it is existed
+		if (me._monthRecords.length < 1) { //empty list, added
+			AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
+				dd: date.getDate(),
+				mm : date.getMonth(),
+				yy : date.getFullYear()
+			});
+	
+			me._store.load(function(records) {
+				me._monthRecords = records;
+				Ext.Array.each(records, function(record, i) {
+					Ext.defer(function(){
+						me.addRecord(record);
+					},100);
+				});
+				
+				me.updateBalance();
+			});
+			
+		} else {//check is existed or not
+			/*var i = 0;
+			for (i = 0; i < me._monthRecords.length; i++) {
+				var record = me._monthRecords[i];
+			}*/
 		}
 	},
 	
@@ -104,6 +156,7 @@ Ext.define('MyApp.view.record.Record', {
 	createView : function() {
 		var me = this;
 		me._recordItems = [];
+		me._monthRecords = [];
 		if (!me._scroller)
 			me._scroller = me.down('container[cls = "app-container"]');
 		if (!me._container)
@@ -117,12 +170,26 @@ Ext.define('MyApp.view.record.Record', {
 		});
 
 		me._store.load(function(records) {
+			me._monthRecords = records;
 			Ext.Array.each(records, function(record, i) {
 				Ext.defer(function(){
 					me.addRecord(record);
 				},100);
 			});
+			
+			me.updateBalance();
 		});
+	},
+	
+	updateBalance: function() {//also call from RecordItem
+		var me = this;
+		if (!me._balanceLbl) me._balanceLbl = me.down('label[cls="balance-lbl"]');
+		var balanceTotal = 0;
+		Ext.Array.each(me._monthRecords, function(record, i) {
+			balanceTotal += parseInt(record.data.total);
+		});
+		
+		me._balanceLbl.setHtml(AppUtil.formatMoney(balanceTotal));
 	},
 	
 	addRecord: function(record) {

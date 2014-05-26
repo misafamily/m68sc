@@ -33,8 +33,6 @@ Ext.define('MyApp.view.record.RecordItem', {
 	hideContent : function() {
 		var me = this;
 		var list = me.getList();
-		//list.setHeight(0);
-		//me._itemStore.removeAll();
 		list.hide();
 	},
 	
@@ -43,14 +41,13 @@ Ext.define('MyApp.view.record.RecordItem', {
 		var list = me.getList();
 		
 		if (!me._itemStore.isLoaded()) {
-			list.setHeight(0);
-			me._itemStore.removeAll();
 			log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
 			me._itemStore.load(function(records) {
-				if (records.length) list.setHeight((42 * records.length) + 2.5);
+				if (records.length) list.setHeight(43 * records.length);
 			});
-		} else 
-			list.show();
+		} 
+		
+		list.show();
 		
 	},
 
@@ -69,28 +66,20 @@ Ext.define('MyApp.view.record.RecordItem', {
 			me._lblDate.setHtml(data.dd);
 			
 			if (!me._lblDayname) me._lblDayname = header.down('label[cls = "recorditem-header-day"]');
-			me._lblDayname.setHtml(now.getShortDayName());
+			me._lblDayname.setHtml(now.dateFormatWithoutTime());
 			
 			if (!me._lblMonth) me._lblMonth = header.down('label[cls = "recorditem-header-month"]');
 			me._lblMonth.setHtml(now.getMonthName() + ' ' + now.getFullYear().toString());
 			
 			if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
 			me._lblAmount.setHtml(AppUtil.formatMoney(parseFloat(data.total)));
-			
-			
-			/*var title = header.down('container[cls= "food-grocery-item-title"]');
-			 title.setHtml((this.getData()['name'] ? this.getData()['name'] : this.getData()['title']).toUpperCase());
 
-			 var itemstext = header.down('container[cls= "food-grocery-item-items"]');
-			 itemstext.setHtml(this.getData()['total_item'] + ' items');
-			 */
 			var list = me.getList();
 			list.setHeight(0);
+			list.hide();
 			if (!me._itemStore) {
 				me._itemStore = new MyApp.store.Trades_Day();
 			} 
-			//data.items;
-			
 
 			AppUtil.offline.updateStoreQuery(me._itemStore, 'Trades_Day', {
 				dd : now.getDate(),
@@ -107,8 +96,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 
 			me.add(header);
 			me.add(list);
-			//this.add(buttons);
-			
+
 			me._selectedDate = new Date(data.yy, data.mm, data.dd);
 			MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);
 		}
@@ -121,18 +109,19 @@ Ext.define('MyApp.view.record.RecordItem', {
 		if (list.getStore())
 				list.getStore().removeAll();
 		list.setHeight(0);
+		list.hide();
 	},
 	
 	onTradeAdded: function(date) { //if already showed, update the list
 		var me = this;
 		var list = me.getList();
 		
-		if (me._itemStore.isLoaded() && me._selectedDate.sameDateWith(date)) {
-			list.setHeight(0);
-			me._itemStore.removeAll();
+		if (me._selectedDate.sameDateWith(date)) {
+			//list.setHeight(0);
+			//me._itemStore.removeAll();
 			me._itemStore.load(function(records) {
 				if (records.length) {
-					list.setHeight((42 * records.length) + 2.5);
+					list.setHeight(43 * records.length);
 					var total = 0;
 					Ext.Array.each(records, function(record, i){
 						if (record.data.type == AppConfig.type.THU) {
@@ -146,7 +135,8 @@ Ext.define('MyApp.view.record.RecordItem', {
 				} else {
 					me.parent.parent.parent.removeItem(me);
 				}
-				
+				//call Record to update balance value
+				me.parent.parent.parent.updateBalance();
 				
 			});
 		}
@@ -174,11 +164,11 @@ Ext.define('MyApp.view.record.RecordItem', {
 					cls : 'recorditem-header-date-info',
 					items : [{
 						xtype : 'label',
-						html : 'Thu 2',
+						html : '..',
 						cls : 'recorditem-header-day'
 					}, {
 						xtype : 'label',
-						html : 'Thang 5 2014',
+						html : '..',
 						cls : 'recorditem-header-month'
 					}]
 				}, //end shape img
@@ -187,7 +177,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 				}, //end shape img
 				{
 					xtype : 'label',
-					html : '+900.000',
+					html : '..',
 					cls : 'recorditem-header-amount'
 				}]
 			});

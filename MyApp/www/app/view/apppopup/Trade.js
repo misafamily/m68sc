@@ -319,9 +319,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		}
 	},
 
-	showView : function() {
+	showView : function(money) {
 		var me = this;
 		me.resetView();
+		me.amount = money;
+		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
 		me.show();
 	},
 
@@ -342,5 +344,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			me._intype = me.down('textfield[name = "intype"]');
 		if (!me._innote)
 			me._innote = me.down('textfield[name = "innote"]');
+			
+		me.getCarousel().setActiveItem(0);
 	}
 });

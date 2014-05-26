@@ -20,6 +20,7 @@ Ext.define('MyApp.view.home.HomeChart', {
      initialize:function(){
 	 	this.callParent(arguments);	
      	var me = this;
+     	me._currentDate = new Date();
      	Ext.defer(function() {
      		me._screenWidth = me.element.dom.offsetWidth;
 	     	me._screenHeight = me.element.dom.offsetHeight;
@@ -69,41 +70,47 @@ Ext.define('MyApp.view.home.HomeChart', {
 				todayBgColor: "#013e5d",
 				todayBarFillColor: "rgba(17,131,191,.5)"
 			};
-	
+			
 			Ext.defer(function() {
 				if (!me._canvas) me._canvas = document.getElementById("home_chart_canvas_id");
 				if (!me._context) me._context = me._canvas.getContext("2d");
-				me.showChart();
+				me.showChart(me._currentDate);
 			},200);
      	}, 200);
      	
-		//MyApp.app.on('day_changed', me.onDayChanged, me);
-		//PatientDiary.app.on('update_progresschart', this.showChart, this);
+     	
+		MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade
     },
+    
+    onTradeAdded: function(date) {
+		var me = this;
+		if (me._currentDate.sameMonthWith(date)) {
+			me.showChart(date);
+		}
+	},
     
     onDayChanged: function() {
     	var me = this;
     	me.showChart();
     },
-	showChart: function() {
+	showChart: function(date) {
 		//ppUtil.log('showChart');
 		var me = this;		
 		
 		//if (recorddata) me.setRecordData(recorddata);
 		setTimeout(function(){
-			me.generateDataForCurrentMonth();
+			me.generateDataForCurrentMonth(date);
 			//me.checkGetDataDone();
 		},100);
 	},
 
-	generateDataForCurrentMonth: function() {
+	generateDataForCurrentMonth: function(date) {
 		var me = this;
 		me.getData()['labels'] = [];	
 		me.getData()['incomes'] = [];	
 		me.getData()['expenses'] = [];
 		me.getData()['target'] = [];		
-		var today = new Date();
-		me.getDataForMonth(today);
+		me.getDataForMonth(date);
 		
 	},
 	getDataForMonth: function(date) {
@@ -117,6 +124,12 @@ Ext.define('MyApp.view.home.HomeChart', {
 		for (var i = 0; i < daysInMonth; i++) {
 			labels.push((i+1).toString());
 		}
+		for (var i = 0; i < todayDate; i++) {
+			incomes.push(0);
+			expenses.push(0);
+		}
+		me.getData()['target'].push(0, 1000000);	//need 2 values
+		/*
 		for (var i = 0; i < todayDate; i++) {
 			if (i == 0 || i == 3 || i == 7 | i == 13) {
 				incomes.push(Math.round(Math.random()*3000000));
@@ -200,19 +213,23 @@ Ext.define('MyApp.view.home.HomeChart', {
 				me._options.scaleStepWidth =40000000;
 			}  else me._options.scaleOverride = false;
 			me.checkGetDataDone();
-			
-		/*
+		*/	
+		
 		//get expense of this month
-		if (!me._monthStore) me._monthStore = new MyApp.store.Expenses_Month();
-		me._monthStore.load(function(records) {
+		if (!me._expenseStore) me._expenseStore = Ext.create('MyApp.store.Trades_Month');
+		AppUtil.offline.updateStoreQuery(me._expenseStore, 'Trades_Month', {
+				mm : date.getMonth(),
+				yy : date.getFullYear()
+		});
+		me._expenseStore.load(function(records) {
 			//AppUtil.log(records);
 			
 			Ext.Array.each(records, function(item, index) {
 				if (item.data.dd <= todayDate) {
-					if (item.data.type == 'thu' || item.data.type == 'linh_lai' || item.data.type == 'tien_du') {
-						incomes[item.data.dd-1] += parseInt(item.data.amount);
+					if (item.data.type == 'thu') {
+						incomes[item.data.dd-1] += parseInt(item.data.total);
 					} else if (item.data.type == 'chi') {
-						expenses[item.data.dd-1] += parseInt(item.data.amount);
+						expenses[item.data.dd-1] += parseInt(item.data.total);
 					}
 				}			
 			});
@@ -220,11 +237,13 @@ Ext.define('MyApp.view.home.HomeChart', {
 			var chiTotal = expenses[0];
 			for (var i = 1; i < incomes.length; i++) {
 				thuTotal += incomes[i];
-				incomes[i] = thuTotal;
+				incomes[i] = thuTotal;			
+			}
+			for (var i = 1; i < expenses.length; i++) {			
 				chiTotal += expenses[i];
 				expenses[i] = chiTotal;
 			}
-			MyApp.app.fireEvent('thuchi_changed', thuTotal, chiTotal);
+			MyApp.app.fireEvent(AppConfig.eventData.EXPENSE_CHANGED, thuTotal, chiTotal, date);//to HOME
 			var max = thuTotal > chiTotal ? thuTotal : chiTotal;
 			//AppUtil.log(max);
 			if (max <= 5000000) {
@@ -284,24 +303,20 @@ Ext.define('MyApp.view.home.HomeChart', {
 			}  else me._options.scaleOverride = false;
 			me.checkGetDataDone();
 		});
-		*/
+		
 	},
 	
 	checkGetDataDone: function() {		
 		var me = this;
-		//this.getData()['labels'].reverse();
-		//this.getData()['value'].reverse();
-		//this.getData()['bad_cholesterol'].reverse();
-		
 		var lineChartData = {
 			labels : me.getData()['labels'],
 			datasets : [
 				{
-					strokeColor : "rgba(139,246,78,.8)",
+					strokeColor : "rgba(139,246,78,.5)",
 					data : me.getData()['incomes']
 				},
 				{
-					strokeColor : "rgba(252,42,51,.8)",
+					strokeColor : "rgba(252,42,51,.5)",
 					data : this.getData()['expenses']
 				},
 				{
@@ -315,12 +330,7 @@ Ext.define('MyApp.view.home.HomeChart', {
 			]
 			
 		};
-		//var max = Ext.Array.max(this.getData()['value']);
-		//max = parseInt(Math.ceil(max/5))*5;
-		//this._options.scaleStartValue = Ext.Array.min(this.getData()['value']);			
-		//this._options.scaleSteps = max%5;
-		//this._options.scaleStepWidth = max / 5;
-		
+	
 		me._context.save();
 		me._context.setTransform(1, 0, 0, 1, 0, 0);
 		me._context.clearRect(0, 0, me._screenWidth, me._screenHeight);

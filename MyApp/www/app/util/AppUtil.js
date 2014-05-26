@@ -7,7 +7,7 @@ Ext.define('MyApp.util.AppUtil', {
 	moneyUnit : 'đ',
 	CASH : 0,
 	CASH_MODEL : null,
-	RELEASE: false,
+	RELEASE: true,
 	//TYPE
 	//chuyen_tien, rut_tien, nap_tien, tao_moi, nhan_luong, sua_thong_tin
 	//TYPE_ATM_CHUYEN_TIEN: 'chuyen_tien',

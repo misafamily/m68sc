@@ -54,18 +54,18 @@ Ext.define('MyApp.controller.Main', {
 
 	onShowInputer : function(defaultValue, callback) {
 		var me = this;
-		var value = defaultValue || '0';
+		var value = defaultValue || '0 d';
 		value = AppUtil.deformatMoneyWithUnit(value);
 		var view = me.getMoneyInputerView();
 		Ext.Viewport.add(view);
 		view.showView(value, callback);
 	},
 
-	onShowTrade : function(callback) {
+	onShowTrade : function(money) {
 		var me = this;
 		var view = me.getTradeView();
 		Ext.Viewport.add(view);
-		view.showView(callback);
+		view.showView(money);
 	},
 
 	//GET FUNCS

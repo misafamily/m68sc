@@ -130,16 +130,16 @@ Ext.define('MyApp.util.offline.Proxy', {
                //console.log("success");
             };
         
-            var createTableSchema = function() {
+            //var createTableSchema = function() {
             //console.log(me.constructFields());
             var createsql = 'CREATE TABLE IF NOT EXISTS ' + me.config.dbConfig.tablename + '('+me.constructFields()+')';
             	//console.log(createsql);
                 tx.executeSql(createsql,[],onSucess,onError);
-            };
+            //};
             
-            var tablesql = 'SELECT * FROM '+ me.config.dbConfig.tablename+' LIMIT 1';
+            //var tablesql = 'SELECT * FROM '+ me.config.dbConfig.tablename+' LIMIT 1';
             //console.log(tablesql);
-            tx.executeSql(tablesql,[], Ext.emptyFn, createTableSchema);
+            //tx.executeSql(tablesql,[], Ext.emptyFn, createTableSchema);
             
         });
         

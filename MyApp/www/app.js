@@ -76,7 +76,7 @@ Ext.application({
 		        function() {
 		        	Ext.defer(function(){
 		        		am.requestAd(
-			                { 'isTesting':true }, 
+			                { 'isTesting':false }, 
 			                function(){
 			                    am.showAd( true );
 			                }, 

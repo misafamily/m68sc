@@ -150,7 +150,15 @@ body {
  .viewbase-container {
  background-image: url('../images/bg-main.png');
  }*/
-
+.viewbase-balance-box {
+	background-color: #002559;
+	height: 40px;
+	width: 100%;
+	color: #fff;
+	font-size: 20px;
+	padding-right:12px;
+	padding-left:16px;
+}
 
 .viewbase-toolbar-top, .viewbase-toolbar-bottom {
 	background-color: #0c71a5;

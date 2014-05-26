@@ -24,6 +24,9 @@ Ext.define('MyApp.model.Hunter', {
 			name : 'hunter_id',
 			type : 'string'
 		}, {
+			name : 'group', //date.getTime()
+			type : 'int'
+		}, {
 			name : 'time', //date.getTime()
 			type : 'number'
 		}, {

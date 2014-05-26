@@ -941,7 +941,7 @@ window.Chart = function(context){
 			ctx.fillStyle = config.scaleFontColor;
 			
 			ctx.font = "12px ROBOTO-LIGHT"; //cheat to fix the position bug
-			ctx.fillText('0', yAxisPosX-1000, xAxisPosY + config.scaleFontSize+3 + 23 +5);
+			ctx.fillText('0', yAxisPosX-1000, 0);
 			ctx.restore();
 			for (var i=0; i<data.labels.length; i++){
 				ctx.save();
@@ -961,6 +961,7 @@ window.Chart = function(context){
 						var rectY1 = xAxisPosY - (calculatedScale.steps * scaleHop);
 						//AppUtil.log(posy);
 						var sf = ctx.font;
+						//ctx.restore();
 						if (i == currentDate && isSameMonth) {
 							//draw vertical line
 							/*
@@ -974,7 +975,8 @@ window.Chart = function(context){
 							//ctx.beginPath();
 							//ctx.arc(posx, posy, todayCircleRadius, (Math.PI/180)*0, (Math.PI/180)*360, false);
 							//ctx.fillStyle = config.todayBgColor;
-							//ctx.fill();							
+							//ctx.fill();		
+												
 							ctx.fillStyle  = config.todayBgColor;
 							ctx.fillRect(posx - valueHop/2, rectY1 - config.scaleXFontSize*1.8, valueHop, config.scaleXFontSize*1.8);
 							
@@ -993,8 +995,7 @@ window.Chart = function(context){
 							//ctx.fillText(data.labels[i], posx, posy+5);
 	
 						}	
-							
-						ctx.restore();
+
 						ctx.font = config.scaleXFontSize+"px " + config.scaleFontFamily;
 						if (isFuture) {
 							ctx.fillStyle = config.futureFontColor;
@@ -1006,7 +1007,7 @@ window.Chart = function(context){
 														
 						ctx.fillText(data.labels[i], posx, rectY1 - config.scaleXFontSize/2);
 						
-						ctx.restore();	
+						//ctx.restore();	
 						ctx.font = sf;
 					}
 						
@@ -1044,11 +1045,16 @@ window.Chart = function(context){
 			ctx.moveTo(yAxisPosX,xAxisPosY+5);
 			ctx.lineTo(yAxisPosX,5);
 			ctx.stroke();*/
-			
+			//currentDate = 15;
 			ctx.textAlign = "right";
+			var beginX = xAxisLength - valueHop + valueHop/2;
+			if (currentDate > 20 && isSameMonth) {
+				ctx.textAlign = "left";
+				beginX = valueHop - valueHop/2 ;
+			}
 			ctx.textBaseline = "middle";
 			ctx.fillStyle = config.scaleFontColor;
-			ctx.fillText('0', xAxisLength - 7,xAxisPosY+config.scaleXFontSize);
+			ctx.fillText('0', beginX,xAxisPosY+config.scaleXFontSize);
 			
 			for (var j=0; j<calculatedScale.steps; j++){
 				/*if (j == calculatedScale.steps - 1) { //Gioi han
@@ -1080,7 +1086,7 @@ window.Chart = function(context){
 					//show money legend
 					var money = AppUtil.formatShortMoney(calculatedScale.labels[j]);
 					ctx.fillStyle = config.scaleFontColor;
-					ctx.fillText(money,xAxisLength - 7,xAxisPosY - ((j+1) * scaleHop) + config.scaleXFontSize);
+					ctx.fillText(money,beginX,xAxisPosY - ((j+1) * scaleHop) + config.scaleXFontSize);
 				}
 			}
 			

@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.home.Home', {
 	extend : 'Ext.Container',
 	xtype : 'home',
-	requires : ['MyApp.view.home.HomeChart'],
+	requires : ['MyApp.store.Trades_Month', 'MyApp.view.home.HomeChart'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -39,7 +39,7 @@ Ext.define('MyApp.view.home.Home', {
 						cls: 'expenseinfo-balance-date'
 					}, {
 						xtype : 'label',
-						html : '3.500.000 d',
+						html : '..',
 						cls: 'expenseinfo-balance'
 					}]
 				}]
@@ -71,7 +71,8 @@ Ext.define('MyApp.view.home.Home', {
 				cls : 'expenseinfo-income',
 				items : [{
 					xtype : 'label',
-					html : '+120.000.000'
+					html : '..',
+					cls: 'expenseinfo-income-lbl'
 				}, {
 					xtype : 'label',
 					html : 'Tong thu',
@@ -81,7 +82,8 @@ Ext.define('MyApp.view.home.Home', {
 				cls : 'expenseinfo-outcome',
 				items : [{
 					xtype : 'label',
-					html : '-15.000.000'
+					html : '..',
+					cls: 'expenseinfo-outcome-lbl'
 				}, {
 					xtype : 'label',
 					html : 'Tong chi',
@@ -125,49 +127,83 @@ Ext.define('MyApp.view.home.Home', {
 	initialize : function() {
 		var me = this;
 		me.callParent(arguments);
-		log('home init');
+		me._currentDate = new Date();
 		Ext.defer(function(){
-			me.showToday();
-		},400);
-		//MyApp.app.on('expense_changed', me.onExpenseChanged, me);
+			me.showDate();
+			//me.updateExpenseInfo();
+		},500);
+		//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade
+		MyApp.app.on(AppConfig.eventData.EXPENSE_CHANGED, me.onExpenseChanged, me);//from HomeChart
 		//MyApp.app.on('thuchi_changed', me.onThuChiChanged, me);
 	},
 
-	showToday: function() {
+	showDate: function() {
 		var me = this;
-		var now = new Date();
-		
 		if (!me._todayLbl) me._todayLbl = me.down('label[cls = "expenseinfo-balance-date"]');
-		me._todayLbl.setHtml(now.homeDateFormat());
+		me._todayLbl.setHtml(me._currentDate.homeDateFormat());
+	},
+	
+	/*updateExpenseInfo: function() {
+		var me = this;
+		if (!me._balanceLbl) me._balanceLbl = me.down('label[cls = "expenseinfo-balance"]');
+		if (!me._incomeLbl) me._incomeLbl = me.down('label[cls = "expenseinfo-income-lbl"]');
+		if (!me._outcomeLbl) me._outcomeLbl = me.down('label[cls = "expenseinfo-outcome-lbl"]');
+		
+		if (!me._expenseStore) me._expenseStore = Ext.create('MyApp.store.Trades_Month');
+		AppUtil.offline.updateStoreQuery(me._expenseStore, 'Income_Month', {
+				mm : me._currentDate.getMonth(),
+				yy : me._currentDate.getFullYear()
+		});
+		
+		var incomeTotal = 0;
+		var outcomeTotal = 0;
+		
+		me._expenseStore.load(function(records) {
+			if (records.length > 0) {
+				incomeTotal = parseInt(records[0].data.total);
+			}
+			
+			AppUtil.offline.updateStoreQuery(me._expenseStore, 'Outcome_Month', {
+					mm : me._currentDate.getMonth(),
+					yy : me._currentDate.getFullYear()
+			});
+			me._expenseStore.load(function(records2) {
+				if (records2.length > 0) {
+					outcomeTotal = parseInt(records2[0].data.total);
+				}
+				
+				var balanceTotal = incomeTotal - outcomeTotal;
+				
+				me._balanceLbl.setHtml(AppUtil.formatMoneyWithUnit(balanceTotal));
+				if (incomeTotal > 0) me._incomeLbl.setHtml('+' + AppUtil.formatMoneyWithUnit(incomeTotal));
+				else me._incomeLbl.setHtml(AppUtil.formatMoneyWithUnit(incomeTotal));
+				if (outcomeTotal > 0) me._outcomeLbl.setHtml('-' +AppUtil.formatMoneyWithUnit(outcomeTotal));
+				else me._outcomeLbl.setHtml(AppUtil.formatMoneyWithUnit(outcomeTotal));
+			});
+		});
+	},
+	
+	onTradeAdded: function(date) {
+		var me = this;
+		if (me._currentDate.sameMonthWith(date)) {
+			me.updateExpenseInfo();
+		}
+	}*/
+	
+	onExpenseChanged: function(incomeTotal, outcomeTotal, date) {
+		var me = this;
+		var balanceTotal = incomeTotal - outcomeTotal;
+		
+		if (!me._balanceLbl) me._balanceLbl = me.down('label[cls = "expenseinfo-balance"]');
+		if (!me._incomeLbl) me._incomeLbl = me.down('label[cls = "expenseinfo-income-lbl"]');
+		if (!me._outcomeLbl) me._outcomeLbl = me.down('label[cls = "expenseinfo-outcome-lbl"]');
+		
+		if (incomeTotal > 0) me._incomeLbl.setHtml('+' + AppUtil.formatMoneyWithUnit(incomeTotal));
+		else me._incomeLbl.setHtml(AppUtil.formatMoneyWithUnit(incomeTotal));
+		if (outcomeTotal > 0) me._outcomeLbl.setHtml('-' +AppUtil.formatMoneyWithUnit(outcomeTotal));
+		else me._outcomeLbl.setHtml(AppUtil.formatMoneyWithUnit(outcomeTotal));
+		
+		me._balanceLbl.setHtml(AppUtil.formatMoneyWithUnit(balanceTotal));
 	}
-	
-	
-	/*,
-	 onThuChiChanged: function(thu, chi) {
-	 var me = this;
-	 if (!me._thuLbl) me._thuLbl = me.down('label[title="thulbl"]');
-	 if (!me._chiLbl) me._chiLbl = me.down('label[title="chilbl"]');
-	 if (!me._soduLbl) me._soduLbl = me.down('label[title="sodulbl"]');
-	 if (!me._chiDiv) me._chiDiv = Ext.get('home_tongchi');
 
-	 me._thuLbl.setHtml('(+) ' + AppUtil.formatShortMoney(thu));
-	 me._chiLbl.setHtml('(-) ' +AppUtil.formatShortMoney(chi));
-	 me._soduLbl.setHtml('(=) ' + AppUtil.formatShortMoney(thu - chi));
-
-	 if (thu == 0) thu = 1;
-	 var percent = Math.round(chi*100/thu);
-	 me._chiDiv.setWidth(percent + '%');
-
-	 },
-	 onExpenseChanged: function(date) {
-	 var me = this;
-	 if (date.sameMonthWith(new Date()))
-	 me.showHomeChart();
-	 },
-
-	 showHomeChart: function() {
-	 var me = this;
-	 if (!me._homeChart) me._homeChart = me.down('tab_home_homechart');
-	 me._homeChart.showChart();
-	 }*/
 });
