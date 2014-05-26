@@ -1,7 +1,6 @@
 Ext.define('MyApp.view.record.Record', {
 	extend : 'Ext.Container',
 	xtype : 'record',
-
 	requires : ['MyApp.view.record.RecordItem', 'MyApp.store.Trades_Month_Day'],
 	config : {
 		layout : {
