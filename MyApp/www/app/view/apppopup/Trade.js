@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.apppopup.Trade', {
 	extend : 'Ext.Container',
 	xtype : 'apppopup_trade',
-	requires:['MyApp.view.comp.PathMenu'],
+	requires:['MyApp.view.comp.PathMenu', 'MyApp.view.comp.DatePicker'],
 	config : {
 		cls : 'main popup-container',
 		layout : {
@@ -142,6 +142,12 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							placeHolder : 'Tien mat hoac ATM',
 							cls : 'form-textfield expensetype'
 							//label: 'Số tiền hiện có  '
+						}, {
+							xtype: 'uxdatepicker',
+							style: {
+								'padding': '60px',
+								'background': 'transparent'
+							}
 						}]
 					}]
 

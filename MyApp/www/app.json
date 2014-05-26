@@ -87,6 +87,10 @@
             "path": "resources/css/app.css",
             "update": "delta"
         },
+        {
+            "path": "resources/css/datepicker.css",
+            "update": "delta"
+        },
          {
             "path": "resources/css/pathmenu.css",
             "update": "delta"
