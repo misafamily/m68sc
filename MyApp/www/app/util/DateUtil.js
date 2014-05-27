@@ -223,9 +223,9 @@
 	};
 	
 	
-	Date.prototype.shortDateFormat = function() {
+	Date.prototype.tradeDateFormat = function() {
 		var s = '';		
-		s += this.getDate() + ' ' + this.getShortMonthName() + ' ' + this.getFullYear();		
+		s += this.getDate() + '.' + this.getMonthName().toLowerCase() + '.' + this.getFullYear();		
 		return s;
 	};
 	

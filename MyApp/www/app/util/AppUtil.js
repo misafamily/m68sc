@@ -255,8 +255,9 @@ Ext.define('MyApp.util.AppUtil', {
 	},
 	
 	checkAmount: function(amount) {
+		var me = this;
 		if (!amount) {
-			alert('Nhap tien di ku');
+			me.alert('Nhap tien di ku');
 			return false;
 		}
 		return true;
@@ -272,7 +273,7 @@ Ext.define('MyApp.util.AppUtil', {
 		if (amount >= 1000000) {
 			amount = Math.round(amount / 1000000);
 
-			amount = amount.toString() + ' triệu';
+			amount = this.formatMoney(amount).toString() + ' triệu';
 		} else if (amount >= 100000) {
 			amount = Math.round(amount / 100000);
 			amount = amount.toString() + ' trăm ngàn';
@@ -320,5 +321,10 @@ Ext.define('MyApp.util.AppUtil', {
 	log : function(msg) {
 		console.log(msg);
 		//Ext.log.Logger.log(msg);
+	},
+	
+	alert: function(msg, title) {
+		title = title || '';
+		Ext.Msg.alert(title, msg, Ext.emptyFn);
 	}
 }); 

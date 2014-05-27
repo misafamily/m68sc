@@ -1,0 +1,122 @@
+/* Touch Calendar*/
+
+/* line 17, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view table {
+  width: 100%;
+  border-collapse: separate;
+  table-layout: fixed;
+  font-size: 14px;
+  /*color: #3F4E5E;*/
+  color:#000;
+  background-color: #c5f1fe;
+}
+/* line 28, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view table.week td {
+  vertical-align: top;
+}
+/* line 38, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view table.day td.time-block {
+  text-align: left;
+  background-image: none;
+  font-size: 0.7em;
+  height: 30px;
+}
+/* line 52, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view tbody td {
+  /*border-bottom: 1px solid #a3a7af;
+  border-left: 1px solid #a3a7af;
+  border-right: 1px solid #dadbde;
+  border-top: 1px solid #dadbde;*/
+}
+/* line 62, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td {
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  background-color: #c5f1fe;
+}
+/* line 71, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.weekend, .touch-calendar-view td.weekend.selected {
+  color: #04759d;
+}
+
+.touch-calendar-view td.today {
+  color: #000;
+  background: url(../images/calendar_today.png) center center no-repeat;
+  background-color: transparent;
+  background-size: contain;
+}
+/* line 82, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.unselectable {
+  color: #89909A;
+  background-color: #cda3a8;
+}
+/* line 88, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.selected {
+  color: #000;
+  background: url(../images/calendar_selected.png) center center no-repeat;
+  background-color: transparent;
+  background-size: contain;
+}
+/* line 98, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.today.selected {
+  color: #000;
+  background: url(../images/calendar_selected.png) center center no-repeat;
+  background-color: transparent;
+  background-size: contain;
+}
+/* line 108, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.prev-month, .touch-calendar-view td.next-month {
+  color: #A2A2A2;
+}
+/* line 113, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view td.prev-month.selected, .touch-calendar-view td.next-month.selected {
+  color: #A2A2A2;
+}
+/* line 119, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view thead {
+  background-color: #04749a;
+}
+/* line 123, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view thead th {
+  font-size: 14px;
+  vertical-align: bottom;
+  padding-bottom: 3px;
+  color: #FFFFFF;
+  text-align: center;
+  height: 46px;
+}
+/* line 135, ../scss/Ext.ux.TouchCalendar.scss */
+/*.touch-calendar-view thead th:first-child {
+  background: url(../images/appointment/back_calendar_icon.png) center center no-repeat;
+  cursor: pointer;
+}*/
+/* line 141, ../scss/Ext.ux.TouchCalendar.scss */
+/*.touch-calendar-view thead th:last-child {
+  background: url(../images/appointment/next_calendar_icon.png) center center no-repeat;
+  cursor: pointer;
+}*/
+/* line 147, ../scss/Ext.ux.TouchCalendar.scss */
+.touch-calendar-view thead th span {
+  font-size: 16px;
+  height: 30px;
+  left: 10px;
+  position: absolute;
+  text-align: left;
+  top: 15px;
+  width: 50%;
+  z-index: 999;
+}
+.touch-calendar-view .goto-prev {
+  background: url(../images/calendar_prev.png) center center no-repeat;
+}
+.touch-calendar-view .goto-next {
+  background: url(../images/calendar_next.png) center center no-repeat;
+}
+
+/*.touch-calendar-view .add-icon {
+  background: url(../images/appointment/add_icon.png) center center no-repeat;
+}*/
+
+/*End Touch Calendar*/

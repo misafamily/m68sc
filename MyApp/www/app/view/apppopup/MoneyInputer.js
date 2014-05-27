@@ -235,7 +235,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 	},
 
 	onDoneButtonClicked : function() {
-		AppUtil.log('onDoneButtonClicked');
+		//AppUtil.log('onDoneButtonClicked');
 		var me = this;
 		me._callback(me._valueNumber);
 		me.hide();
@@ -246,7 +246,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 		if (!me._field)
 			me._field = me.down('textfield');
 		me._valueNumber = parseInt(me._valueString);
-		me._field.setValue(AppUtil.formatMoney(me._valueNumber));
+		me._field.setValue(AppUtil.formatMoneyWithUnit(me._valueNumber));
 		me._valueString = me._valueNumber.toString();
 	},
 

@@ -85,10 +85,19 @@ body {
 	height: 44px;
 }
 
+.toolbar-button-add.x-button-pressing {
+	background-image: url('../images/buttons/btn-add-pressing.png');
+}
+
+
 .toolbar-button-back {
 	background-image: url('../images/buttons/btn-back.png');
 	width: 30px;
 	height: 26px;
+}
+
+.toolbar-button-back.x-button-pressing {
+	background-image: url('../images/buttons/btn-back-pressing.png');
 }
 
 .toolbar-button-done {
@@ -97,16 +106,30 @@ body {
 	height: 44px;
 }
 
+.toolbar-button-done.x-button-pressing {
+	background-image: url('../images/buttons/btn-done-pressing.png');
+}
+
+
 .toolbar-button-done2 {
 	background-image: url('../images/buttons/btn-done2.png');
 	width: 44px;
 	height: 44px;
 }
 
+.toolbar-button-done2.x-button-pressing {
+	background-image: url('../images/buttons/btn-done2-pressing.png');
+}
+
+
 .toolbar-button-done3 {
 	background-image: url('../images/buttons/btn-done3.png');
 	width: 44px;
 	height: 44px;
+}
+
+.toolbar-button-done3.x-button-pressing {
+	background-image: url('../images/buttons/btn-done3-pressing.png');
 }
 
 .toolbar-button-viewtype {

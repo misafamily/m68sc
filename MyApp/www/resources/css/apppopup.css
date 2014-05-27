@@ -52,3 +52,16 @@
     background-size: 27px;
     color: white;
 }
+
+/*date chooser*/
+.datechooser-date-choosen {
+	font-size: 90px;
+	color: #fff;
+	text-align: center;
+}
+
+.datechooser-month-choosen {
+	font-size: 26px;
+	color: #fff;
+	text-align: center;
+}

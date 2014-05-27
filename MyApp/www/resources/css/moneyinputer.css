@@ -20,6 +20,12 @@
 	font-size: 28px
 }
 
+.moneyinputer-button.x-button-pressing {
+	background-color: #03375c;
+	border-radius: 0;
+	color: #fff;
+}
+
 .b-textfield-moneyinput .x-input-el {
 	font-family: "ROBOTO-LIGHT";
 	color: #fff;

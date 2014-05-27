@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.apppopup.Trade', {
 	extend : 'Ext.Container',
 	xtype : 'apppopup_trade',
-	requires:['MyApp.view.comp.PathMenu', 'MyApp.view.comp.DatePicker'],
+	requires:['MyApp.view.comp.PathMenu'],
 	config : {
 		cls : 'main popup-container',
 		layout : {
@@ -143,11 +143,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							cls : 'form-textfield expensetype'
 							//label: 'Số tiền hiện có  '
 						}, {
-							xtype: 'uxdatepicker',
-							style: {
-								'padding': '60px',
-								'background': 'transparent'
-							}
+							xtype : 'textfield',
+							name : 'outtradedate',
+							placeHolder : 'Ngay giao dich',
+							cls : 'form-textfield expensetype',
+							readOnly : true
 						}]
 					}]
 
@@ -217,6 +217,12 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							placeHolder : 'Tien mat hoac ATM',
 							cls : 'form-textfield expensetype'
 							//label: 'Số tiền hiện có  '
+						},{
+							xtype : 'textfield',
+							name : 'intradedate',
+							placeHolder : 'Ngay giao dich',
+							cls : 'form-textfield expensetype',
+							readOnly : true
 						}]
 					}]
 
@@ -250,6 +256,32 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
 						me.amount = money;
 						tf.setValue(AppUtil.formatMoneyWithUnit(money));
+					});
+				}
+			},
+			'textfield[name="outtradedate"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_DATE_CHOOSER, me._selectedDate, function(date) {
+						me._selectedDate = date;
+						//tf.setValue(me._selectedDate.tradeDateFormat());
+						var todayDateFormat = me._selectedDate.tradeDateFormat();
+		
+						me._outtrade.setValue(todayDateFormat);	
+						me._intrade.setValue(todayDateFormat);
+					});
+				}
+			},
+			'textfield[name="intradedate"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_DATE_CHOOSER, me._selectedDate, function(date) {
+						me._selectedDate = date;
+						//tf.setValue(me._selectedDate.tradeDateFormat());
+						var todayDateFormat = me._selectedDate.tradeDateFormat();
+		
+						me._outtrade.setValue(todayDateFormat);	
+						me._intrade.setValue(todayDateFormat);
 					});
 				}
 			},
@@ -334,17 +366,25 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		me._amount.reset();
 		me.amount = 0;
 		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
+		me._selectedDate = new Date();
+		var todayDateFormat = me._selectedDate.tradeDateFormat();
 		
 		if (!me._outtype)
 			me._outtype = me.down('textfield[name = "outtype"]');
 		if (!me._outnote)
 			me._outnote = me.down('textfield[name = "outnote"]');
+		if (!me._outtrade)
+			me._outtrade = me.down('textfield[name = "outtradedate"]');
 		
 		if (!me._intype)
 			me._intype = me.down('textfield[name = "intype"]');
 		if (!me._innote)
 			me._innote = me.down('textfield[name = "innote"]');
-			
+		if (!me._intrade)
+			me._intrade = me.down('textfield[name = "intradedate"]');
+		
+		me._outtrade.setValue(todayDateFormat);	
+		me._intrade.setValue(todayDateFormat);
 		me.getCarousel().setActiveItem(0);
 	}
 });

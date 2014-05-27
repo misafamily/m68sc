@@ -19,6 +19,7 @@ AppConfig.eventData.SHOW_TRADE = 'SHOW_TRADE';
 AppConfig.eventData.MAIN_VIEW_CHANGED = 'MAIN_VIEW_CHANGED';
 AppConfig.eventData.TRADE_ADDED = 'TRADE_ADDED';
 AppConfig.eventData.EXPENSE_CHANGED = 'EXPENSE_CHANGED';
+AppConfig.eventData.SHOW_DATE_CHOOSER = 'SHOW_DATE_CHOOSER';
 
 
 AppConfig.placeholderData = {};
