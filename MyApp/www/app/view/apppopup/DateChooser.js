@@ -60,7 +60,7 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 				items : [{
 					xtype : 'label',
 					html : '',
-					cls : 'datechooser-date-choosen',
+					cls : 'datechooser-date-choosen',		
 					flex : 2
 				},{
 					xtype : 'label',
@@ -79,7 +79,7 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 				cls: 'fullwidth-container',
 				items : [{
 					xtype : 'comp_datechooser',
-					viewMode: 'month',
+					//viewMode: 'month',
 					flex: 1,
 					width: '100%',
 					value: new Date()
@@ -142,7 +142,7 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 		
 		me._titleLbl.setHtml(me._selectedDate.getDayName().toUpperCase());
 		me._dateLbl.setHtml(me._selectedDate.getDate().toString());
-		me._monthLbl.setHtml(me._selectedDate.getMonthName().toUpperCase());
+		me._monthLbl.setHtml(me._selectedDate.getMonthName().toUpperCase() + ' ' + me._selectedDate.getFullYear());
 	},
 
 
@@ -166,6 +166,10 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 		var me = this;
 		me.onCalendarSelectionChanged(date);
 		me._callback = callback;
+		
+		if (!me._dateView) me._dateView = me.down('comp_datechooser');
+		me._dateView.setValue(date);
+		//me._dateView.populateStore();
 		me.show();
 	}
 });

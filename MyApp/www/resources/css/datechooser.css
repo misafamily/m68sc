@@ -5,7 +5,7 @@
   width: 100%;
   border-collapse: separate;
   table-layout: fixed;
-  font-size: 14px;
+  font-size: 16px;
   /*color: #3F4E5E;*/
   color:#000;
   background-color: #c5f1fe;
@@ -33,7 +33,7 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 16px;
   background-color: #c5f1fe;
 }
 /* line 71, ../scss/Ext.ux.TouchCalendar.scss */
@@ -43,9 +43,10 @@
 
 .touch-calendar-view td.today {
   color: #000;
-  background: url(../images/calendar_today.png) center center no-repeat;
+  background: url('../images/calendar_today.png') center center no-repeat;
   background-color: transparent;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 /* line 82, ../scss/Ext.ux.TouchCalendar.scss */
 .touch-calendar-view td.unselectable {
@@ -55,16 +56,18 @@
 /* line 88, ../scss/Ext.ux.TouchCalendar.scss */
 .touch-calendar-view td.selected {
   color: #000;
-  background: url(../images/calendar_selected.png) center center no-repeat;
+  background: url('../images/calendar_selected.png') center center no-repeat;
   background-color: transparent;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 /* line 98, ../scss/Ext.ux.TouchCalendar.scss */
 .touch-calendar-view td.today.selected {
   color: #000;
-  background: url(../images/calendar_selected.png) center center no-repeat;
+  background: url('../images/calendar_selected.png') center center no-repeat;
   background-color: transparent;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 /* line 108, ../scss/Ext.ux.TouchCalendar.scss */
 .touch-calendar-view td.prev-month, .touch-calendar-view td.next-month {
@@ -80,7 +83,7 @@
 }
 /* line 123, ../scss/Ext.ux.TouchCalendar.scss */
 .touch-calendar-view thead th {
-  font-size: 14px;
+  font-size: 16px;
   vertical-align: bottom;
   padding-bottom: 3px;
   color: #FFFFFF;
@@ -109,10 +112,10 @@
   z-index: 999;
 }
 .touch-calendar-view .goto-prev {
-  background: url(../images/calendar_prev.png) center center no-repeat;
+  background: url('../images/calendar_prev.png') center center no-repeat;
 }
 .touch-calendar-view .goto-next {
-  background: url(../images/calendar_next.png) center center no-repeat;
+  background: url('../images/calendar_next.png') center center no-repeat;
 }
 
 /*.touch-calendar-view .add-icon {
