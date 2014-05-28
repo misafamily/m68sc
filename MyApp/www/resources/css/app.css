@@ -222,8 +222,17 @@ body {
  }
  */
 /*SEGMENTED BUTTON EXPENSE TYPE*/
+.segmentedbutton.expensetype .x-first {
+	background-color: #fd2937;
+}
+
+.segmentedbutton.expensetype .x-last  {
+	background-color: #6bc63a;
+}
+
 .segmentedbutton.expensetype .x-button.x-button-pressed {
-	background-image: url('../images/bg-trade-active.png');
+	/*background-image: url('../images/bg-trade-active.png');*/
+	background-image: url('');
 	background-size: contain;
 }
 .segmentedbutton.expensetype .x-button {
@@ -287,7 +296,8 @@ body {
 
 .expenseinfo-income, .expenseinfo-outcome, .expenseinfo-balance {
 	color: #fff;
-	font-size: 26px;
+	font-size: 22px;
+	white-space: nowrap;
 }
 
 .expenseinfo-income {

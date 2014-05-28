@@ -72,7 +72,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 			me._lblMonth.setHtml(now.getMonthName() + ' ' + now.getFullYear().toString());
 			
 			if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
-			me._lblAmount.setHtml(AppUtil.formatMoney(parseFloat(data.total)));
+			me._lblAmount.setHtml(AppUtil.formatMoney2(parseFloat(data.total)));
 
 			var list = me.getList();
 			list.setHeight(0);
@@ -131,7 +131,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 						}
 					});
 					me.getModel().data.total = total.toString();
-					me._lblAmount.setHtml(AppUtil.formatMoney(total));
+					me._lblAmount.setHtml(AppUtil.formatMoney2(total));
 				} else {
 					me.parent.parent.parent.removeItem(me);
 				}

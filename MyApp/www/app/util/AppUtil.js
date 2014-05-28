@@ -270,7 +270,11 @@ Ext.define('MyApp.util.AppUtil', {
 	formatShortMoney : function(amount) {
 		amount = amount || 0;
 		amount = parseInt(amount);
-		if (amount >= 1000000) {
+		if (amount >= 1000000000) {
+			amount = Math.round(amount / 1000000000);
+
+			amount = this.formatMoney(amount).toString() + ' tỷ';
+		} else if (amount >= 1000000) {
 			amount = Math.round(amount / 1000000);
 
 			amount = this.formatMoney(amount).toString() + ' triệu';
@@ -292,6 +296,19 @@ Ext.define('MyApp.util.AppUtil', {
 	formatMoney : function(amount) {
 		amount = amount || 0;
 		return parseInt(amount).format(0, 3, '.');
+	},
+	
+	formatMoney2 : function(amount) {
+		var displayTotal = AppUtil.formatMoney(amount);
+		if (amount > 0) displayTotal = '+' + displayTotal;
+		//else if (amount < 0) displayTotal = '-' + displayTotal;
+		
+		return displayTotal;
+	},
+	
+	formatMoney2WithUnit : function(amount) {
+		var me = this;
+		return me.formatMoney2(amount) + ' ' + me.moneyUnit;
 	},
 
 	formatMoneyWithUnit : function(amount) {

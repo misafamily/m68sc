@@ -92,7 +92,7 @@ Ext.define('MyApp.view.record.Record', {
 		me.callParent(arguments);
 		me._expandItem = null;
 		me._pool = [];
-		me_currentDate = new Date();	
+		me._currentDate = new Date();	
 		MyApp.app.on(AppConfig.eventData.MAIN_VIEW_CHANGED, me.onMainViewChanged, me);
 	},
 	
@@ -102,9 +102,8 @@ Ext.define('MyApp.view.record.Record', {
 		if (carouselActiveIndex == 1) {
 			if (!me._initView) {
 				me._initView = true;
-				me.showMonth(me_currentDate);
+				me.showMonth(me._currentDate);
 				me.createView();
-				log('Record init');
 				MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
 		}
@@ -112,32 +111,60 @@ Ext.define('MyApp.view.record.Record', {
 	
 	onTradeAdded: function(date) {
 		var me = this;
+		AppUtil.log('RECORD onTradAdded: ' + date.homeDateFormat());
+		if (!me._currentDate.sameMonthWith(date)) return;
 		log('Record onTradeAdded me._monthRecords.length: ' + me._monthRecords.length);
 		//search to check if it is existed
-		if (me._monthRecords.length < 1) { //empty list, added
-			AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
+		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
 				dd: date.getDate(),
 				mm : date.getMonth(),
 				yy : date.getFullYear()
 			});
-	
+
+		var pos = me.getPositionItemInList(me._monthRecords, date);
+		if (pos == 0) {
+			//do nothhing
+		} else if (pos == -1) { //add to bottom
 			me._store.load(function(records) {
-				me._monthRecords = records;
-				Ext.Array.each(records, function(record, i) {
-					Ext.defer(function(){
-						me.addRecord(record);
-					},100);
-				});
-				
-				me.updateBalance();
+				if (records.length == 1) {
+					me._monthRecords.push(records[0]);
+					//Ext.Array.each(records, function(record, i) {
+						Ext.defer(function(){
+							me.addRecord(records[0]);
+						},100);
+					//});
+					
+					me.updateBalance();	
+				}
 			});
-			
-		} else {//check is existed or not
-			/*var i = 0;
-			for (i = 0; i < me._monthRecords.length; i++) {
-				var record = me._monthRecords[i];
-			}*/
+		} else { //insert at pos
+			AppUtil.log('insert at pos: ' + pos);
+			me._store.load(function(records) {
+				if (records.length == 1) {
+					Ext.Array.insert(me._monthRecords, pos, records[0]);
+					//Ext.Array.each(records, function(record, i) {
+						Ext.defer(function(){
+							me.insertRecord(records[0], pos);
+						},100);
+					//});
+					
+					me.updateBalance();
+				}
+			});
 		}
+		
+	},
+	
+	getPositionItemInList: function(list, date) {
+		var me = this;
+		var pos = -1;
+		for (var i = 0; i < list.length; i++) {
+			var record = list[i];
+			var d = new Date(record.data.yy, record.data.mm, record.data.dd);
+			if (d.sameDateWith(date)) return 0;//do nothing, it already is on Record home screen
+			else if (record.dd < date.getDate()) return i;
+		}
+		return pos;//dont have, insert it at pos
 	},
 	
 	showMonth: function(date) {
@@ -189,7 +216,7 @@ Ext.define('MyApp.view.record.Record', {
 			balanceTotal += parseInt(record.data.total);
 		});
 		
-		me._balanceLbl.setHtml(AppUtil.formatMoney(balanceTotal));
+		me._balanceLbl.setHtml(AppUtil.formatMoney2(balanceTotal));
 	},
 	
 	addRecord: function(record) {
@@ -197,6 +224,16 @@ Ext.define('MyApp.view.record.Record', {
 		var recordItem = me.getRecordItemFromPool();
 		recordItem.setModel(record);
 		me._container.add(recordItem);
+		recordItem.showHeader();
+		recordItem.on('headertap', me.onItemTap, me);
+		me._recordItems.push(recordItem);			
+	},
+	
+	insertRecord: function(record, pos) {
+		var me = this;
+		var recordItem = me.getRecordItemFromPool();
+		recordItem.setModel(record);
+		me._container.insert(recordItem, pos);
 		recordItem.showHeader();
 		recordItem.on('headertap', me.onItemTap, me);
 		me._recordItems.push(recordItem);			

@@ -176,7 +176,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done2',
+				cls : 'button-icon toolbar-button-done',
 				title : 'donebutton'
 			}]
 		}],

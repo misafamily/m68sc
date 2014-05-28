@@ -237,7 +237,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					cls : 'viewbase-toolbar-bottom',
 					items : [{
 						xtype : 'button',
-						cls : 'button-icon toolbar-button-done',
+						cls : 'button-icon toolbar-button-done2',
 						title : 'addincomebutton'
 					}]
 				}]
@@ -336,7 +336,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	onOutcomeButtonClicked : function() {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), new Date(), 'CASH');
+			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
 
 			me.hide();
 		}
@@ -345,7 +345,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	onIncomeButtonClicked: function() {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), new Date(), 'CASH');
+			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
 
 			me.hide();
 		}
