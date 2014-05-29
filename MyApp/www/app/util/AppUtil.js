@@ -343,5 +343,23 @@ Ext.define('MyApp.util.AppUtil', {
 	alert: function(msg, title) {
 		title = title || '';
 		Ext.Msg.alert(title, msg, Ext.emptyFn);
-	}
+	},
+
+	confirm: function(msg, title, callback) {
+    	var me = this;
+    	Ext.Msg.confirm(title, msg, function(code){
+    		if (code == 'yes') 
+    			if (callback) callback();
+    	});
+    },
+
+    showLoading: function (loading) {
+    	loading = loading || 'Loading ..';
+        Ext.Viewport.mask({ xtype: 'loadmask', message: loading });
+        Ext.Viewport.setMasked(true);
+    },
+
+    hideLoading: function () {
+        Ext.Viewport.unmask();
+    },
 }); 
