@@ -346,7 +346,7 @@ body {
 }
 
 .recorditem-header-container.active {
-	background-color: #054e77;/*#065784*/055683
+	background-color: #054e77;/*#065784 055683*/
 }
 
 .recorditem-header {
@@ -357,8 +357,9 @@ body {
 
 .recorditem-header-date {
 	font-size: 26px;
-	padding: 4px 6px;
-	
+	padding: 4px 6px;	
+	width: 42px;
+	text-align: center;
 }
 
 .recorditem-header-date-info {

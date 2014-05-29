@@ -111,9 +111,7 @@ Ext.define('MyApp.view.record.Record', {
 	
 	onTradeAdded: function(date) {
 		var me = this;
-		AppUtil.log('RECORD onTradAdded: ' + date.homeDateFormat());
 		if (!me._currentDate.sameMonthWith(date)) return;
-		log('Record onTradeAdded me._monthRecords.length: ' + me._monthRecords.length);
 		//search to check if it is existed
 		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
 				dd: date.getDate(),
@@ -122,7 +120,7 @@ Ext.define('MyApp.view.record.Record', {
 			});
 
 		var pos = me.getPositionItemInList(me._monthRecords, date);
-		if (pos == 0) {
+		if (pos == -2) {
 			//do nothhing
 		} else if (pos == -1) { //add to bottom
 			me._store.load(function(records) {
@@ -138,10 +136,10 @@ Ext.define('MyApp.view.record.Record', {
 				}
 			});
 		} else { //insert at pos
-			AppUtil.log('insert at pos: ' + pos);
+			//AppUtil.log('insert at pos: ' + pos);
 			me._store.load(function(records) {
 				if (records.length == 1) {
-					Ext.Array.insert(me._monthRecords, pos, records[0]);
+					Ext.Array.insert(me._monthRecords, pos, records);
 					//Ext.Array.each(records, function(record, i) {
 						Ext.defer(function(){
 							me.insertRecord(records[0], pos);
@@ -161,10 +159,10 @@ Ext.define('MyApp.view.record.Record', {
 		for (var i = 0; i < list.length; i++) {
 			var record = list[i];
 			var d = new Date(record.data.yy, record.data.mm, record.data.dd);
-			if (d.sameDateWith(date)) return 0;//do nothing, it already is on Record home screen
-			else if (record.dd < date.getDate()) return i;
+			if (d.sameDateWith(date)) return -2;//do nothing, it already is on Record home screen
+			else if (d.sameMonthWith(date) && d.getDate() < date.getDate()) return i;
 		}
-		return pos;//dont have, insert it at pos
+		return pos;// -1 dont have, insert it at bottom
 	},
 	
 	showMonth: function(date) {
@@ -233,7 +231,7 @@ Ext.define('MyApp.view.record.Record', {
 		var me = this;
 		var recordItem = me.getRecordItemFromPool();
 		recordItem.setModel(record);
-		me._container.insert(recordItem, pos);
+		me._container.insert(pos, recordItem);
 		recordItem.showHeader();
 		recordItem.on('headertap', me.onItemTap, me);
 		me._recordItems.push(recordItem);			
