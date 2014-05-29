@@ -330,7 +330,7 @@ body {
 
 .record-date {
 	font-size: 14px;
-	color: #fff;
+	color: #46b9cc;
 	margin-top: 15px;
 }
 
@@ -441,3 +441,12 @@ body {
 	margin-right: 12px;
 }
 
+/*IRON BOX*/
+.tienmat-header-thumb {
+	width: 30px;
+	height: 30px;
+	background: transparent url('../images/fields/f-tienmat.png') no-repeat;
+	background-size: contain;
+	margin: 4px 6px;
+	margin-left: 0px;
+}

@@ -1,7 +1,7 @@
-Ext.define('MyApp.view.record.Record', {
+Ext.define('MyApp.view.ironbox.IronBox', {
 	extend : 'Ext.Container',
-	xtype : 'record',
-	requires : ['MyApp.view.record.RecordItem', 'MyApp.store.Trades_Month_Day'],
+	xtype : 'ironbox',
+	requires : ['MyApp.view.ironbox.TienMat', 'MyApp.view.ironbox.Atm'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -99,12 +99,12 @@ Ext.define('MyApp.view.record.Record', {
 	onMainViewChanged: function(carouselActiveIndex) {
 		//log('onMainViewChanged: ' + carouselActiveIndex);
 		var me = this;
-		if (carouselActiveIndex == 1) {
+		if (carouselActiveIndex == 2) {
 			if (!me._initView) {
 				me._initView = true;
 				me.showMonth(me._currentDate);
 				me.createView();
-				MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
+				//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
 		}
 	},
@@ -169,11 +169,7 @@ Ext.define('MyApp.view.record.Record', {
 		var me = this;
 		date = Ext.Date.clone(date);
 		date.setDate(1);
-		/*var s = date.format('dd.mm.yyyy');
-		s += ' - ';
-		date.setDate(Ext.Date.getDaysInMonth(date));
-		s += date.format('dd.mm.yyyy');*/
-		var s = 'Giao dịch ' + date.getMonthName() + ' ' + date.getFullYear();
+		var s = AppConfig.textData.QUAN_LY_KET_SAT;
 		
 		if (!me._dateLbl) me._dateLbl = me.down('label[cls="record-date"]');
 		me._dateLbl.setHtml(s);
@@ -187,9 +183,22 @@ Ext.define('MyApp.view.record.Record', {
 			me._scroller = me.down('container[cls = "app-container"]');
 		if (!me._container)
 			me._container = me.down('container[cls = "record-list-container"]');
-		if (!me._store)
+
+		//add tien mat
+		if (!me._tienmat) me._tienmat = new MyApp.view.ironbox.TienMat();
+		me._container.add(me._tienmat);
+		me._tienmat.showHeader();
+		me._tienmat.on('headertap', me.onItemTap, me);
+
+		//add atm
+		if (!me._atm) me._atm = new MyApp.view.ironbox.Atm();
+		me._container.add(me._atm);
+		me._atm.showHeader();
+		me._atm.on('headertap', me.onItemTap, me);
+
+		/*if (!me._store)
 			me._store = Ext.create('MyApp.store.Trades_Month_Day');
-		var now = me._currentDate;
+		var now = new Date();
 		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day', {
 			mm : now.getMonth(),
 			yy : now.getFullYear()
@@ -200,11 +209,11 @@ Ext.define('MyApp.view.record.Record', {
 			Ext.Array.each(records, function(record, i) {
 				Ext.defer(function(){
 					me.addRecord(record);
-				},100);
+				},30);
 			});
 			
 			me.updateBalance();
-		});
+		});*/
 	},
 	
 	updateBalance: function() {//also call from RecordItem
@@ -271,7 +280,7 @@ Ext.define('MyApp.view.record.Record', {
 		if (needDelay) {
 			Ext.defer(function(){
 				me._expandItem.expand();
-			}, 200);
+			}, 30);
 		} else 
 			me._expandItem.expand();
 	}

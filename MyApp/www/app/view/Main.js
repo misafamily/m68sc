@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.Main', {
 	extend : 'Ext.Container',
 	xtype : 'main',
-	requires : ['Ext.carousel.Carousel', 'MyApp.view.home.Home', 'MyApp.view.record.Record'],
+	requires : ['Ext.carousel.Carousel', 'MyApp.view.home.Home', 'MyApp.view.record.Record', 'MyApp.view.ironbox.IronBox'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -51,8 +51,7 @@ Ext.define('MyApp.view.Main', {
 			}, {
 				xtype : 'record'
 			}, {
-				xtype : 'container',
-				html : 'View 3'
+				xtype : 'ironbox'
 			}]
 		}]
 	}

@@ -1,11 +1,8 @@
-Ext.define('MyApp.view.record.RecordItem', {
+Ext.define('MyApp.view.ironbox.TienMat', {
 	extend : 'Ext.Container',
-	xtype : 'record_recorditem',
-	requires : ['MyApp.store.Trades_Day'],
+	xtype : 'ironbox_tienmat',
 	config : {
 		cls : 'recorditem-container',
-		model : null,
-		itemStoreList : null,
 		layout : {
 			type : 'vbox'
 		}
@@ -54,52 +51,49 @@ Ext.define('MyApp.view.record.RecordItem', {
 	showHeader : function() {
 		var me = this;
 		me.removeAll(false);
-		var model = me.getModel();
-		if (model) {
-			var data = model.data;
-			log(data);
-			var header = me.getHeader();
-			
-			var now = new Date(data.yy, data.mm, data.dd);
-			
-			if (!me._lblDate) me._lblDate = header.down('label[cls = "recorditem-header-date"]');
-			me._lblDate.setHtml(data.dd);
-			
-			if (!me._lblDayname) me._lblDayname = header.down('label[cls = "recorditem-header-day"]');
-			me._lblDayname.setHtml(now.dateFormatWithoutTime());
-			
-			if (!me._lblMonth) me._lblMonth = header.down('label[cls = "recorditem-header-month"]');
-			me._lblMonth.setHtml(now.getMonthName() + ' ' + now.getFullYear().toString());
-			
-			if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
-			me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
 
-			var list = me.getList();
-			list.setHeight(0);
-			list.hide();
-			if (!me._itemStore) {
-				me._itemStore = new MyApp.store.Trades_Day();
-			} 
+		var data = {title: AppConfig.textData.TIEN_MAT, description: AppConfig.textData.TIEN_MAT_HIEN_CO, total: AppUtil.CASH};
+		log(data);
+		var header = me.getHeader();
+		
+		//if (!me._lblDate) me._lblDate = header.down('label[cls = "recorditem-header-date"]');
+		//me._lblDate.setHtml(data.title);
+		
+		if (!me._lblDayname) me._lblDayname = header.down('label[cls = "recorditem-header-day"]');
+		me._lblDayname.setHtml(data.title);
+		
+		if (!me._lblMonth) me._lblMonth = header.down('label[cls = "recorditem-header-month"]');
+		me._lblMonth.setHtml(data.description);
+		
+		if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
+		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
 
-			AppUtil.offline.updateStoreQuery(me._itemStore, 'Trades_Day', {
-				dd : now.getDate(),
-				mm : now.getMonth(),
-				yy : now.getFullYear()
+		var list = me.getList();
+		list.setHeight(0);
+		list.hide();
+		if (!me._itemStore) {
+			me._itemStore = new Ext.data.Store({
+				fields: ['title']
 			});
-			
-			me.setItemStoreList(list);
+		} 
 
-			if (list.getStore())
-				list.getStore().removeAll();
-			else 
-				list.setStore(me._itemStore);
+		//me.setItemStoreList(list);
 
-			me.add(header);
-			me.add(list);
+		if (list.getStore())
+			list.getStore().removeAll();
+		else 
+			list.setStore(me._itemStore);
 
-			me._selectedDate = new Date(data.yy, data.mm, data.dd);
-			MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);
-		}
+		me.add(header);
+		me.add(list);
+
+		var listData = AppConfig.ironboxdata.TIEN_MAT;
+		me._itemStore.setData(listData);
+
+		list.setHeight(43 * listData.length);
+		//me._selectedDate = new Date(data.yy, data.mm, data.dd);
+		//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);
+	
 	},
 	
 	resetView: function() {
@@ -151,9 +145,8 @@ Ext.define('MyApp.view.record.RecordItem', {
 					type : 'hbox'
 				},
 				items : [{
-					xtype : 'label',
-					html : '10',
-					cls : 'recorditem-header-date'
+					xtype : 'container',
+					cls : 'tienmat-header-thumb'
 				}, {
 					xtype : 'container',
 					layout : {
@@ -208,21 +201,10 @@ Ext.define('MyApp.view.record.RecordItem', {
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
 						'<div class="content">', 
 							'<div class="title">{title}</div>', 
-							'<div class="description">{trade_note}</div>', 
-						'</div>', 
-						'<tpl if="this.isChi(type)">',
-							'<div class= "total">-{amount:this.showAmount}</div>', 
-						'<tpl else>',
-							'<div class= "total">+{amount:this.showAmount}</div>', 
-						'</tpl>',
-					'</div>', {
-						isChi: function(type) {
-							return type == 'chi';
-						},
-						showAmount: function(amount) {
-							return AppUtil.formatMoneyWithUnit(amount);
-						}
-				}),
+							//'<div class="description">{trade_note}</div>', 
+						'</div>',
+					'</div>'
+				),
 				scrollable: false
 			});
 		}

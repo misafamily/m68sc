@@ -353,13 +353,13 @@ Ext.define('MyApp.util.AppUtil', {
     	});
     },
 
-    showLoading: function (loading) {
+    showLoading: function (msg) {
     	loading = loading || 'Loading ..';
-        Ext.Viewport.mask({ xtype: 'loadmask', message: loading });
+        Ext.Viewport.mask({ xtype: 'loadmask', message: msg });
         Ext.Viewport.setMasked(true);
     },
 
     hideLoading: function () {
         Ext.Viewport.unmask();
-    },
+    }
 }); 

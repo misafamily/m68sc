@@ -27,11 +27,17 @@ AppConfig.placeholderData.TYPE = 'Loại hình';
 AppConfig.placeholderData.AMOUNT = 'Số tiền đ';
 
 AppConfig.textData = {};
-AppConfig.textData.THEM_GIAO_DICH = 'THÊM GIAO DỊCH';
+AppConfig.textData.THEM_GIAO_DICH = 'CHỌN GIAO DỊCH';
 AppConfig.textData.CHI_TIEU = 'CHI TIÊU';
 AppConfig.textData.THU_NHAP = 'THU NHẬP';
 AppConfig.textData.NHAP_SO_TIEN = 'NHẬP SỐ TIỀN';
 AppConfig.textData.SO_DU = 'Số dư';
+AppConfig.textData.GIAO_DICH = 'Giao dịch';
+AppConfig.textData.QUAN_LY_KET_SAT = 'Quản lý két sắt';
+AppConfig.textData.TIEN_MAT = 'Tiền mặt';
+AppConfig.textData.TIEN_MAT_HIEN_CO = 'Tiền mặt hiện có';
+AppConfig.textData.ATM = 'Tài khoản ATM';
+AppConfig.textData.TIEN_TRONG_TAI_KHOAN = 'Tiền trong tài khoản';
 
 
 AppConfig.type = {};
@@ -47,6 +53,61 @@ AppConfig.type.CHO_VAY = 'Cho vay';
 
 //thu
 AppConfig.type.LUONG = 'Lương';
+
+
+AppConfig.action = {};
+AppConfig.action.DIEU_CHINH = 'DIEU_CHINH';
+AppConfig.action.CHI_TIET_GIAO_DICH = 'CHI_TIET_GIAO_DICH';
+AppConfig.action.THEM = 'THEM';
+AppConfig.action.RUT = 'RUT';
+AppConfig.action.NAP = 'NAP';
+AppConfig.action.CHUYEN_KHOAN = 'CHUYEN_KHOAN';
+AppConfig.action.TIEN_VAO = 'TIEN_VAO';
+AppConfig.action.SUA_THONG_TIN = 'SUA_THONG_TIN';
+
+//ketsat list-item
+AppConfig.ironboxdata = {};
+AppConfig.ironboxdata.TIEN_MAT = [{
+	title: 'Điều chỉnh số dư',
+	type: AppConfig.type.TIEN_MAT,
+	action: AppConfig.action.DIEU_CHINH
+}, {
+	title: 'Chi tiết giao dịch',
+	type: AppConfig.type.TIEN_MAT,
+	action: AppConfig.action.CHI_TIET_GIAO_DICH 
+}];
+
+AppConfig.ironboxdata.ATM = [{
+	title: 'Thêm tài khoản',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.THEM
+}];
+
+AppConfig.ironboxdata.ATM_SUB = [{
+	title: 'Rút tiền',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.RUT
+},{
+	title: 'Nạp tiền',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.NAP
+},{
+	title: 'Tiền vào',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.TIEN_VAO
+},{
+	title: 'Chuyển khoản',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.CHUYEN_KHOAN
+},{
+	title: 'Chi tiết giao dịch',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.CHI_TIET_GIAO_DICH
+},{
+	title: 'Sủa thông tin',
+	type: AppConfig.type.ATM,
+	action: AppConfig.action.SUA_THONG_TIN
+}];
 
 /*
 AppConfig.expenseType = [													
