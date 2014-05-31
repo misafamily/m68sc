@@ -1,6 +1,7 @@
 Ext.define('MyApp.controller.Main', {
 	extend : 'Ext.app.Controller',
-	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade','MyApp.view.apppopup.DateChooser'],
+	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade',
+				'MyApp.view.apppopup.DateChooser', 'MyApp.view.apppopup.CashTradeList'],
 	config : {
 		refs : {
 			main : 'main',
@@ -14,6 +15,7 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_INPUTER, me.onShowInputer, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_TRADE, me.onShowTrade, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_DATE_CHOOSER, me.onShowDateChooser, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_CASH_TRADE_LIST, me.onShowCashTradeList, me);
 				}
 			},
 
@@ -53,13 +55,13 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.toggleMenu("left");
 	},
 
-	onShowInputer : function(defaultValue, callback) {
+	onShowInputer : function(defaultValue, callback, atitle) {
 		var me = this;
 		var value = defaultValue || '0 d';
 		value = AppUtil.deformatMoneyWithUnit(value);
 		var view = me.getMoneyInputerView();
 		Ext.Viewport.add(view);
-		view.showView(value, callback);
+		view.showView(value, callback, atitle);
 	},
 
 	onShowTrade : function(money) {
@@ -74,6 +76,13 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getDateChooserView();
 		Ext.Viewport.add(view);
 		view.showView(date, callback);
+	},
+
+	onShowCashTradeList: function() {
+		var me = this;
+		var view = me.getCashTradeListView();
+		Ext.Viewport.add(view);
+		view.showView();
 	},
 
 	//GET FUNCS
@@ -97,5 +106,13 @@ Ext.define('MyApp.controller.Main', {
 			me._dateChooser = Ext.create('MyApp.view.apppopup.DateChooser');
 
 		return me._dateChooser;
+	},
+
+	getCashTradeListView: function() {
+		var me = this;
+		if (!me._cashTradeList)
+			me._cashTradeList = Ext.create('MyApp.view.apppopup.CashTradeList');
+
+		return me._cashTradeList;
 	}
 });

@@ -1,11 +1,43 @@
-Ext.define('MyApp.view.ironbox.TienMat', {
+Ext.define('MyApp.view.ironbox.Cash', {
 	extend : 'Ext.Container',
-	xtype : 'ironbox_tienmat',
+	xtype : 'ironbox_cash',
 	config : {
 		cls : 'recorditem-container',
 		layout : {
 			type : 'vbox'
+		},
+
+		control: {
+			'list': {
+				itemtap: function( list, index, target, record, e, eOpts ) {
+					log(record.data.action);
+					if (record.data.type == AppConfig.type.TIEN_MAT) {
+						switch(record.data.action) {
+							case AppConfig.action.DIEU_CHINH:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, AppUtil.CASH, function(money) {
+									if (AppUtil.CASH != money)
+										AppUtil.cashEdit(money);
+								}, AppConfig.textData.DIEU_CHINH_SO_DU);
+								break;
+							case AppConfig.action.CHI_TIET_GIAO_DICH:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_TRADE_LIST);
+								break;
+						}
+					}
+				}
+			}
 		}
+	},
+
+	initialize: function() {
+		var me = this;
+		me.callParent(arguments);
+		MyApp.app.on(AppConfig.eventData.CASH_CHANGED, me.onCashChanged, me);
+	},
+
+	onCashChanged: function(amount) {
+		var me = this;
+		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(amount));
 	},
 
 	onHeaderTap: function() {
@@ -38,7 +70,7 @@ Ext.define('MyApp.view.ironbox.TienMat', {
 		var list = me.getList();
 		
 		if (!me._itemStore.isLoaded()) {
-			log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
+			//log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
 			me._itemStore.load(function(records) {
 				if (records.length) list.setHeight(43 * records.length);
 			});
@@ -73,7 +105,7 @@ Ext.define('MyApp.view.ironbox.TienMat', {
 		list.hide();
 		if (!me._itemStore) {
 			me._itemStore = new Ext.data.Store({
-				fields: ['title']
+				fields: ['title', 'type', 'action']
 			});
 		} 
 

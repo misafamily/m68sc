@@ -40,7 +40,7 @@ Ext.define('MyApp.model.Trade', {
             	type:'number'
 	       	},
 	       	 {
-            	name:'hunter_id',
+            	name:'hunter_id',//trade, cash, atm_id, 
             	type:'string'
             },
             {

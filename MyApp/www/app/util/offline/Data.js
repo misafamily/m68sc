@@ -38,7 +38,7 @@ Ext.define('MyApp.util.offline.Data',{
   				var dd = extra.dd;
   				var mm = extra.mm;
   				var yy = extra.yy;
-  				queryStr = 'SELECT DISTINCT dd, mm, yy, sum(sign_amount) as total FROM trade WHERE dd={0} AND mm={1} AND yy={2} GROUP BY dd,mm,yy';
+  				queryStr = 'SELECT DISTINCT dd, mm, yy, sum(sign_amount) as total FROM trade WHERE dd={0} AND mm={1} AND yy={2} AND (type = "thu" OR type ="chi") GROUP BY dd,mm,yy';
   				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
   				break;
   				
@@ -46,7 +46,7 @@ Ext.define('MyApp.util.offline.Data',{
   				var dd = extra.dd;
   				var mm = extra.mm;
   				var yy = extra.yy;
-  				queryStr = 'SELECT * FROM trade WHERE dd={0} AND mm={1} AND yy={2} ORDER BY time DESC';
+  				queryStr = 'SELECT * FROM trade WHERE dd={0} AND mm={1} AND yy={2} AND (type = "thu" OR type ="chi") ORDER BY time DESC';
   				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
   				break;
   				
@@ -57,7 +57,7 @@ Ext.define('MyApp.util.offline.Data',{
   				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
   				break;
   				
-  			case 'Income_Month'://for Home
+  			/*case 'Income_Month'://for Home
   				var mm = extra.mm;
   				var yy = extra.yy;
   				queryStr = 'SELECT sum(amount) as total FROM trade WHERE mm={1} AND yy={2} AND type = "thu"';
@@ -69,11 +69,11 @@ Ext.define('MyApp.util.offline.Data',{
   				var yy = extra.yy;
   				queryStr = 'SELECT sum(amount) as total FROM trade WHERE mm={1} AND yy={2} AND type = "chi"';
   				queryStr = Ext.util.Format.format(queryStr, dd, mm, yy);
-  				break;
+  				break;*/
   			
 			
   	}
-  	log(queryStr);
+  	//log(queryStr);
   	return queryStr;
   }
 });

@@ -34,7 +34,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'spacer',
-				width : 45
+				width : 31
 			}]
 		}, {
 			xtype : 'container',
@@ -237,6 +237,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 	onDoneButtonClicked : function() {
 		//AppUtil.log('onDoneButtonClicked');
 		var me = this;
+		me._valueNumber = AppUtil.deformatMoneyWithUnit(me._field.getValue());
 		me._callback(me._valueNumber);
 		me.hide();
 	},
@@ -250,11 +251,17 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 		me._valueString = me._valueNumber.toString();
 	},
 
-	showView : function(value, callback) {
+	showView : function(value, callback, atitle) {
 		var me = this;
+		atitle = atitle || AppConfig.textData.NHAP_SO_TIEN;
+		if (!me._title)
+			me._title = me.down('label[cls="apppopup-title"]');
+		me._title.setHtml(atitle.toUpperCase());
 		//me._valueNumber = 0;
 		me._valueString = value.toString();
 		me.displayValueFormat();
+		me._valueNumber = 0;
+		me._valueString = '0';
 		me._callback = callback;
 		me.show();
 	}

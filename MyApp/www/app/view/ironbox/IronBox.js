@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.ironbox.IronBox', {
 	extend : 'Ext.Container',
 	xtype : 'ironbox',
-	requires : ['MyApp.view.ironbox.TienMat', 'MyApp.view.ironbox.Atm'],
+	requires : ['MyApp.view.ironbox.Cash', 'MyApp.view.ironbox.Atm'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -185,7 +185,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 			me._container = me.down('container[cls = "record-list-container"]');
 
 		//add tien mat
-		if (!me._tienmat) me._tienmat = new MyApp.view.ironbox.TienMat();
+		if (!me._tienmat) me._tienmat = new MyApp.view.ironbox.Cash();
 		me._container.add(me._tienmat);
 		me._tienmat.showHeader();
 		me._tienmat.on('headertap', me.onItemTap, me);

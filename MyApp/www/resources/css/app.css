@@ -286,6 +286,10 @@ body {
 	width: 100%;
 }
 
+.fullheight-container {
+	height: 100%;
+}
+
 .transparent-container {
 	background-color: transparent;
 }
@@ -385,6 +389,10 @@ body {
 	background-color: #055683;/*065784;*/
 }
 
+.recorditem-list.nobg {
+	background-color: transparent;/*065784;*/
+}
+
 .recorditem-list .x-list-item {
 	color: #fff;
 }
@@ -393,7 +401,8 @@ body {
 	border-bottom: 0px solid red;
 }
 
-.recorditem-list .info .thumb, .recorditem-list .info .content, .recorditem-list .info .total {
+.recorditem-list .info .thumb, .recorditem-list .info .date, 
+.recorditem-list .info .content, .recorditem-list .info .total {
 	display: inline-block;
 	/* height: 100%; */
 	vertical-align: middle;
@@ -420,7 +429,13 @@ body {
 
 .recorditem-list .info .content .title {
     font-size: 14px;
-	
+}
+
+.recorditem-list .info .date {
+	font-size: 26px;
+	padding: 4px 6px;	
+	width: 42px;
+	text-align: center;
 }
 
 .recorditem-list .info .content .description {

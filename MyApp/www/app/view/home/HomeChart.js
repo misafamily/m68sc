@@ -246,7 +246,9 @@ Ext.define('MyApp.view.home.HomeChart', {
 			MyApp.app.fireEvent(AppConfig.eventData.EXPENSE_CHANGED, thuTotal, chiTotal, date);//to HOME
 			var max = thuTotal > chiTotal ? thuTotal : chiTotal;
 			//AppUtil.log(max);
-			if (max <= 5000000) {
+			if (max <= 1000000) {
+				me._options.scaleOverride = false;
+			} else if (max <= 5000000) {
 				me._options.scaleSteps = 5;
 				me._options.scaleStepWidth = 1000000;
 			} else if (max <= 10000000) {

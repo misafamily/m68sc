@@ -35,7 +35,7 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'spacer',
-				width : 45
+				width : 31
 			}]
 		}, {
 			xtype : 'container',

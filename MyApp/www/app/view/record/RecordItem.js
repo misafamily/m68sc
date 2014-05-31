@@ -41,7 +41,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 		var list = me.getList();
 		
 		if (!me._itemStore.isLoaded()) {
-			log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
+			//log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
 			me._itemStore.load(function(records) {
 				if (records.length) list.setHeight(43 * records.length);
 			});
@@ -57,7 +57,6 @@ Ext.define('MyApp.view.record.RecordItem', {
 		var model = me.getModel();
 		if (model) {
 			var data = model.data;
-			log(data);
 			var header = me.getHeader();
 			
 			var now = new Date(data.yy, data.mm, data.dd);

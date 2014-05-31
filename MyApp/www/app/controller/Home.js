@@ -13,7 +13,7 @@ Ext.define('MyApp.controller.Home', {
 					
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
 						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
-					});
+					},null);
 					
 				}
 			},
@@ -21,7 +21,7 @@ Ext.define('MyApp.controller.Home', {
 				tap: function() {
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
 						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
-					});
+					},null);
 				}
 			}
 		}

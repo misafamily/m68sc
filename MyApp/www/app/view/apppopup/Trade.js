@@ -36,7 +36,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'spacer',
-				width : 45
+				width : 31
 			}]
 		}, {
 			xtype : 'segmentedbutton',
@@ -256,7 +256,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
 						me.amount = money;
 						tf.setValue(AppUtil.formatMoneyWithUnit(money));
-					});
+					}, null);
 				}
 			},
 			'textfield[name="outtradedate"]' : {
