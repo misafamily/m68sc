@@ -1,14 +1,15 @@
-Ext.define('MyApp.view.ironbox.Atm', {
+Ext.define('MyApp.view.ironbox.AtmItem', {
 	extend : 'Ext.Container',
-	xtype : 'ironbox_atm',
-	requires:['MyApp.store.Atms', 'MyApp.view.ironbox.AtmItem'],
+	xtype : 'ironbox_atmitem',
 	config : {
-		cls : 'recorditem-container',
+		cls : 'recorditem-container atmitem',
 		layout : {
 			type : 'vbox'
 		},
-
-		control: {
+		style: {
+			'padding-left': '18px'
+		},
+		control: {	
 			'list': {
 				itemtap: function( list, index, target, record, e, eOpts ) {
 					//log(record.data.action);
@@ -46,15 +47,11 @@ Ext.define('MyApp.view.ironbox.Atm', {
 	hideContent : function() {
 		var me = this;
 		var list = me.getList();
-		var atmlist = me.getAtmList();
 		list.hide();
-		atmlist.hide();
 	},
 	
 	showContent : function() {
 		var me = this;
-		var atmlist = me.getAtmList();
-
 		var list = me.getList();
 		
 		if (!me._itemStore.isLoaded()) {
@@ -65,15 +62,14 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		} 
 		
 		list.show();
-		atmlist.show();
 		
 	},
 
-	showHeader : function() {
+	showHeader : function(atmData) {
 		var me = this;
 		me.removeAll(false);
 
-		var data = {title: AppConfig.textData.ATM, description: AppConfig.textData.TIEN_TRONG_TAI_KHOAN, total: 0};
+		var data = {title: atmData.data.owner, description: atmData.data.bank, total: atmData.data.amount};
 		//log(data);
 		var header = me.getHeader();
 		
@@ -88,10 +84,6 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		
 		if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
 		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
-
-		var atmlist = me.getAtmList();
-		atmlist.setHeight(0);
-		atmlist.hide();
 
 		var list = me.getList();
 		list.setHeight(0);
@@ -110,10 +102,9 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			list.setStore(me._itemStore);
 
 		me.add(header);
-		me.add(atmlist);		
 		me.add(list);
 
-		var listData = AppConfig.ironboxdata.ATM;
+		var listData = AppConfig.ironboxdata.ATM_SUB;
 		me._itemStore.setData(listData);
 
 		list.setHeight(43 * listData.length);
@@ -166,7 +157,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		var me = this;
 		if (!me._header) {
 			var header = Ext.create('Ext.Container', {
-				cls : 'recorditem-header',
+				cls : 'recorditem-header atmitem',
 				layout : {
 					type : 'hbox'
 				},
@@ -202,7 +193,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			});
 			
 			me._header = Ext.create('Ext.Container', {
-				cls : 'recorditem-header-container',
+				cls : 'recorditem-header-container atmitem',
 				layout : {
 					type : 'hbox'
 				},
@@ -235,30 +226,5 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			});
 		}
 		return this._list;
-	},
-
-	getAtmList: function() {
-		var me = this;
-		if (!me._atmStore) me._atmStore = Ext.create('MyApp.store.Atms');
-		if (!me._atmContainer) {
-			me._atmContainer = Ext.create('Ext.Container', {
-				cls : 'recorditem-container',
-				layout : {
-					type : 'vbox'
-				}
-			});
-
-			me._atmStore.load(function(records){
-				Ext.each(records, function(record, i) {
-					var atmItem = Ext.create('MyApp.view.ironbox.AtmItem');
-					atmItem.showHeader(record);
-					me._atmContainer.add(atmItem);
-				});
-
-				me._atmContainer.setHeight(40*records.length);
-			});
-		}
-		//me.add(me._atmContainer);
-		return me._atmContainer;
 	}
 });

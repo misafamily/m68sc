@@ -2,7 +2,7 @@ Ext.define('MyApp.model.Hunter', {
 	extend : 'Ext.data.Model',
 	config : {
 		fields : [{
-			name : 'owener',
+			name : 'owner',
 			type : 'string'
 		}, {
 			name : 'bank', //hsbc
@@ -28,7 +28,7 @@ Ext.define('MyApp.model.Hunter', {
 			type : 'string',
 			defaultValue : ''
 		}, {
-			name : 'group', 
+			name : 'groupx', 
 			type : 'int'
 		}, {
 			name : 'time', //date.getTime()

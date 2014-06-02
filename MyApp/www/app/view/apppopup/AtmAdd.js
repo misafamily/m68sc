@@ -3,7 +3,6 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 	xtype : 'apppopup_atmadd',
 	requires:[],
 	config : {
-		emptyListOnHide: true,
 		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
@@ -55,7 +54,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
-					html : 'Thong tin tai khoan ATM',
+					html : AppConfig.textData.DIEN_THONG_TIN_ATM,
 					cls : 'record-date'
 				}]
 			},{
@@ -86,7 +85,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					name : 'owner',
 					//label: 'Tên tài khoản ',
 					cls : 'form-textfield verhical',
-					placeHolder : 'AppConfig.type.TEN',					
+					placeHolder : AppConfig.placeholderData.TEN_CHU_THE,					
 					value : ''
 				}, /*{
 					xtype: 'comp_pathmenu',
@@ -94,20 +93,20 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				},*/{
 					xtype : 'textfield',
 					name : 'bank',
-					placeHolder : 'AppConfig.type.NGAN_HANG',	
+					placeHolder : AppConfig.placeholderData.NGAN_HANG,	
 					cls : 'form-textfield expensetype',
 					value : ''
 				}, {
 					xtype : 'textfield',
 					name : 'amount',
-					placeHolder : 'AppConfig.type.TIEN_HIEN_CO',
+					placeHolder : AppConfig.placeholderData.TIEN_HIEN_CO,
 					cls : 'form-textfield expensetype',
 					readOnly : true				
 					//label: 'Số tiền hiện có  '
 				}, {
 					xtype : 'textfield',
 					name : 'note',
-					placeHolder : 'AppConfig.type.GHI_CHU',
+					placeHolder : AppConfig.placeholderData.GHI_CHU,
 					cls : 'form-textfield expensetype'
 				}]
 			}]
@@ -155,20 +154,26 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 	showView : function() {
 		var me = this;
 		me.amount = 0;
+		if (!me._owner) me._owner = me.down('textfield[name="owner"]');
+		if (!me._bank) me._bank = me.down('textfield[name="bank"]');
+		if (!me._amount) me._amount = me.down('textfield[name="amount"]');
+		if (!me._note) me._note = me.down('textfield[name="note"]');
+		me._owner.reset();
+		me._bank.reset();
+		me._amount.reset();
+		me._note.reset();
+		
 		me.show();
 	},
 
 	addAtm: function() {
 		var me = this;
-		if (!me._owner) me._owner = me.down('textfield[name="owner"]');
-		if (!me._bank) me._bank = me.down('textfield[name="bank"]');
-		if (!me._amount) me._amount = me.down('textfield[name="amount"]');
-		if (!me._note) me._note = me.down('textfield[name="note"]');
+		
 
 		var owner = me._owner.getValue();
 		var bank = me._bank.getValue();
 		var amount = me._amount.getValue();
-		var note = me._note.getValue();
+		var note = me._note.getValue() || '';
 
 		if (!owner || !bank || !amount || !note) {
 			AppUtil.alert('Chua nhap day du thong tin');
@@ -180,9 +185,10 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				note: me.note,
 				type: AppConfig.type.ATM
 			};
+			AppUtil.log(data);
 			var hunter = Ext.create('MyApp.model.Hunter', data);
 			hunter.save(function() {
-				
+				me.hide();
 			});
 		}
 	}

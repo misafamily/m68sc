@@ -465,3 +465,12 @@ body {
 	margin: 4px 6px;
 	margin-left: 0px;
 }
+
+.recorditem-header-container .atmitem {
+	background-color: #055683;/*065784;*/
+}
+
+.recorditem-header.atmitem {
+	padding-left: 30px;
+	
+}

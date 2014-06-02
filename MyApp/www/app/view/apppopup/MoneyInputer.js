@@ -92,17 +92,11 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					},
 
 					items : [{
-						text : '1',
-						style : {
-							'margin-right' : '0px'
-						}
+						text : '7'
 					}, {
-						text : '2',
-						style : {
-							'margin-right' : '0px'
-						}
+						text : '8'
 					}, {
-						text : '3'
+						text : '9'
 					}]
 				}, {
 					xtype : 'container',
@@ -136,11 +130,11 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 						flex: 1
 					},
 					items : [{
-						text : '7'
+						text : '1'
 					}, {
-						text : '8'
+						text : '2'
 					}, {
-						text : '9'
+						text : '3'
 					}]
 				}, {
 					xtype : 'container',

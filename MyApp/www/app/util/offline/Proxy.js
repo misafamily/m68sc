@@ -290,7 +290,7 @@ Ext.define('MyApp.util.offline.Proxy', {
      * @param {Object} rs Response
      */
     throwDbError: function(tx, err) {
-        //console.log(this.type + "----" + err.message);
+        console.log(this.type + "----" + err.message);
     },
     /**
      * Saves the given record in the Proxy.

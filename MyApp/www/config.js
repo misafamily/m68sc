@@ -29,6 +29,10 @@ AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
 AppConfig.placeholderData = {};
 AppConfig.placeholderData.TYPE = 'Loại hình';
 AppConfig.placeholderData.AMOUNT = 'Số tiền đ';
+AppConfig.placeholderData.TEN_CHU_THE = 'Tền chủ thẻ';
+AppConfig.placeholderData.NGAN_HANG = 'Ngân hàng';
+AppConfig.placeholderData.TIEN_HIEN_CO = 'Tền hiện có trong thẻ';
+AppConfig.placeholderData.GHI_CHU = 'Ghi chú';
 
 AppConfig.textData = {};
 AppConfig.textData.THEM_GIAO_DICH = 'CHỌN GIAO DỊCH';
@@ -52,6 +56,8 @@ AppConfig.textData.TIEN_THU_NHAP = 'Thu nhập';
 AppConfig.textData.CHUYEN_KHOAN = 'Chuyển khoản';
 AppConfig.textData.SUA_THONG_TIN = 'Sủa thông tin';
 AppConfig.textData.THEM_TAI_KHOAN_ATM = 'Thêm tài khoản';
+AppConfig.textData.DIEN_THONG_TIN_ATM = 'Điền thông tin tài khỏan ATM';
+
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';
