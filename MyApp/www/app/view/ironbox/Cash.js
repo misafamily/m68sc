@@ -10,7 +10,7 @@ Ext.define('MyApp.view.ironbox.Cash', {
 		control: {
 			'list': {
 				itemtap: function( list, index, target, record, e, eOpts ) {
-					log(record.data.action);
+					//log(record.data.action);
 					if (record.data.type == AppConfig.type.TIEN_MAT) {
 						switch(record.data.action) {
 							case AppConfig.action.DIEU_CHINH:
@@ -85,7 +85,7 @@ Ext.define('MyApp.view.ironbox.Cash', {
 		me.removeAll(false);
 
 		var data = {title: AppConfig.textData.TIEN_MAT, description: AppConfig.textData.TIEN_MAT_HIEN_CO, total: AppUtil.CASH};
-		log(data);
+		//log(data);
 		var header = me.getHeader();
 		
 		//if (!me._lblDate) me._lblDate = header.down('label[cls = "recorditem-header-date"]');

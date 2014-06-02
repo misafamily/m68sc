@@ -24,7 +24,11 @@ Ext.define('MyApp.model.Hunter', {
 			name : 'hunter_id',
 			type : 'string'
 		}, {
-			name : 'group', //date.getTime()
+			name : 'note', 
+			type : 'string',
+			defaultValue : ''
+		}, {
+			name : 'group', 
 			type : 'int'
 		}, {
 			name : 'time', //date.getTime()

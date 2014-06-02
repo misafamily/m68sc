@@ -22,6 +22,7 @@ AppConfig.eventData.EXPENSE_CHANGED = 'EXPENSE_CHANGED';
 AppConfig.eventData.SHOW_DATE_CHOOSER = 'SHOW_DATE_CHOOSER';
 AppConfig.eventData.CASH_CHANGED = 'cash_changed';
 AppConfig.eventData.SHOW_CASH_TRADE_LIST = 'show_cash_trade_list';
+AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
 
 
 
@@ -50,6 +51,7 @@ AppConfig.textData.CHUYEN_TIEN = 'Chuyển vào tài khoản ATM';
 AppConfig.textData.TIEN_THU_NHAP = 'Thu nhập';
 AppConfig.textData.CHUYEN_KHOAN = 'Chuyển khoản';
 AppConfig.textData.SUA_THONG_TIN = 'Sủa thông tin';
+AppConfig.textData.THEM_TAI_KHOAN_ATM = 'Thêm tài khoản';
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';

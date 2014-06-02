@@ -1,7 +1,8 @@
 Ext.define('MyApp.controller.Main', {
 	extend : 'Ext.app.Controller',
 	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade',
-				'MyApp.view.apppopup.DateChooser', 'MyApp.view.apppopup.CashTradeList'],
+				'MyApp.view.apppopup.DateChooser', 'MyApp.view.apppopup.CashTradeList',
+				'MyApp.view.apppopup.AtmAdd'],
 	config : {
 		refs : {
 			main : 'main',
@@ -16,6 +17,7 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_TRADE, me.onShowTrade, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_DATE_CHOOSER, me.onShowDateChooser, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_CASH_TRADE_LIST, me.onShowCashTradeList, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_ATM_ADD, me.onShowAtmAdd, me);
 				}
 			},
 
@@ -85,6 +87,13 @@ Ext.define('MyApp.controller.Main', {
 		view.showView();
 	},
 
+	onShowAtmAdd: function() {
+		var me = this;
+		var view = me.getAtmAddView();
+		Ext.Viewport.add(view);
+		view.showView();
+	},
+
 	//GET FUNCS
 	getMoneyInputerView : function() {
 		var me = this;
@@ -114,5 +123,13 @@ Ext.define('MyApp.controller.Main', {
 			me._cashTradeList = Ext.create('MyApp.view.apppopup.CashTradeList');
 
 		return me._cashTradeList;
+	},
+
+	getAtmAddView: function() {
+		var me = this;
+		if (!me._atmAdd)
+			me._atmAdd = Ext.create('MyApp.view.apppopup.AtmAdd');
+
+		return me._atmAdd;
 	}
 });

@@ -5,6 +5,21 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		cls : 'recorditem-container',
 		layout : {
 			type : 'vbox'
+		},
+
+		control: {
+			'list': {
+				itemtap: function( list, index, target, record, e, eOpts ) {
+					//log(record.data.action);
+					if (record.data.type == AppConfig.type.ATM) {
+						switch(record.data.action) {				
+							case AppConfig.action.THEM:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_ATM_ADD);
+								break;
+						}
+					}
+				}
+			}
 		}
 	},
 
@@ -38,7 +53,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		var list = me.getList();
 		
 		if (!me._itemStore.isLoaded()) {
-			log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
+			//log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
 			me._itemStore.load(function(records) {
 				if (records.length) list.setHeight(43 * records.length);
 			});
@@ -52,8 +67,8 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		var me = this;
 		me.removeAll(false);
 
-		var data = {title: AppConfig.textData.ATM, description: AppConfig.textData.TIEN_TRONG_TAI_KHOAN, total: 1000000};
-		log(data);
+		var data = {title: AppConfig.textData.ATM, description: AppConfig.textData.TIEN_TRONG_TAI_KHOAN, total: 0};
+		//log(data);
 		var header = me.getHeader();
 		
 		//if (!me._lblDate) me._lblDate = header.down('label[cls = "recorditem-header-date"]');
@@ -73,7 +88,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		list.hide();
 		if (!me._itemStore) {
 			me._itemStore = new Ext.data.Store({
-				fields: ['title']
+				fields: ['title', 'type', 'action']
 			});
 		} 
 

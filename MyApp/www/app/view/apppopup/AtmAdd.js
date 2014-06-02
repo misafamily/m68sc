@@ -1,0 +1,189 @@
+Ext.define('MyApp.view.apppopup.AtmAdd', {
+	extend : 'Ext.Container',
+	xtype : 'apppopup_atmadd',
+	requires:[],
+	config : {
+		emptyListOnHide: true,
+		cls : 'popup-container',
+		layout : {
+			type : 'vbox',
+			pacK : 'center',
+			align : 'center'
+		},
+		items : [{
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center'
+			},
+			cls : 'fullwidth-container viewbase-toolbar-top',
+			items : [{
+				xtype : 'button',
+				cls : 'button-icon toolbar-button-back',
+				title : 'backbtn'
+			}, {
+				xtype : 'container',
+				cls : 'apppopup-line'
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'label',
+				html : AppConfig.textData.THEM_TAI_KHOAN_ATM,
+				cls : 'apppopup-title'
+			}, {
+				xtype : 'spacer'
+			}, {
+				xtype : 'spacer',
+				width : 31
+			}]
+		}, {
+			xtype : 'container',
+			layout : {
+				type : 'vbox'
+			},
+			flex : 1,
+			cls : 'main fullwidth-container',
+			items : [{
+				xtype : 'container',
+				layout : {
+					type : 'vbox',
+					pack : 'center',
+					align : 'start'
+				},
+				cls : 'record-date-container',
+				items : [{
+					xtype : 'label',
+					html : 'Thong tin tai khoan ATM',
+					cls : 'record-date'
+				}]
+			},{
+				xtype : 'container',
+				style: {
+					'margin-top':'10px'
+				},
+				layout : {
+					type : 'vbox'
+				},
+				flex : 1,
+				/*scrollable : {
+					directionLock : true,
+					direction : 'vertical',
+					indicators : false
+				},*/
+				
+				defaults : {
+					required : true,
+					autoComplete : false,
+					autoCorrect : false,
+					autoCapitalize : false,
+					clearIcon : false,
+					readOnly : false	
+				},
+				items : [{
+					xtype : 'textfield',
+					name : 'owner',
+					//label: 'Tên tài khoản ',
+					cls : 'form-textfield verhical',
+					placeHolder : 'AppConfig.type.TEN',					
+					value : ''
+				}, /*{
+					xtype: 'comp_pathmenu',
+					zIndex: 2
+				},*/{
+					xtype : 'textfield',
+					name : 'bank',
+					placeHolder : 'AppConfig.type.NGAN_HANG',	
+					cls : 'form-textfield expensetype',
+					value : ''
+				}, {
+					xtype : 'textfield',
+					name : 'amount',
+					placeHolder : 'AppConfig.type.TIEN_HIEN_CO',
+					cls : 'form-textfield expensetype',
+					readOnly : true				
+					//label: 'Số tiền hiện có  '
+				}, {
+					xtype : 'textfield',
+					name : 'note',
+					placeHolder : 'AppConfig.type.GHI_CHU',
+					cls : 'form-textfield expensetype'
+				}]
+			}]
+
+		}, {
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center',
+				pack : 'center'
+			},
+			cls : 'viewbase-toolbar-bottom',
+			items : [{
+				xtype : 'button',
+				cls : 'button-icon toolbar-button-done',
+				title : 'addbutton'
+			}]		
+		}],
+		control : {
+			'textfield[name="amount"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
+						me.amount = money;
+						tf.setValue(AppUtil.formatMoneyWithUnit(money));
+					}, null);
+				}
+			},
+
+			'button[title="backbtn"]' : {
+				tap : function() {
+					this.hide();
+				}
+			},
+
+			'button[title="addbutton"]' : {
+				tap : function() {
+					this.addAtm();
+				}
+			},
+
+		}
+	},
+
+	showView : function() {
+		var me = this;
+		me.amount = 0;
+		me.show();
+	},
+
+	addAtm: function() {
+		var me = this;
+		if (!me._owner) me._owner = me.down('textfield[name="owner"]');
+		if (!me._bank) me._bank = me.down('textfield[name="bank"]');
+		if (!me._amount) me._amount = me.down('textfield[name="amount"]');
+		if (!me._note) me._note = me.down('textfield[name="note"]');
+
+		var owner = me._owner.getValue();
+		var bank = me._bank.getValue();
+		var amount = me._amount.getValue();
+		var note = me._note.getValue();
+
+		if (!owner || !bank || !amount || !note) {
+			AppUtil.alert('Chua nhap day du thong tin');
+		} else {
+			var data = {
+				owner: owner,
+				bank: bank,
+				amount: me.amount,
+				note: me.note,
+				type: AppConfig.type.ATM
+			};
+			var hunter = Ext.create('MyApp.model.Hunter', data);
+			hunter.save(function() {
+				
+			});
+		}
+	}
+});
