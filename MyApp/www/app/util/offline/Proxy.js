@@ -448,7 +448,7 @@ Ext.define('MyApp.util.offline.Proxy', {
     * Physically removes a given record from the object store. 
     * @param {Mixed} id The id of the record to remove
     */
-    removeRecord: function (id, tablename, primarykey, callback, opts) { //opts: [ ['key', 'value]]
+    removeRecord: function (key, keyvalue, callback, opts) { //opts: [ ['key', 'value]]
         var me = this,
             values = [],
             onSuccess = function (tx, rs) {
@@ -459,8 +459,8 @@ Ext.define('MyApp.util.offline.Proxy', {
                 console.log(err);
                 me.throwDbError(tx, err);
             };
-        var sql = 'DELETE FROM ' + tablename + ' WHERE ' + primarykey + ' = ?';
-        values.push(id);
+        var sql = 'DELETE FROM ' + me.config.dbConfig.tablename + ' WHERE ' + key + ' = ?';
+        values.push(keyvalue);
 
         if (opts) {
             Ext.Array.each(opts, function (value, index) {
