@@ -59,7 +59,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				html: '..',
 				cls: 'balance-lbl'
 			}]
-		}, {
+		}/*, {
 			//xtype: 'toolbar',
 			//docked: 'bottom',
 			xtype : 'container',
@@ -84,14 +84,13 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-tag'
 			}]
-		}]
+		}*/]
 	},
 
 	initialize : function() {
 		var me = this;
 		me.callParent(arguments);
 		me._expandItem = null;
-		me._pool = [];
 		me._currentDate = new Date();	
 		MyApp.app.on(AppConfig.eventData.MAIN_VIEW_CHANGED, me.onMainViewChanged, me);
 	},
@@ -107,62 +106,6 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
 		}
-	},
-	
-	onTradeAdded: function(date) {
-		var me = this;
-		if (!me._currentDate.sameMonthWith(date)) return;
-		//search to check if it is existed
-		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
-				dd: date.getDate(),
-				mm : date.getMonth(),
-				yy : date.getFullYear()
-			});
-
-		var pos = me.getPositionItemInList(me._monthRecords, date);
-		if (pos == -2) {
-			//do nothhing
-		} else if (pos == -1) { //add to bottom
-			me._store.load(function(records) {
-				if (records.length == 1) {
-					me._monthRecords.push(records[0]);
-					//Ext.Array.each(records, function(record, i) {
-						Ext.defer(function(){
-							me.addRecord(records[0]);
-						},100);
-					//});
-					
-					me.updateBalance();	
-				}
-			});
-		} else { //insert at pos
-			//AppUtil.log('insert at pos: ' + pos);
-			me._store.load(function(records) {
-				if (records.length == 1) {
-					Ext.Array.insert(me._monthRecords, pos, records);
-					//Ext.Array.each(records, function(record, i) {
-						Ext.defer(function(){
-							me.insertRecord(records[0], pos);
-						},100);
-					//});
-					
-					me.updateBalance();
-				}
-			});
-		}
-		
-	},
-	
-	getPositionItemInList: function(list, date) {
-		var me = this;
-		var pos = -1;
-		for (var i = 0; i < list.length; i++) {
-			var record = list[i];
-			var d = new Date(record.data.yy, record.data.mm, record.data.dd);
-			if (d.sameDateWith(date)) return -2;//do nothing, it already is on Record home screen
-			else if (d.sameMonthWith(date) && d.getDate() < date.getDate()) return i;
-		}
-		return pos;// -1 dont have, insert it at bottom
 	},
 	
 	showMonth: function(date) {
@@ -196,74 +139,9 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		me._atm.showHeader();
 		me._atm.on('headertap', me.onItemTap, me);
 
-		/*if (!me._store)
-			me._store = Ext.create('MyApp.store.Trades_Month_Day');
-		var now = new Date();
-		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day', {
-			mm : now.getMonth(),
-			yy : now.getFullYear()
-		});
+		//me._scroller.setHeight(window.innerHeight - 46 - 40);
+	},
 
-		me._store.load(function(records) {
-			me._monthRecords = records;
-			Ext.Array.each(records, function(record, i) {
-				Ext.defer(function(){
-					me.addRecord(record);
-				},30);
-			});
-			
-			me.updateBalance();
-		});*/
-	},
-	
-	updateBalance: function() {//also call from RecordItem
-		var me = this;
-		if (!me._balanceLbl) me._balanceLbl = me.down('label[cls="balance-lbl"]');
-		var balanceTotal = 0;
-		Ext.Array.each(me._monthRecords, function(record, i) {
-			balanceTotal += parseInt(record.data.total);
-		});
-		
-		me._balanceLbl.setHtml(AppUtil.formatMoney2WithUnit(balanceTotal));
-	},
-	
-	addRecord: function(record) {
-		var me = this;
-		var recordItem = me.getRecordItemFromPool();
-		recordItem.setModel(record);
-		me._container.add(recordItem);
-		recordItem.showHeader();
-		recordItem.on('headertap', me.onItemTap, me);
-		me._recordItems.push(recordItem);			
-	},
-	
-	insertRecord: function(record, pos) {
-		var me = this;
-		var recordItem = me.getRecordItemFromPool();
-		recordItem.setModel(record);
-		me._container.insert(pos, recordItem);
-		recordItem.showHeader();
-		recordItem.on('headertap', me.onItemTap, me);
-		me._recordItems.push(recordItem);			
-	},
-	
-	removeRecord: function(recordItem) {
-		var me = this;
-		recordItem.un('headertap', me.onItemTap, me);
-		recordItem.resetView();
-		me._container.remove(recordItem);
-		Ext.Array.remove(me._recordItems, recordItem);
-		me._pool.push(recordItem);//store to pool
-	},
-	
-	getRecordItemFromPool: function() {
-		var me = this;
-		if (me._pool.length > 1) {
-			return me._pool.pop();
-		} 
-		return new MyApp.view.record.RecordItem();
-	},
-	
 	onItemTap: function(item) {
 		var me = this;
 		var needDelay = false;

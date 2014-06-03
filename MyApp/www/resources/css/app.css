@@ -466,11 +466,19 @@ body {
 	margin-left: 0px;
 }
 
-.recorditem-header-container .atmitem {
+.recorditem-header-container.atmitem {
 	background-color: #055683;/*065784;*/
 }
 
 .recorditem-header.atmitem {
-	padding-left: 30px;
+	padding-left: 18px;
 	
+}
+
+.recorditem-header-container.atmitem.active {
+	background-color: #054e77;/*#065784 055683*/
+}
+
+.recorditem-list.atmitem .info {
+	padding-left: 18px;
 }

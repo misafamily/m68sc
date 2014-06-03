@@ -6,9 +6,6 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 		layout : {
 			type : 'vbox'
 		},
-		style: {
-			'padding-left': '18px'
-		},
 		control: {	
 			'list': {
 				itemtap: function( list, index, target, record, e, eOpts ) {
@@ -123,35 +120,6 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 		list.hide();
 	},
 	
-	onTradeAdded: function(date) { //if already showed, update the list
-		var me = this;
-		var list = me.getList();
-		
-		if (me._selectedDate.sameDateWith(date)) {
-			//list.setHeight(0);
-			//me._itemStore.removeAll();
-			me._itemStore.load(function(records) {
-				if (records.length) {
-					list.setHeight(43 * records.length);
-					var total = 0;
-					Ext.Array.each(records, function(record, i){
-						if (record.data.type == AppConfig.type.THU) {
-							total += parseInt(record.data.amount);
-						} else if (record.data.type == AppConfig.type.CHI) {
-							total -= parseInt(record.data.amount);
-						}
-					});
-					me.getModel().data.total = total.toString();
-					me._lblAmount.setHtml(AppUtil.formatMoney2(total));
-				} else {
-					me.parent.parent.parent.removeItem(me);
-				}
-				//call Record to update balance value
-				me.parent.parent.parent.updateBalance();
-				
-			});
-		}
-	},
 
 	getHeader : function() {
 		var me = this;
@@ -212,7 +180,7 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 		//console.log('getIngredientList');
 		if (!this._list) {
 			this._list = Ext.create('MyApp.view.comp.AppList', {
-				cls : 'recorditem-list',
+				cls : 'recorditem-list atmitem',
 				itemTpl : new Ext.XTemplate(
 					'<div class="info">', 
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 

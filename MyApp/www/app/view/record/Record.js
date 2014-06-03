@@ -271,7 +271,7 @@ Ext.define('MyApp.view.record.Record', {
 		if (needDelay) {
 			Ext.defer(function(){
 				me._expandItem.expand();
-			}, 200);
+			}, 30);
 		} else 
 			me._expandItem.expand();
 	}

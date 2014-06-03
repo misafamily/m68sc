@@ -185,10 +185,11 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				note: me.note,
 				type: AppConfig.type.ATM
 			};
-			AppUtil.log(data);
+			//AppUtil.log(data);
 			var hunter = Ext.create('MyApp.model.Hunter', data);
 			hunter.save(function() {
 				me.hide();
+				MyApp.app.fireEvent(AppConfig.eventData.ATM_ADDED, hunter);
 			});
 		}
 	}

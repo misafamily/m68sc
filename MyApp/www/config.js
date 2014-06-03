@@ -23,6 +23,7 @@ AppConfig.eventData.SHOW_DATE_CHOOSER = 'SHOW_DATE_CHOOSER';
 AppConfig.eventData.CASH_CHANGED = 'cash_changed';
 AppConfig.eventData.SHOW_CASH_TRADE_LIST = 'show_cash_trade_list';
 AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
+AppConfig.eventData.ATM_ADDED = 'atm_added';
 
 
 
@@ -122,7 +123,7 @@ AppConfig.ironboxdata.ATM_SUB = [{
 	type: AppConfig.type.ATM,
 	action: AppConfig.action.CHUYEN_KHOAN
 },{
-	title: AppConfig.textData.DIEU_CHINH,
+	title: AppConfig.textData.DIEU_CHINH_SO_DU,
 	type: AppConfig.type.ATM,
 	action: AppConfig.action.DIEU_CHINH
 },{

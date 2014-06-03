@@ -24,6 +24,13 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		}
 	},
 
+	initialize: function() {
+		var me = this;
+		me.callParent(arguments);
+
+		MyApp.app.on(AppConfig.eventData.ATM_ADDED, me.onAtmAdded, me);
+	},
+
 	onHeaderTap: function() {
 		var me = this;
 		me.fireEvent('headertap', me);
@@ -110,8 +117,8 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			list.setStore(me._itemStore);
 
 		me.add(header);
-		me.add(atmlist);		
 		me.add(list);
+		me.add(atmlist);
 
 		var listData = AppConfig.ironboxdata.ATM;
 		me._itemStore.setData(listData);
@@ -131,35 +138,35 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		list.setHeight(0);
 		list.hide();
 	},
-	
-	onTradeAdded: function(date) { //if already showed, update the list
+
+	onAtmAdded: function(atmModel) {
 		var me = this;
-		var list = me.getList();
-		
-		if (me._selectedDate.sameDateWith(date)) {
-			//list.setHeight(0);
-			//me._itemStore.removeAll();
-			me._itemStore.load(function(records) {
-				if (records.length) {
-					list.setHeight(43 * records.length);
-					var total = 0;
-					Ext.Array.each(records, function(record, i){
-						if (record.data.type == AppConfig.type.THU) {
-							total += parseInt(record.data.amount);
-						} else if (record.data.type == AppConfig.type.CHI) {
-							total -= parseInt(record.data.amount);
-						}
-					});
-					me.getModel().data.total = total.toString();
-					me._lblAmount.setHtml(AppUtil.formatMoney2(total));
-				} else {
-					me.parent.parent.parent.removeItem(me);
-				}
-				//call Record to update balance value
-				me.parent.parent.parent.updateBalance();
+		var atmItem = Ext.create('MyApp.view.ironbox.AtmItem');
+		atmItem.showHeader(atmModel);
+		atmItem.on('headertap', me.onItemTap, me);
+		me._atmContainer.add(atmItem);
+		me._atmContainer.setHeight(me._atmContainer.getHeight() + 40);
+	},
+	
+	onItemTap: function(item) {
+		var me = this;
+		var needDelay = false;
+		if (me._expandItem) {
+			needDelay = true;
+			me._expandItem.collapse();
+			if (me._expandItem == item) {		
+				me._expandItem = null;
+				return;
+			} 
 				
-			});
-		}
+		} 
+		me._expandItem = item;	
+		if (needDelay) {
+			Ext.defer(function(){
+				me._expandItem.expand();
+			}, 30);
+		} else 
+			me._expandItem.expand();
 	},
 
 	getHeader : function() {
@@ -252,6 +259,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 				Ext.each(records, function(record, i) {
 					var atmItem = Ext.create('MyApp.view.ironbox.AtmItem');
 					atmItem.showHeader(record);
+					atmItem.on('headertap', me.onItemTap, me);
 					me._atmContainer.add(atmItem);
 				});
 
