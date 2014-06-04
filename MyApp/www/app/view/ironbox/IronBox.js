@@ -101,8 +101,12 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		if (carouselActiveIndex == 2) {
 			if (!me._initView) {
 				me._initView = true;
+				//
 				me.showMonth(me._currentDate);
-				me.createView();
+				Ext.defer(function(){
+					AppUtil.showLoading(AppConfig.textData.TAI_DATA);
+					me.createView();
+				},100);
 				//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
 		}
@@ -120,6 +124,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 
 	createView : function() {
 		var me = this;
+		
 		me._recordItems = [];
 		me._monthRecords = [];
 		if (!me._scroller)
@@ -127,6 +132,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		if (!me._container)
 			me._container = me.down('container[cls = "record-list-container"]');
 
+		me._container.hide();
 		//add tien mat
 		if (!me._tienmat) me._tienmat = new MyApp.view.ironbox.Cash();
 		me._container.add(me._tienmat);
@@ -140,6 +146,11 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		me._atm.on('headertap', me.onItemTap, me);
 
 		//me._scroller.setHeight(window.innerHeight - 46 - 40);
+		Ext.defer(function(){
+			me._container.show();
+			AppUtil.hideLoading();
+		},200);
+		
 	},
 
 	onItemTap: function(item) {

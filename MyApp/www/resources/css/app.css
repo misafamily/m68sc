@@ -6,6 +6,15 @@ body {
  overflow: visible;
  }*/
 
+ .x-mask.x-has-message .x-loading-spinner-outer {
+	height: 75px;
+/* color: #fff; */
+}
+
+.x-mask .x-mask-inner .x-mask-message {
+	color: #666;
+}
+
 .x-android .x-input-el {
     -webkit-text-fill-color: #fff !important;
 }
@@ -366,6 +375,11 @@ body {
 	text-align: center;
 }
 
+.recorditem-header-date.today {
+	font-size: 30px;
+	padding: 1px 6px;	
+}
+
 .recorditem-header-date-info {
 	height: 100%;
 }
@@ -375,8 +389,18 @@ body {
 	margin-top: 0px;
 }
 
+.recorditem-header-day.today {
+	font-size: 16px;
+	margin-top: -2px;
+	font-family: 'ROBOTO-BOLD';
+}
+
 .recorditem-header-month {
 	font-size: 10px;
+}
+
+.recorditem-header-month.today {
+	font-size: 12px;
 }
 
 .recorditem-header-amount {

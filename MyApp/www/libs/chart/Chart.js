@@ -842,6 +842,15 @@ window.Chart = function(context){
 			console.log(e.message);
 		}
 		function drawLines(animPc){
+			var now = new Date();
+			now = Ext.Date.clearTime(now);
+			var selectedDate = config.selectedDate;
+			selectedDate = Ext.Date.clearTime(selectedDate);
+			
+			var isSameMonth = selectedDate.sameMonthWith(now);
+			var isFuture = Ext.Date.diff(selectedDate, now) > 0;
+			var currentDate = now.getDate() - 1;
+
 			for (var i=0; i<data.datasets.length; i++){
 				ctx.strokeStyle = data.datasets[i].strokeColor;
 				ctx.lineWidth = config.datasetStrokeWidth;
@@ -849,7 +858,7 @@ window.Chart = function(context){
 				ctx.moveTo(yAxisPosX, xAxisPosY);
 				ctx.lineTo(yAxisPosX, xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[0],calculatedScale,scaleHop)));
 				ctx.moveTo(yAxisPosX, xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[0],calculatedScale,scaleHop)));
-
+				var didStock1 = false;
 				for (var j=1; j<data.datasets[i].data.length; j++){
 					if (data.datasets[i].type) {
 						//ctx.moveTo(0, yPos(i,j));
@@ -865,6 +874,24 @@ window.Chart = function(context){
 						}
 						else{
 							ctx.lineTo(xPos(j),yPos(i,j));
+							if (isFuture) {
+								//console.log('isFuture');
+								if (!didStock1) {
+									ctx.stroke();
+									ctx.strokeStyle = data.datasets[i].strokeColor2;
+									didStock1 = true;
+								}
+							} else if (isSameMonth) {
+								//console.log('isSameMonth ', j);
+								if (j >= currentDate) {
+									if (!didStock1) {
+										ctx.stroke();
+										ctx.strokeStyle = data.datasets[i].strokeColor2;
+										didStock1 = true;
+									}
+								} //else ctx.fillStyle = config.passedFontColor;
+							} //else ctx.fillStyle = config.passedFontColor;
+							//console.log('strokeStyle ', ctx.strokeStyle);
 						}
 					}				
 				}

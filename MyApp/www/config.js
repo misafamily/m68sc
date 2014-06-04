@@ -24,6 +24,8 @@ AppConfig.eventData.CASH_CHANGED = 'cash_changed';
 AppConfig.eventData.SHOW_CASH_TRADE_LIST = 'show_cash_trade_list';
 AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
 AppConfig.eventData.ATM_ADDED = 'atm_added';
+AppConfig.eventData.APP_MASK = 'app_mask';
+AppConfig.eventData.APP_UNMASK = 'app_unmask';
 
 
 
@@ -36,6 +38,7 @@ AppConfig.placeholderData.TIEN_HIEN_CO = 'Tền hiện có trong thẻ';
 AppConfig.placeholderData.GHI_CHU = 'Ghi chú';
 
 AppConfig.textData = {};
+AppConfig.textData.TAI_DATA = 'Tải dữ liệu ..';
 AppConfig.textData.THEM_GIAO_DICH = 'CHỌN GIAO DỊCH';
 AppConfig.textData.CHI_TIEU = 'CHI TIÊU';
 AppConfig.textData.THU_NHAP = 'THU NHẬP';

@@ -284,20 +284,24 @@ Ext.define('MyApp.util.AppUtil', {
 	},
 	
 	alert: function(msg, title) {
+		MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
 		title = title || '';
-		Ext.Msg.alert(title, msg, Ext.emptyFn);
+		Ext.Msg.alert(title, msg, function() {
+			MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
+		});
 	},
 
 	confirm: function(msg, title, callback) {
-    	var me = this;
+    	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
     	Ext.Msg.confirm(title, msg, function(code){
+    		MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
     		if (code == 'yes') 
     			if (callback) callback();
     	});
     },
 
     showLoading: function (msg) {
-    	loading = loading || 'Loading ..';
+    	msg = msg || 'Loading ..';
         Ext.Viewport.mask({ xtype: 'loadmask', message: msg });
         Ext.Viewport.setMasked(true);
     },

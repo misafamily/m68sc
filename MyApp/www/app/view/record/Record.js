@@ -103,7 +103,11 @@ Ext.define('MyApp.view.record.Record', {
 			if (!me._initView) {
 				me._initView = true;
 				me.showMonth(me._currentDate);
-				me.createView();
+				Ext.defer(function(){
+					AppUtil.showLoading(AppConfig.textData.TAI_DATA);
+					me.createView();
+				},100);
+				//me.createView();
 				MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
 			}
 		}
@@ -189,6 +193,9 @@ Ext.define('MyApp.view.record.Record', {
 			me._container = me.down('container[cls = "record-list-container"]');
 		if (!me._store)
 			me._store = Ext.create('MyApp.store.Trades_Month_Day');
+
+		//AppUtil.showLoading(AppConfig.textData.TAI_DATA);
+		me._container.hide();
 		var now = me._currentDate;
 		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day', {
 			mm : now.getMonth(),
@@ -200,11 +207,44 @@ Ext.define('MyApp.view.record.Record', {
 			Ext.Array.each(records, function(record, i) {
 				Ext.defer(function(){
 					me.addRecord(record);
-				},100);
+				},50);
+
+				if (i == records.length - 1) {
+					
+					Ext.defer(function(){
+						me.expandToday();
+					},100);
+				}
 			});
 			
 			me.updateBalance();
+			if (records.length == 0) {
+				Ext.defer(function(){
+					
+					AppUtil.hideLoading();
+				},200);
+			}
 		});
+	},
+
+	expandToday: function() {
+		var me = this;
+		var foundItem = null;
+		var i = 0;
+		for (i = 0; i < me._recordItems.length; i++) {
+			var item = me._recordItems[i];
+			if (item.getIsToday() == true) {
+				foundItem = item;
+				me.onItemTap(item);
+				break;
+			}
+		}
+		//console.log('foundItem', foundItem);
+		if (foundItem) me._scroller.getScrollable().getScroller().scrollTo(0, i*40);
+		Ext.defer(function(){
+			me._container.show();
+			AppUtil.hideLoading();
+		},200);
 	},
 	
 	updateBalance: function() {//also call from RecordItem

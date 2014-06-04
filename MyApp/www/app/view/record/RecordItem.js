@@ -4,6 +4,7 @@ Ext.define('MyApp.view.record.RecordItem', {
 	requires : ['MyApp.store.Trades_Day'],
 	config : {
 		cls : 'recorditem-container',
+		isToday: false,
 		model : null,
 		itemStoreList : null,
 		layout : {
@@ -61,17 +62,31 @@ Ext.define('MyApp.view.record.RecordItem', {
 			
 			var now = new Date(data.yy, data.mm, data.dd);
 			
-			if (!me._lblDate) me._lblDate = header.down('label[cls = "recorditem-header-date"]');
+			if (!me._lblDate) me._lblDate = header.down('label[title = "headerdate"]');
 			me._lblDate.setHtml(data.dd);
 			
-			if (!me._lblDayname) me._lblDayname = header.down('label[cls = "recorditem-header-day"]');
+			if (!me._lblDayname) me._lblDayname = header.down('label[title = "headerday"]');
 			me._lblDayname.setHtml(now.dateFormatWithoutTime());
 			
-			if (!me._lblMonth) me._lblMonth = header.down('label[cls = "recorditem-header-month"]');
+			if (!me._lblMonth) me._lblMonth = header.down('label[title = "headermonth"]');
 			me._lblMonth.setHtml(now.getMonthName() + ' ' + now.getFullYear().toString());
 			
 			if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
 			me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
+
+			if (now.sameDateWith(new Date())) {
+				me.setIsToday(true);
+				//me._lblDayname.setHtml(now.dateFormatWithoutTime().toUpperCase());
+				me._lblDate.addCls('today');
+				me._lblDayname.addCls('today');
+				me._lblMonth.addCls('today');
+			} else {
+				me.setIsToday(false);
+				
+				me._lblDate.removeCls('today');
+				me._lblDayname.removeCls('today');
+				me._lblMonth.removeCls('today');
+			}
 
 			var list = me.getList();
 			list.setHeight(0);
@@ -152,7 +167,8 @@ Ext.define('MyApp.view.record.RecordItem', {
 				items : [{
 					xtype : 'label',
 					html : '10',
-					cls : 'recorditem-header-date'
+					cls : 'recorditem-header-date',
+					title: 'headerdate'
 				}, {
 					xtype : 'container',
 					layout : {
@@ -164,11 +180,13 @@ Ext.define('MyApp.view.record.RecordItem', {
 					items : [{
 						xtype : 'label',
 						html : '..',
-						cls : 'recorditem-header-day'
+						cls : 'recorditem-header-day',
+						title: 'headerday'
 					}, {
 						xtype : 'label',
 						html : '..',
-						cls : 'recorditem-header-month'
+						cls : 'recorditem-header-month',
+						title: 'headermonth'
 					}]
 				}, //end shape img
 				{

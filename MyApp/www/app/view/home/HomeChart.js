@@ -28,9 +28,9 @@ Ext.define('MyApp.view.home.HomeChart', {
 	     		me._screenHeight = 170;
 	     	
 	     	//fix duplicate canvas on Android webview
-	     	//var html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
+	     	var html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
 	     	
-	     	var html = '<canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas>';
+	     	//var html = '<canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas>';
 	     	//if (AppUtil.RELEASE) html = '<div style="position:relative; overflow-y:scroll;"><canvas id="home_chart_canvas_id" width="{0}" height="{1}"></canvas></div>';
 	     	html = Ext.util.Format.format(html, me._screenWidth, me._screenHeight);
 	     	me.setHtml(html);
@@ -116,7 +116,7 @@ Ext.define('MyApp.view.home.HomeChart', {
 	getDataForMonth: function(date) {
 		var me = this;		
 		var daysInMonth = Ext.Date.getDaysInMonth(date);
-		var todayDate = date.getDate();
+		var todayDate = daysInMonth;//date.getDate();
 		var labels = me.getData()['labels'];
 		var incomes = me.getData()['incomes'];
 		var expenses = me.getData()['expenses'];
@@ -315,10 +315,12 @@ Ext.define('MyApp.view.home.HomeChart', {
 			datasets : [
 				{
 					strokeColor : "rgba(139,246,78,.5)",
+					strokeColor2 : "rgba(139,246,00,.2)",
 					data : me.getData()['incomes']
 				},
 				{
 					strokeColor : "rgba(252,42,51,.5)",
+					strokeColor2 : "rgba(252,42,00,.2)",
 					data : this.getData()['expenses']
 				},
 				{

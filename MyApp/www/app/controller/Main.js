@@ -18,6 +18,9 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_DATE_CHOOSER, me.onShowDateChooser, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_CASH_TRADE_LIST, me.onShowCashTradeList, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_ATM_ADD, me.onShowAtmAdd, me);
+
+					MyApp.app.on(AppConfig.eventData.APP_MASK, me.onAppMasked, me);
+					MyApp.app.on(AppConfig.eventData.APP_UNMASK, me.onAppUnMasked, me);
 				}
 			},
 
@@ -55,6 +58,17 @@ Ext.define('MyApp.controller.Main', {
 
 	onToggleMenu : function() {
 		Ext.Viewport.toggleMenu("left");
+	},
+
+	onAppMasked: function() {
+		this.getMain().disable();
+	},
+
+	onAppUnMasked: function() {
+		var me = this;
+		Ext.defer(function() {
+			me.getMain().enable();
+		}, 300);
 	},
 
 	onShowInputer : function(defaultValue, callback, atitle) {

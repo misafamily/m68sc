@@ -153,6 +153,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 
 	showView : function() {
 		var me = this;
+		me.disable();
 		me.amount = 0;
 		if (!me._owner) me._owner = me.down('textfield[name="owner"]');
 		if (!me._bank) me._bank = me.down('textfield[name="bank"]');
@@ -164,7 +165,12 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 		me._note.reset();
 		
 		me.show();
+		Ext.defer(function() {
+			me.enable();
+		},300);
 	},
+
+
 
 	addAtm: function() {
 		var me = this;
