@@ -17,6 +17,7 @@ Ext.define('MyApp.util.offline.Proxy', {
     },
     //inherit docs
     create: function (operation, callback, scope) {
+        //console.log("PROXY create");
         var me = this;
         var records = me.getTableFields(operation.getRecords()),
             length = records.length,
@@ -26,35 +27,56 @@ Ext.define('MyApp.util.offline.Proxy', {
         //console.log(idProperty,"model")
         operation.setStarted();
 
+        var recordDone = 0;
+        var recordJobDone = function() {
+            recordDone ++;
+            if (recordDone >= length) {
+                if (typeof callback == 'function') {
+                    callback.call(scope || me, operation);
+                }
+            }
+        }
+
         for (var i = 0; i < length; i++) {
             record = records[i];
-            this.setRecord(record, me.config.dbConfig.tablename, idProperty);
+            this.setRecord(record, me.config.dbConfig.tablename, idProperty, recordJobDone);
         }
 
         operation.setCompleted();
         operation.setSuccessful();
 
-        if (typeof callback == 'function') {
+        if (typeof callback == 'function' && length == 0) {
             callback.call(scope || this, operation);
         }
     },
     //inherit docs
     update: function (operation, callback, scope) {
-        console.log("PROXY update");
+        //console.log("PROXY update");
         var me = this;
         var records = this.getTableFields(operation.getRecords()),
             length = records.length,
             record, id, i, tbl_Id = me.getModel().getIdProperty();
         //console.log(me.getModel().getClientIdProperty(),"primaryKey");
         operation.setStarted();
+
+        var recordDone = 0;
+        var recordJobDone = function() {
+            recordDone ++;
+            if (recordDone >= length) {
+                if (typeof callback == 'function') {
+                    callback.call(scope || me, operation);
+                }
+            }
+        }
+
         for (var i = 0; i < length; i++) {
             record = records[i];
-            this.updateRecord(record, me.config.dbConfig.tablename, tbl_Id);
+            this.updateRecord(record, me.config.dbConfig.tablename, tbl_Id, recordJobDone);
         }
         operation.setCompleted();
         operation.setSuccessful();
 
-        if (typeof callback == 'function') {
+        if (typeof callback == 'function' && length == 0) {
             callback.call(scope || this, operation);
         }
     },
@@ -88,6 +110,7 @@ Ext.define('MyApp.util.offline.Proxy', {
     },
     //inherit docs
     destroy: function (operation, callback, scope) {
+        console.log("PROXY destroy");
         var me = this;
         var records = (operation.records != undefined ? operation.records : operation.getRecords()),
             length = records.length,
@@ -311,7 +334,7 @@ Ext.define('MyApp.util.offline.Proxy', {
         var me = this,
         Model = me.getModel(),
         fields = Model.getFields().items,
-    	primarykey = Model.getIdProperty();
+        primarykey = Model.getIdProperty();
         var records = me.parseData(tx, results);
         var storedatas = [];
         if (results.rows && records.length) {
@@ -338,7 +361,7 @@ Ext.define('MyApp.util.offline.Proxy', {
     * Saves the given record in the Proxy.
     * @param {Ext.data.Model} record The model instance
     */
-    setRecord: function (record, tablename, primarykey) {
+    setRecord: function (record, tablename, primarykey, recordJobDone) {
         //console.log(primarykey);
         //console.log(record.internalId,"recprd1");
         //console.log(record.getData().id,"recprd2");
@@ -351,6 +374,7 @@ Ext.define('MyApp.util.offline.Proxy', {
             placeholders = [],
 
             onSuccess = function (tx, rs) {
+                //console.log('setRecord onSuccess');
                 //console.log(rs,"balh");
                 var returnrecord = record,
                 insertId = rs.insertId;
@@ -358,6 +382,7 @@ Ext.define('MyApp.util.offline.Proxy', {
                 returnrecord.internalId = insertId;
                 returnrecord.commit(true);
 
+                if (typeof recordJobDone == 'function') recordJobDone();
             },
 
             onError = function (tx, err) {
@@ -394,7 +419,7 @@ Ext.define('MyApp.util.offline.Proxy', {
     * Updates the given record.
     * @param {Ext.data.Model} record The model instance
     */
-    updateRecord: function (record, tablename, primarykey) {
+    updateRecord: function (record, tablename, primarykey, recordJobDone) {
         var me = this,
             Model = me.getModel(),
             keys = Model.getFields().keys,
@@ -406,13 +431,15 @@ Ext.define('MyApp.util.offline.Proxy', {
             values = [],
             onSuccess = function (tx, rs) {
                 //add new record if id doesn't exist
-                console.log('onSuccess: ' + rs.rowsAffected);
+                //console.log('updateRecord onSuccess: ' + rs.rowsAffected);
                 if (rs.rowsAffected == 0) {
                     me.setRecord(record, tablename, primarykey);
                 }
                 else {
                     record.commit(true);
                 }
+
+                if (typeof recordJobDone == 'function') recordJobDone();
             },
             onError = function (tx, err) {
                 console.log('updateRecord onError: ');
@@ -448,11 +475,11 @@ Ext.define('MyApp.util.offline.Proxy', {
     * Physically removes a given record from the object store. 
     * @param {Mixed} id The id of the record to remove
     */
-    removeRecord: function (key, keyvalue, callback, opts) { //opts: [ ['key', 'value]]
+    removeRecord: function (key, value, callback, opts) { //opts: [ ['key', 'value]]
         var me = this,
             values = [],
             onSuccess = function (tx, rs) {
-                if (callback) callback();
+                if (callback) if (typeof callback === 'function') callback();
             },
             onError = function (tx, err) {
                 console.log('removeRecord onError: ');
@@ -460,7 +487,7 @@ Ext.define('MyApp.util.offline.Proxy', {
                 me.throwDbError(tx, err);
             };
         var sql = 'DELETE FROM ' + me.config.dbConfig.tablename + ' WHERE ' + key + ' = ?';
-        values.push(keyvalue);
+        values.push(value);
 
         if (opts) {
             Ext.Array.each(opts, function (value, index) {
@@ -476,7 +503,7 @@ Ext.define('MyApp.util.offline.Proxy', {
         var me = this,
             values = [],
             Model = me.getModel(),
-     		primarykey = Model.getIdProperty();
+            primarykey = Model.getIdProperty();
         onSuccess = function (tx, rs) {
             //console.log(rs);
             var storedatas = [];
@@ -550,7 +577,7 @@ Ext.define('MyApp.util.offline.Proxy', {
         var me = this;
         var sql = 'SELECT * FROM ' + me.config.dbConfig.tablename + " ORDER BY id DESC LIMIT 1";
         var Model = me.getModel(),
-     		primarykey = Model.getIdProperty();
+            primarykey = Model.getIdProperty();
         var onSuccess = function (tx, rs) {
             //console.log(rs);
             var storedatas = [];
