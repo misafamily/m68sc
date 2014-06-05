@@ -167,6 +167,13 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			}, 30);
 		} else 
 			me._expandItem.expand();
+
+		Ext.defer(function(){
+			console.log('refreshMaxPosition ', me.parent.parent.parent._scroller.element.dom.offsetHeight);
+			var scroller = me.parent.parent.parent._scroller.getScrollable().getScroller();
+			scroller.refresh();
+			//scroller.refreshMaxPosition();
+		}, 200);
 	},
 
 	getHeader : function() {

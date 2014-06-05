@@ -61,6 +61,7 @@ AppConfig.textData.CHUYEN_KHOAN = 'Chuyển khoản';
 AppConfig.textData.SUA_THONG_TIN = 'Sủa thông tin';
 AppConfig.textData.THEM_TAI_KHOAN_ATM = 'Thêm tài khoản';
 AppConfig.textData.DIEN_THONG_TIN_ATM = 'Điền thông tin tài khỏan ATM';
+AppConfig.textData.TONG_CONG = 'Tổng cộng';
 
 
 AppConfig.type = {};

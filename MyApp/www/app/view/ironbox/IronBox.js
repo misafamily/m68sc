@@ -51,7 +51,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 			cls : 'viewbase-balance-box',
 			items : [{
 				xtype : 'label',
-				html: AppConfig.textData.SO_DU
+				html: AppConfig.textData.TONG_CONG
 			}, {
 				xtype : 'spacer'
 			}, {
@@ -172,5 +172,8 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 			}, 30);
 		} else 
 			me._expandItem.expand();
+
+		
+		
 	}
 });
