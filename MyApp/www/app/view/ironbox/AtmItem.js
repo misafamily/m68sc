@@ -50,14 +50,6 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 	showContent : function() {
 		var me = this;
 		var list = me.getList();
-		
-		if (!me._itemStore.isLoaded()) {
-			//log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
-			me._itemStore.load(function(records) {
-				if (records.length) list.setHeight(43 * records.length);
-			});
-		} 
-		
 		list.show();
 		
 	},
@@ -118,6 +110,13 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 				list.getStore().removeAll();
 		list.setHeight(0);
 		list.hide();
+	},
+
+	getRealHeight: function() {
+		var me = this;
+		if (me._list.getHidden() == true) {
+			return 40;
+		} else return (40 + me._list.getHeight());
 	},
 	
 

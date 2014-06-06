@@ -63,14 +63,6 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		var atmlist = me.getAtmList();
 
 		var list = me.getList();
-		
-		if (!me._itemStore.isLoaded()) {
-			//log(me._itemStore.getModel().getProxy().config.dbConfig.dbQuery);
-			me._itemStore.load(function(records) {
-				if (records.length) list.setHeight(43 * records.length);
-			});
-		} 
-		
 		list.show();
 		atmlist.show();
 		
@@ -156,6 +148,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			me._expandItem.collapse();
 			if (me._expandItem == item) {		
 				me._expandItem = null;
+				me.refreshParentScroller();
 				return;
 			} 
 				
@@ -168,12 +161,22 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		} else 
 			me._expandItem.expand();
 
-		Ext.defer(function(){
-			console.log('refreshMaxPosition ', me.parent.parent.parent._scroller.element.dom.offsetHeight);
+		me.refreshParentScroller();
+	},
+
+	refreshParentScroller: function() {
+		var me = this;
+		Ext.defer(function(){			
+			var totalHeight = 0;
+			Ext.each(me._atmContainer.items.items, function(item, i){
+				totalHeight += item.getRealHeight();
+			});
+			
+			me._atmContainer.setHeight(totalHeight);
 			var scroller = me.parent.parent.parent._scroller.getScrollable().getScroller();
 			scroller.refresh();
-			//scroller.refreshMaxPosition();
-		}, 200);
+			
+		}, 50);
 	},
 
 	getHeader : function() {
