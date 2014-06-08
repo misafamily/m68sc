@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.apppopup.Trade', {
 	extend : 'Ext.Container',
 	xtype : 'apppopup_trade',
-	requires:['MyApp.view.comp.PathMenu'],
+	requires:[],
 	config : {
 		cls : 'main popup-container',
 		layout : {

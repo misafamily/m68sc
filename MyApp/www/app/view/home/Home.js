@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.home.Home', {
 	extend : 'Ext.Container',
 	xtype : 'home',
-	requires : ['MyApp.store.Trades_Month', 'MyApp.view.home.HomeChart'],
+	requires : ['MyApp.view.home.HomeChart'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -118,9 +118,15 @@ Ext.define('MyApp.view.home.Home', {
 		}],
 		
 		control: {
-			/*'home': {
-				
-			}*/
+			'button[title="addtradebutton"]': {
+				tap: function() {
+					
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
+						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
+					},null);
+					
+				}
+			}
 		}
 	},
 	

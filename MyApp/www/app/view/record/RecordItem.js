@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.record.RecordItem', {
 	extend : 'Ext.Container',
 	xtype : 'record_recorditem',
-	requires : ['MyApp.store.Trades_Day'],
+	requires : ['MyApp.store.Trades'],
 	config : {
 		cls : 'recorditem-container',
 		isToday: false,
@@ -92,10 +92,10 @@ Ext.define('MyApp.view.record.RecordItem', {
 			list.setHeight(0);
 			list.hide();
 			if (!me._itemStore) {
-				me._itemStore = new MyApp.store.Trades_Day();
+				me._itemStore = Ext.create('MyApp.store.Trades');
 			} 
 
-			AppUtil.offline.updateStoreQuery(me._itemStore, 'Trades_Day', {
+			me._itemStore.changeQuery('Trades_Day', {
 				dd : now.getDate(),
 				mm : now.getMonth(),
 				yy : now.getFullYear()
@@ -229,12 +229,17 @@ Ext.define('MyApp.view.record.RecordItem', {
 						'</div>', 
 						'<tpl if="this.isChi(type)">',
 							'<div class= "total">-{amount:this.showAmount}</div>', 
-						'<tpl else>',
+						'<tpl elseif="this.isThu(type)">',
 							'<div class= "total">+{amount:this.showAmount}</div>', 
+						'<tpl else>',
+							'<div class= "total">{amount:this.showAmount}</div>', 
 						'</tpl>',
 					'</div>', {
 						isChi: function(type) {
-							return type == 'chi';
+							return type == AppConfig.type.CHI;
+						},
+						isThu: function(type) {
+							return type == AppConfig.type.THU;
 						},
 						showAmount: function(amount) {
 							return AppUtil.formatMoneyWithUnit(amount);

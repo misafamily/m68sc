@@ -37,6 +37,9 @@ Ext.define('MyApp.model.Hunter', {
 			name : 'id',
 			type : 'int',
 			fieldOption : ' PRIMARY KEY AUTOINCREMENT'
+		}, { //extra
+			name : 'total', //total of amount
+			type : 'int'
 		}],
 		proxy : {
 			type : 'sqlitestorage',

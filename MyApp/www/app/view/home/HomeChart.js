@@ -2,7 +2,7 @@ Ext.define('MyApp.view.home.HomeChart', {
     extend: 'Ext.Container',
     xtype: 'home_homechart',
     requires: [
-    	'MyApp.store.Trades_Month'
+    	'MyApp.store.Trades'
     ],
 	config: {
 		recordData: null,
@@ -216,8 +216,8 @@ Ext.define('MyApp.view.home.HomeChart', {
 		*/	
 		
 		//get expense of this month
-		if (!me._expenseStore) me._expenseStore = Ext.create('MyApp.store.Trades_Month');
-		AppUtil.offline.updateStoreQuery(me._expenseStore, 'Trades_Month', {
+		if (!me._expenseStore) me._expenseStore = Ext.create('MyApp.store.Trades');
+		me._expenseStore.changeQuery('Trades_Month', {
 				mm : date.getMonth(),
 				yy : date.getFullYear()
 		});

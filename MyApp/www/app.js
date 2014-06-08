@@ -13,9 +13,9 @@
 Ext.application({
     name: 'MyApp',
 
-    requires : ['MyApp.override.picker.Date', 'MyApp.util.AppUtil', 'MyApp.util.offline.Connection', 'MyApp.util.offline.Proxy', 'MyApp.util.offline.PagingLocalStorageProxy', 'MyApp.util.offline.Data'],
+    requires : ['MyApp.override.picker.Date', 'MyApp.util.AppUtil', 'MyApp.util.offline.Connection', 'MyApp.util.offline.Proxy', 'MyApp.util.offline.PagingLocalStorageProxy'],
     
-    controllers: ['Main','Home'],
+    controllers: ['Main'],
     
     models:['Hunter', 'Trade'],
     

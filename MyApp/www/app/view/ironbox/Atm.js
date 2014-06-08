@@ -86,7 +86,7 @@ Ext.define('MyApp.view.ironbox.Atm', {
 		me._lblMonth.setHtml(data.description);
 		
 		if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
-		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
+		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(data.total));
 
 		var atmlist = me.getAtmList();
 		atmlist.setHeight(0);
@@ -266,17 +266,25 @@ Ext.define('MyApp.view.ironbox.Atm', {
 			});
 
 			me._atmStore.load(function(records){
+				//var totalAmount = 0;
 				Ext.each(records, function(record, i) {
 					var atmItem = Ext.create('MyApp.view.ironbox.AtmItem');
 					atmItem.showHeader(record);
 					atmItem.on('headertap', me.onItemTap, me);
 					me._atmContainer.add(atmItem);
-				});
 
+					//totalAmount += parseInt(record.data.amount);
+				});
+				
 				me._atmContainer.setHeight(40*records.length);
 			});
 		}
 		//me.add(me._atmContainer);
 		return me._atmContainer;
+	}, 
+
+	updateTotalAmount: function(totalAmount) {
+		var me = this;
+		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(totalAmount));
 	}
 });

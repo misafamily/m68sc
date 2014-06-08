@@ -181,8 +181,8 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 		var amount = me._amount.getValue();
 		var note = me._note.getValue() || '';
 
-		if (!owner || !bank || !amount || !note) {
-			AppUtil.alert('Chua nhap day du thong tin');
+		if (!owner || !bank || !amount) {
+			AppUtil.alert(AppConfig.textData.NHAP_DATA_ERROR, AppConfig.textData.NHAP_DATA_TITLE);
 		} else {
 			var data = {
 				owner: owner,

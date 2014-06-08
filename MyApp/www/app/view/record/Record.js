@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.record.Record', {
 	extend : 'Ext.Container',
 	xtype : 'record',
-	requires : ['MyApp.view.record.RecordItem', 'MyApp.store.Trades_Month_Day'],
+	requires : ['MyApp.view.record.RecordItem'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -84,7 +84,17 @@ Ext.define('MyApp.view.record.Record', {
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-tag'
 			}]
-		}]
+		}],
+
+		control: {
+			'button[title="addtradebutton"]': {
+				tap: function() {
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, null, function(money){
+						MyApp.app.fireEvent(AppConfig.eventData.SHOW_TRADE, money);
+					},null);
+				}
+			}
+		}
 	},
 
 	initialize : function() {
@@ -117,7 +127,7 @@ Ext.define('MyApp.view.record.Record', {
 		var me = this;
 		if (!me._currentDate.sameMonthWith(date)) return;
 		//search to check if it is existed
-		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day_FilterWithDate', {
+		me._store.changeQuery('Trades_Month_Day_FilterWithDate', {
 				dd: date.getDate(),
 				mm : date.getMonth(),
 				yy : date.getFullYear()
@@ -192,12 +202,12 @@ Ext.define('MyApp.view.record.Record', {
 		if (!me._container)
 			me._container = me.down('container[cls = "record-list-container"]');
 		if (!me._store)
-			me._store = Ext.create('MyApp.store.Trades_Month_Day');
+			me._store = Ext.create('MyApp.store.Trades');
 
 		//AppUtil.showLoading(AppConfig.textData.TAI_DATA);
 		me._container.hide();
 		var now = me._currentDate;
-		AppUtil.offline.updateStoreQuery(me._store, 'Trades_Month_Day', {
+		me._store.changeQuery('Trades_Month_Day', {
 			mm : now.getMonth(),
 			yy : now.getFullYear()
 		});

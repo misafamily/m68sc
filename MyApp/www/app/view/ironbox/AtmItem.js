@@ -10,15 +10,74 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 			'list': {
 				itemtap: function( list, index, target, record, e, eOpts ) {
 					//log(record.data.action);
+					var me = this;
 					if (record.data.type == AppConfig.type.ATM) {
 						switch(record.data.action) {				
 							case AppConfig.action.THEM:
 								MyApp.app.fireEvent(AppConfig.eventData.SHOW_ATM_ADD);
 								break;
+							case AppConfig.action.DIEU_CHINH:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, me._amount, function(money) {
+									if (me._amount != money) {
+										var dif = money - me._amount;
+										me._amount = money;
+										//me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(me._amount));
+										me._atmModel.data.amount = money.toString();
+										me._atmModel.save(function() {
+											if (dif > 0) {
+												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.THU, dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
+											} else if (dif < 0) {
+												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.CHI, -dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
+											}
+											MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._atmModel.data.id);
+										});
+									}
+										
+								}, AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM_ONLY);
+								break;
+							case AppConfig.action.CHI_TIET_GIAO_DICH:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_ATM_TRADE_LIST, me._atmModel);
+								break;
+							case AppConfig.action.RUT:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, 0, function(money) {
+									var dif = me._amount - money;
+									if (dif < 0) {
+										AppUtil.alert(Ext.util.Format.format(AppConfig.textData.ATM_RUT_ERROR, AppUtil.formatMoney2WithUnit(me._amount)), AppConfig.textData.ERROR_TITLE + ' ' + AppConfig.textData.RUT_TIEN);
+									} else {
+										me._amount -= money;
+										//me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(me._amount));
+										me._atmModel.data.amount = me._amount.toString();
+										me._atmModel.save(function() {
+											AppUtil.cashPlus(dif, false);
+											AppUtil.doTrade(AppConfig.textData.RUT_TIEN + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.RUT, dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
+											MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._atmModel.data.id);
+										});
+									}
+								}, AppConfig.textData.RUT_TIEN + ' ' + AppConfig.textData.ATM_ONLY);
+								break;
+							case AppConfig.action.TIEN_THU_NHAP:
+								MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, 0, function(money) {
+									MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_ADD, money, AppConfig.type.ATM, me._atmModel);
+								}, AppConfig.textData.TIEN_THU_NHAP + ' ' + AppConfig.textData.ATM_ONLY);
+								break;
 						}
 					}
 				}
 			}
+		}
+	},
+
+	initialize: function() {
+		var me = this;
+		MyApp.app.on(AppConfig.eventData.ATM_CHANGED, me.onAtmChanged, me);
+	},
+
+	onAtmChanged: function(atmid) {
+		var me = this;
+		if (me._atmModel.data.id == atmid) {
+			//me._amount = me._atmModel.data;
+			me._amount = parseInt(me._atmModel.data.amount);
+			me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(me._amount));
 		}
 	},
 
@@ -57,6 +116,7 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 	showHeader : function(atmData) {
 		var me = this;
 		me.removeAll(false);
+		me._atmModel = atmData;
 
 		var data = {title: atmData.data.owner, description: atmData.data.bank, total: atmData.data.amount};
 		//log(data);
@@ -72,7 +132,8 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 		me._lblMonth.setHtml(data.description);
 		
 		if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
-		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
+		me._amount = parseInt(data.total);
+		me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(me._amount));
 
 		var list = me.getList();
 		list.setHeight(0);

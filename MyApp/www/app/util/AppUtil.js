@@ -88,7 +88,7 @@ Ext.define('MyApp.util.AppUtil', {
 				dbDescription : "money68productionteam m68app database"
 			};
 			me.dbConnection = Ext.create('MyApp.util.offline.Connection', dbconnval);
-			me.offline = Ext.create('MyApp.util.offline.Data', {});
+			//me.offline = Ext.create('MyApp.util.offline.Data', {});
 		}
 		return me.dbConnection;
 	},
@@ -167,18 +167,20 @@ Ext.define('MyApp.util.AppUtil', {
 		return this.CASH >= amount;
 	},
 
-	cashPlus : function(amount) {
+	cashPlus : function(amount, fire) {
 		var me = this;
+		fire = fire || true;
 		me.CASH += amount;
 		me.saveCashModel();
-		MyApp.app.fireEvent('cash_changed', me.CASH, amount);
+		if (fire) MyApp.app.fireEvent('cash_changed', me.CASH, amount);
 	},
 
-	cashMinus : function(amount) {
+	cashMinus : function(amount, fire) {
 		var me = this;
 		me.CASH -= amount;
 		me.saveCashModel();
-		MyApp.app.fireEvent('cash_changed', me.CASH, -amount);
+		fire = fire || true;
+		if (fire) MyApp.app.fireEvent('cash_changed', me.CASH, -amount);
 	},
 
 	cashEdit : function(amount) {
@@ -270,12 +272,8 @@ Ext.define('MyApp.util.AppUtil', {
 	},
 
 	onDevice : function() {
-		if (this.RELEASE) return true;
-		//alert('Ext.os.deviceType: ' + Ext.os.deviceType);
-		if (Ext.os.deviceType == "Desktop" || Ext.os.deviceType == "Phone") {
-			return false;
-		}
-		return true;
+		//if (this.RELEASE) return true;
+		return this.RELEASE;
 	},
 
 	log : function(msg) {
@@ -296,7 +294,7 @@ Ext.define('MyApp.util.AppUtil', {
     	Ext.Msg.confirm(title, msg, function(code){
     		MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
     		if (code == 'yes') 
-    			if (callback) callback();
+    			if (typeof callback === 'function') callback();
     	});
     },
 

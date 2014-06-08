@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.ironbox.IronBox', {
 	extend : 'Ext.Container',
 	xtype : 'ironbox',
-	requires : ['MyApp.view.ironbox.Cash', 'MyApp.view.ironbox.Atm'],
+	requires : ['MyApp.view.ironbox.Cash', 'MyApp.view.ironbox.Atm', 'MyApp.store.Atms'],
 	config : {
 		layout : {
 			type : 'vbox'
@@ -103,13 +103,37 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				me._initView = true;
 				//
 				me.showMonth(me._currentDate);
+				me._atmAmountTotal = 0;
+				me._cashAmountTotal = 0;
 				Ext.defer(function(){
 					AppUtil.showLoading(AppConfig.textData.TAI_DATA);
 					me.createView();
+					me.calculateTotal();
 				},100);
-				//MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.onTradeAdded, me);//from Trade, check to add RecordItem
+
+				MyApp.app.on(AppConfig.eventData.CASH_CHANGED, me.calculateTotal, me);
+				MyApp.app.on(AppConfig.eventData.TRADE_ADDED, me.calculateTotal, me);//from Trade, check to add RecordItem
+				MyApp.app.on(AppConfig.eventData.ATM_ADDED, me.calculateTotal, me);
+				MyApp.app.on(AppConfig.eventData.ATM_CHANGED, me.calculateTotal, me);
 			}
 		}
+	},
+
+	calculateTotal: function() {
+		var me = this;
+		if (!me._atmStore) me._atmStore = Ext.create('MyApp.store.Atms');
+		if (!me._lblBalance) me._lblBalance = me.down('label[cls="balance-lbl"]');
+		me._atmStore.changeQueryTotalAmount();
+		me._atmStore.load(function(records){
+			if (records.length > 0) {
+				me._atmAmountTotal = records[0].data.total;
+				var total = me._atmAmountTotal + AppUtil.CASH;
+				me._lblBalance.setHtml(AppUtil.formatMoney2WithUnit(total));
+
+
+				me._atm.updateTotalAmount(me._atmAmountTotal);
+			}		
+		});
 	},
 	
 	showMonth: function(date) {

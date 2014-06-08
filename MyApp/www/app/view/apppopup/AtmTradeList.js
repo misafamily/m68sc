@@ -1,6 +1,6 @@
-Ext.define('MyApp.view.apppopup.CashTradeList', {
+Ext.define('MyApp.view.apppopup.AtmTradeList', {
 	extend : 'MyApp.view.comp.AppContainer',
-	xtype : 'apppopup_cashtradelist',
+	xtype : 'apppopup_atmtradelist',
 	requires:['MyApp.view.comp.AppListPull', 'MyApp.store.Trades_Page'],
 	config : {
 		emptyListOnHide: true,
@@ -30,7 +30,7 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'label',
-				html : AppConfig.textData.GIAO_DICH_TIEN_MAT,
+				html : AppConfig.textData.GIAO_DICH_ATM,
 				cls : 'apppopup-title'
 			}, {
 				xtype : 'spacer'
@@ -60,7 +60,7 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 								'</tpl>',
 							'</div>', {
 							isChi: function(type) {
-							return type == AppConfig.type.CHI;
+								return type == AppConfig.type.CHI || type == AppConfig.type.RUT;
 							},
 							showAmount: function(amount) {
 								return AppUtil.formatMoneyWithUnit(amount);
@@ -82,16 +82,17 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 		}
 	},
 
-	showView : function() {
+	showView : function(atmModel) {
 		var me = this;
-		me.loadData();
+		me.loadData(atmModel);
 		me.show();
 	},
 
-	loadData: function() {
+	loadData: function(atmModel) {
 		var me = this;
 		if (!me._list) me._list = me.down('list');		
 		var store = me._list.getStore();
+		store.changeQueryAtmTradeList(atmModel.data.id);
 		store.loadPage(1/*, function(records, operation, success) {
 		    //console.log(records);
 		    Ext.defer(function(){

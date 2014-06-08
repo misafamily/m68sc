@@ -15,5 +15,10 @@ Ext.define('MyApp.store.Atms', {
 				type : 'array'
 			}
 		}
+    },
+
+    changeQueryTotalAmount: function() { //for ketsat > ATm
+    	var me = this;
+    	me.getProxy().config.dbConfig.dbQuery = 'SELECT IFNULL(SUM(h.amount), 0) as total FROM hunter h WHERE h.status = "active"';
     }
 });

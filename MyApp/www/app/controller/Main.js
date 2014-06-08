@@ -2,7 +2,8 @@ Ext.define('MyApp.controller.Main', {
 	extend : 'Ext.app.Controller',
 	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade',
 				'MyApp.view.apppopup.DateChooser', 'MyApp.view.apppopup.CashTradeList',
-				'MyApp.view.apppopup.AtmAdd'],
+				'MyApp.view.apppopup.AtmAdd', 'MyApp.view.apppopup.AtmTradeList',
+				'MyApp.view.apppopup.IncomeAdd'],
 	config : {
 		refs : {
 			main : 'main',
@@ -17,7 +18,9 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_TRADE, me.onShowTrade, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_DATE_CHOOSER, me.onShowDateChooser, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_CASH_TRADE_LIST, me.onShowCashTradeList, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_ATM_TRADE_LIST, me.onShowAtmTradeList, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_ATM_ADD, me.onShowAtmAdd, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_INCOME_ADD, me.onShowIncomeAdd, me);
 
 					MyApp.app.on(AppConfig.eventData.APP_MASK, me.onAppMasked, me);
 					MyApp.app.on(AppConfig.eventData.APP_UNMASK, me.onAppUnMasked, me);
@@ -101,11 +104,25 @@ Ext.define('MyApp.controller.Main', {
 		view.showView();
 	},
 
+	onShowAtmTradeList: function(atmModel) {
+		var me = this;
+		var view = me.getAtmTradeListView();
+		Ext.Viewport.add(view);
+		view.showView(atmModel);
+	},
+
 	onShowAtmAdd: function() {
 		var me = this;
 		var view = me.getAtmAddView();
 		Ext.Viewport.add(view);
 		view.showView();
+	},
+
+	onShowIncomeAdd: function(amount, type, model) {
+		var me = this;
+		var view = me.getIncomeAddView();
+		Ext.Viewport.add(view);
+		view.showView(amount, type, model);
 	},
 
 	//GET FUNCS
@@ -139,11 +156,27 @@ Ext.define('MyApp.controller.Main', {
 		return me._cashTradeList;
 	},
 
+	getAtmTradeListView: function() {
+		var me = this;
+		if (!me._atmTradeList)
+			me._atmTradeList = Ext.create('MyApp.view.apppopup.AtmTradeList');
+
+		return me._atmTradeList;
+	},
+
 	getAtmAddView: function() {
 		var me = this;
 		if (!me._atmAdd)
 			me._atmAdd = Ext.create('MyApp.view.apppopup.AtmAdd');
 
 		return me._atmAdd;
+	},
+
+	getIncomeAddView: function() {
+		var me = this;
+		if (!me._incomeAdd)
+			me._incomeAdd = Ext.create('MyApp.view.apppopup.IncomeAdd');
+
+		return me._incomeAdd;
 	}
 });

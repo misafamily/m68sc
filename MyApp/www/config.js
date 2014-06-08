@@ -21,11 +21,15 @@ AppConfig.eventData.TRADE_ADDED = 'TRADE_ADDED';
 AppConfig.eventData.EXPENSE_CHANGED = 'EXPENSE_CHANGED';
 AppConfig.eventData.SHOW_DATE_CHOOSER = 'SHOW_DATE_CHOOSER';
 AppConfig.eventData.CASH_CHANGED = 'cash_changed';
+AppConfig.eventData.ATM_CHANGED = 'atm_changed';
 AppConfig.eventData.SHOW_CASH_TRADE_LIST = 'show_cash_trade_list';
+AppConfig.eventData.SHOW_ATM_TRADE_LIST = 'show_atm_trade_list';
 AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
+AppConfig.eventData.SHOW_INCOME_ADD = 'show_income_add';
 AppConfig.eventData.ATM_ADDED = 'atm_added';
 AppConfig.eventData.APP_MASK = 'app_mask';
 AppConfig.eventData.APP_UNMASK = 'app_unmask';
+
 
 
 
@@ -49,10 +53,12 @@ AppConfig.textData.QUAN_LY_KET_SAT = 'Quản lý két sắt';
 AppConfig.textData.TIEN_MAT = 'Tiền mặt';
 AppConfig.textData.TIEN_MAT_HIEN_CO = 'Tiền mặt hiện có';
 AppConfig.textData.ATM = 'Tài khoản ATM';
+AppConfig.textData.ATM_ONLY = 'ATM';
 AppConfig.textData.TIEN_TRONG_TAI_KHOAN = 'Tiền trong tài khoản';
 AppConfig.textData.DIEU_CHINH_SO_DU = 'Điều chỉnh';// tiền mặt hiện có';
 AppConfig.textData.CHI_TIET_GIAO_DICH = 'Chi tiết giao dịch';
 AppConfig.textData.GIAO_DICH_TIEN_MAT = 'Giao dịch tiền mặt';
+AppConfig.textData.GIAO_DICH_ATM = 'Giao dịch ATM';
 AppConfig.textData.THEM_TAI_KHOAN = 'Thêm tài khoản';
 AppConfig.textData.RUT_TIEN = 'Rút tiền';
 AppConfig.textData.CHUYEN_TIEN = 'Chuyển vào tài khoản ATM';
@@ -62,11 +68,16 @@ AppConfig.textData.SUA_THONG_TIN = 'Sủa thông tin';
 AppConfig.textData.THEM_TAI_KHOAN_ATM = 'Thêm tài khoản';
 AppConfig.textData.DIEN_THONG_TIN_ATM = 'Điền thông tin tài khỏan ATM';
 AppConfig.textData.TONG_CONG = 'Tổng cộng';
+AppConfig.textData.NHAP_DATA_ERROR = 'Chưa nhập đầy đủ thông tin';
+AppConfig.textData.ATM_RUT_ERROR = 'Chỉ được rút tối đa {0}';
+AppConfig.textData.NHAP_ERROR_TITLE = 'Lỗi nhập liệu';
+AppConfig.textData.ERROR_TITLE = 'Lỗi';
 
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';
 AppConfig.type.CHI = 'chi';
+AppConfig.type.RUT = 'rut';
 
 AppConfig.type.TIEN_MAT = 'tien_mat';
 AppConfig.type.ATM = 'atm';
