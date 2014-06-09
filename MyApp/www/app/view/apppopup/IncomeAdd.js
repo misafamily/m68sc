@@ -194,6 +194,7 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 				me._model.data.amount = (parseInt(me._model.data.amount) + me.amount).toString();
 				me._model.save(function() {
 					MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._model.data.id);
+					AppUtil.autoAlert(AppConfig.textData.GIAO_DICH_OK);
 				});	
 			}
 				

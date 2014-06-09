@@ -72,6 +72,9 @@ AppConfig.textData.NHAP_DATA_ERROR = 'Chưa nhập đầy đủ thông tin';
 AppConfig.textData.ATM_RUT_ERROR = 'Chỉ được rút tối đa {0}';
 AppConfig.textData.NHAP_ERROR_TITLE = 'Lỗi nhập liệu';
 AppConfig.textData.ERROR_TITLE = 'Lỗi';
+AppConfig.textData.GIAO_DICH_OK = 'Giao dịch xong';
+AppConfig.textData.TAO_ATM_OK = 'Tạo mới ATM xong';
+AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
 
 
 AppConfig.type = {};

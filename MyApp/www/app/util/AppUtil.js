@@ -114,10 +114,11 @@ Ext.define('MyApp.util.AppUtil', {
 
 	},
 
-	doTrade : function(title, type, amount, trade_with, trade_note, time, hunter_id) {
+	doTrade : function(title, type, amount, trade_with, trade_note, time, hunter_id, showalert) {
 		//log('doTrade');
 		//log(arguments);
 		var now = time || new Date();
+		showalert = showalert || true;
 		trade_note = trade_note || '';
 		hunter_id = hunter_id || 'trade';
 		trade_with = trade_with || AppConfig.type.TIEN_MAT;
@@ -148,8 +149,10 @@ Ext.define('MyApp.util.AppUtil', {
 		};
 		//log(data);
 		var model = Ext.create('MyApp.model.Trade', data);
+		var me = this;
 		model.save(function() {
 			MyApp.app.fireEvent(AppConfig.eventData.TRADE_ADDED, now);
+			if (showalert) me.autoAlert(AppConfig.textData.GIAO_DICH_OK);
 		});
 	},
 
@@ -189,12 +192,13 @@ Ext.define('MyApp.util.AppUtil', {
 		me.CASH = amount;
 		me.saveCashModel();
 		if (dif > 0) {
-			me.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.TIEN_MAT.toLowerCase(), AppConfig.type.THU, dif, AppConfig.type.TIEN_MAT, '', new Date(), 'cash');
+			me.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.TIEN_MAT.toLowerCase(), AppConfig.type.THU, dif, AppConfig.type.TIEN_MAT, '', new Date(), 'cash', false);
 		} else if (dif < 0) {
-			me.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.TIEN_MAT.toLowerCase(), AppConfig.type.CHI, -dif, AppConfig.type.TIEN_MAT, '', new Date(), 'cash');
+			me.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.TIEN_MAT.toLowerCase(), AppConfig.type.CHI, -dif, AppConfig.type.TIEN_MAT, '', new Date(), 'cash', false);
 		}
 		
 		MyApp.app.fireEvent(AppConfig.eventData.CASH_CHANGED, me.CASH, amount);
+		me.autoAlert(AppConfig.textData.DIEU_CHINH_OK);
 	},
 	
 	checkAmount: function(amount) {

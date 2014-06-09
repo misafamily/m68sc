@@ -196,6 +196,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 			hunter.save(function() {
 				me.hide();
 				MyApp.app.fireEvent(AppConfig.eventData.ATM_ADDED, hunter);
+				AppUtil.autoAlert(AppConfig.textData.TAO_ATM_OK);
 			});
 		}
 	}

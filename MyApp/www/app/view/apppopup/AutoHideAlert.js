@@ -33,7 +33,7 @@ Ext.define('MyApp.view.apppopup.AutoHideAlert', {
     	me._msgLabel.setHtml(me.getMessage());
     },
 
-    show: function(msg) {
+    show: function() {
     	var me = this;
     	me.callParent(arguments);    	
     	if (me._interval) clearTimeout(me._interval);

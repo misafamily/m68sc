@@ -25,11 +25,12 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 										me._atmModel.data.amount = money.toString();
 										me._atmModel.save(function() {
 											if (dif > 0) {
-												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.THU, dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
+												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.THU, dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id, false);
 											} else if (dif < 0) {
-												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.CHI, -dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
+												AppUtil.doTrade(AppConfig.textData.DIEU_CHINH_SO_DU + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.CHI, -dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id, false);
 											}
 											MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._atmModel.data.id);
+											AppUtil.autoAlert(AppConfig.textData.DIEU_CHINH_OK);
 										});
 									}
 										
@@ -51,6 +52,7 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 											AppUtil.cashPlus(dif, false);
 											AppUtil.doTrade(AppConfig.textData.RUT_TIEN + ' ' + AppConfig.textData.ATM.toLowerCase(), AppConfig.type.RUT, dif, AppConfig.type.ATM, '', new Date(), me._atmModel.data.id);
 											MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._atmModel.data.id);
+											AppUtil.autoAlert(AppConfig.textData.GIAO_DICH_OK);
 										});
 									}
 								}, AppConfig.textData.RUT_TIEN + ' ' + AppConfig.textData.ATM_ONLY);
