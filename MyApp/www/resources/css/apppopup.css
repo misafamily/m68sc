@@ -65,3 +65,18 @@
 	color: #fff;
 	text-align: center;
 }
+
+/*AUTO HIDE ALERT*/
+.autohidealert-container {
+	height: 50px;
+	z-index: 11;
+	width: 100%;
+	background-color: transparent;
+}
+
+.autohidealert-container .message {
+	background-color: rgba(36, 95, 24, 0.9);
+	color: white;	
+	border-radius: 6px;
+	padding: 10px;
+}

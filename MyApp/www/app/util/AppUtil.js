@@ -1,6 +1,6 @@
 Ext.define('MyApp.util.AppUtil', {
 	alternateClassName : 'AppUtil',
-	requires : ['MyApp.model.SavedVar'],
+	requires : ['MyApp.model.SavedVar','MyApp.view.apppopup.AutoHideAlert'],
 	singleton : true,
 	dbConnection : null,
 	moneyUnit : 'đ',
@@ -288,6 +288,14 @@ Ext.define('MyApp.util.AppUtil', {
 			MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
 		});
 	},
+
+	autoAlert: function (msg) {
+       var me = this;
+       if (!me._autoHideAlert) me._autoHideAlert = Ext.create('MyApp.view.apppopup.AutoHideAlert');
+       Ext.Viewport.add(me._autoHideAlert);
+       me._autoHideAlert.setMessage(msg);
+       me._autoHideAlert.show();
+    },
 
 	confirm: function(msg, title, callback) {
     	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
