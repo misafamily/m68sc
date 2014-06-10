@@ -1,0 +1,101 @@
+{
+    "expenses": [
+        {
+            "name": "Đi chợ",
+            "thumb": "",
+			"type": "chi"
+        }, {
+            "name": "Điện",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Nước",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Gas",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Xăng",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Cước điện thoại",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Sủa chữa nhà cứa, xe cộ",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Học hành",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Y tế",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Ăn uống",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Cafe, bạn bè",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Mua sắm",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Giải trí",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Du lịch",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Bảo hiểm",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Cho vay",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Trả nợ",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Khác",
+            "thumb": "",
+            "type": "chi"
+        }, {
+            "name": "Tiền lương",
+            "thumb": "",
+            "type": "thu"
+        }, {
+            "name": "Tiền thưởng",
+            "thumb": "",
+            "type": "thu"
+        }, {
+            "name": "Tiền lãi",
+            "thumb": "",
+            "type": "thu"
+        }, {
+            "name": "Tiền trả nợ",
+            "thumb": "",
+            "type": "thu"
+        }, {
+            "name": "Buôn bán",
+            "thumb": "",
+            "type": "thu"
+        }, {
+            "name": "Khác",
+            "thumb": "",
+            "type": "thu"
+        }
+    ]
+}

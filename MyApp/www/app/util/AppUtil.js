@@ -16,7 +16,22 @@ Ext.define('MyApp.util.AppUtil', {
 		
 		me.getDbConnection();
 		me.initLocalStorage();
+		//me.initAppData();
 		
+	},
+
+	initAppData: function() {
+		var me = this;
+		var store = Ext.create('MyApp.store.InitData');
+		store.getProxy().setUrl('resources/data/InitData.json');
+		store.load(function(records) {
+			console.log(records);
+			/*Ext.Array.each(records, function(item, index){
+				//console.log(item);
+				//item.data.lang = lang;
+				item.save();
+			});*/
+		});
 	},
 
 	initLocalStorage : function() {

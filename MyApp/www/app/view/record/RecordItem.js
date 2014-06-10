@@ -72,7 +72,12 @@ Ext.define('MyApp.view.record.RecordItem', {
 			me._lblMonth.setHtml(now.getMonthName() + ' ' + now.getFullYear().toString());
 			
 			if (!me._lblAmount) me._lblAmount = header.down('label[cls = "recorditem-header-amount"]');
-			me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(parseFloat(data.total)));
+			var tt = parseFloat(data.total);
+			me._lblAmount.removeCls('income');
+			me._lblAmount.removeCls('outcome');
+			if (tt > 0) me._lblAmount.addCls('income');
+			else if (tt < 0) me._lblAmount.addCls('outcome');
+			me._lblAmount.setHtml(AppUtil.formatMoney2WithUnit(tt));
 
 			if (now.sameDateWith(new Date())) {
 				me.setIsToday(true);
@@ -228,9 +233,9 @@ Ext.define('MyApp.view.record.RecordItem', {
 							'<div class="description">{trade_note}</div>', 
 						'</div>', 
 						'<tpl if="this.isChi(type)">',
-							'<div class= "total">-{amount:this.showAmount}</div>', 
+							'<div class= "total outcome">-{amount:this.showAmount}</div>', 
 						'<tpl elseif="this.isThu(type)">',
-							'<div class= "total">+{amount:this.showAmount}</div>', 
+							'<div class= "total income">+{amount:this.showAmount}</div>', 
 						'<tpl else>',
 							'<div class= "total">{amount:this.showAmount}</div>', 
 						'</tpl>',

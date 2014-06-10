@@ -3,6 +3,10 @@
 	z-index: 5;
 }
 
+.popup6-container {
+	z-index: 6;
+}
+
 .apppopup-line {
 	width: 1px;
 	height: 80%;

@@ -126,7 +126,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							cls : 'form-textfield verhical',
 							//placeHolder : AppConfig.type.DI_CHO,
 							autoCapitalize : false,
-							value : AppConfig.type.DI_CHO
+							value : AppConfig.type.DI_CHO,
+							readOnly: true
 						}, /*{
 							xtype: 'comp_pathmenu',
 							zIndex: 2
@@ -254,6 +255,15 @@ Ext.define('MyApp.view.apppopup.Trade', {
 				focus : function(tf) {
 					var me = this;
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
+						me.amount = money;
+						tf.setValue(AppUtil.formatMoneyWithUnit(money));
+					}, null);
+				}
+			},
+			'textfield[name="outtype"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_EXPENSE_CHOSEN, tf.getValue(), function(money) {
 						me.amount = money;
 						tf.setValue(AppUtil.formatMoneyWithUnit(money));
 					}, null);

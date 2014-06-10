@@ -264,6 +264,11 @@ Ext.define('MyApp.view.record.Record', {
 		Ext.Array.each(me._monthRecords, function(record, i) {
 			balanceTotal += parseInt(record.data.total);
 		});
+
+		me._balanceLbl.removeCls('income');
+		me._balanceLbl.removeCls('outcome');
+		if (balanceTotal > 0) me._balanceLbl.addCls('income');
+		else if (balanceTotal < 0) me._balanceLbl.addCls('outcome');
 		
 		me._balanceLbl.setHtml(AppUtil.formatMoney2WithUnit(balanceTotal));
 	},

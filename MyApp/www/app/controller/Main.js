@@ -3,7 +3,8 @@ Ext.define('MyApp.controller.Main', {
 	requires : ['MyApp.view.apppopup.MoneyInputer', 'MyApp.view.apppopup.Trade',
 				'MyApp.view.apppopup.DateChooser', 'MyApp.view.apppopup.CashTradeList',
 				'MyApp.view.apppopup.AtmAdd', 'MyApp.view.apppopup.AtmTradeList',
-				'MyApp.view.apppopup.IncomeAdd'],
+				'MyApp.view.apppopup.IncomeAdd',
+				'MyApp.view.apppopup.Trade_ExpenseChosen'],
 	config : {
 		refs : {
 			main : 'main',
@@ -21,6 +22,7 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_ATM_TRADE_LIST, me.onShowAtmTradeList, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_ATM_ADD, me.onShowAtmAdd, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_INCOME_ADD, me.onShowIncomeAdd, me);
+					MyApp.app.on(AppConfig.eventData.SHOW_EXPENSE_CHOSEN, me.onShowExpenseChosen, me);
 
 					MyApp.app.on(AppConfig.eventData.APP_MASK, me.onAppMasked, me);
 					MyApp.app.on(AppConfig.eventData.APP_UNMASK, me.onAppUnMasked, me);
@@ -125,6 +127,13 @@ Ext.define('MyApp.controller.Main', {
 		view.showView(amount, type, model);
 	},
 
+	onShowExpenseChosen: function(value, callback) {
+		var me = this;
+		var view = me.getExpenseChosenView();
+		Ext.Viewport.add(view);
+		view.showView(value);
+	},
+
 	//GET FUNCS
 	getMoneyInputerView : function() {
 		var me = this;
@@ -178,5 +187,13 @@ Ext.define('MyApp.controller.Main', {
 			me._incomeAdd = Ext.create('MyApp.view.apppopup.IncomeAdd');
 
 		return me._incomeAdd;
+	},
+
+	getExpenseChosenView: function() {
+		var me = this;
+		if (!me._expenseChosen)
+			me._expenseChosen = Ext.create('MyApp.view.apppopup.Trade_ExpenseChosen');
+
+		return me._expenseChosen;
 	}
 });

@@ -475,6 +475,16 @@ body {
 	font-size: 14px;
 }
 
+.recorditem-list .info .total.income, .recorditem-header-amount.income, .balance-lbl.income {
+	color: #6bc63a;
+}
+
+.recorditem-list .info .total.outcome, .recorditem-header-amount.outcome, .balance-lbl.outcome {
+	color: #ff4f5a;
+}
+
+
+
 .record-list .x-list {
 	background-color: transparent;
 	margin-right: 12px;
