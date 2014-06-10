@@ -43,6 +43,7 @@ AppConfig.placeholderData.GHI_CHU = 'Ghi chú';
 
 AppConfig.textData = {};
 AppConfig.textData.TAI_DATA = 'Tải dữ liệu ..';
+AppConfig.textData.NO_DATA = 'Không có dữ liệu';
 AppConfig.textData.THEM_GIAO_DICH = 'CHỌN GIAO DỊCH';
 AppConfig.textData.CHI_TIEU = 'CHI TIÊU';
 AppConfig.textData.THU_NHAP = 'THU NHẬP';
@@ -64,7 +65,7 @@ AppConfig.textData.RUT_TIEN = 'Rút tiền';
 AppConfig.textData.CHUYEN_TIEN = 'Chuyển vào tài khoản ATM';
 AppConfig.textData.TIEN_THU_NHAP = 'Thu nhập';
 AppConfig.textData.CHUYEN_KHOAN = 'Chuyển khoản';
-AppConfig.textData.SUA_THONG_TIN = 'Sủa thông tin';
+AppConfig.textData.SUA_THONG_TIN = 'Sửa thông tin';
 AppConfig.textData.THEM_TAI_KHOAN_ATM = 'Thêm tài khoản';
 AppConfig.textData.DIEN_THONG_TIN_ATM = 'Điền thông tin tài khỏan ATM';
 AppConfig.textData.TONG_CONG = 'Tổng cộng';
@@ -73,7 +74,7 @@ AppConfig.textData.ATM_RUT_ERROR = 'Chỉ được rút tối đa {0}';
 AppConfig.textData.NHAP_ERROR_TITLE = 'Lỗi nhập liệu';
 AppConfig.textData.ERROR_TITLE = 'Lỗi';
 AppConfig.textData.GIAO_DICH_OK = 'Giao dịch xong';
-AppConfig.textData.TAO_ATM_OK = 'Tạo mới ATM xong';
+AppConfig.textData.TAO_ATM_OK = 'Thêm ATM xong';
 AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
 
 

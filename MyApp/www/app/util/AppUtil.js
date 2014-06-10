@@ -118,7 +118,7 @@ Ext.define('MyApp.util.AppUtil', {
 		//log('doTrade');
 		//log(arguments);
 		var now = time || new Date();
-		showalert = showalert || true;
+		if (showalert == null) showalert = true;
 		trade_note = trade_note || '';
 		hunter_id = hunter_id || 'trade';
 		trade_with = trade_with || AppConfig.type.TIEN_MAT;
