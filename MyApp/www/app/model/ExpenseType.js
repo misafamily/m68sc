@@ -29,6 +29,11 @@ Ext.define('MyApp.model.ExpenseType', {
                 defaultValue: 'app'
             },
             {
+                name:'selected',
+                type:'string', //'yes', 'no'
+                defaultValue: 'no'
+            },
+            {
             	name:'id',
             	type:'int',
             	fieldOption:' PRIMARY KEY AUTOINCREMENT'

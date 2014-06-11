@@ -80,7 +80,8 @@ AppConfig.textData.ERROR_TITLE = 'Lỗi';
 AppConfig.textData.GIAO_DICH_OK = 'Giao dịch xong';
 AppConfig.textData.TAO_ATM_OK = 'Thêm ATM xong';
 AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
-
+AppConfig.textData.KIEU_CHI_TIEU = 'Chọn kiểu chi tiêu';
+AppConfig.textData.KIEU_THU_NHAP = 'Chọn kiểu thu nhập';
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';
@@ -89,10 +90,6 @@ AppConfig.type.RUT = 'rut';
 
 AppConfig.type.TIEN_MAT = 'tien_mat';
 AppConfig.type.ATM = 'atm';
-
-//chi
-AppConfig.type.DI_CHO = 'Đi chợ';
-AppConfig.type.CHO_VAY = 'Cho vay';
 
 //thu
 AppConfig.type.LUONG = 'Lương';

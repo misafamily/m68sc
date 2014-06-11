@@ -6,6 +6,11 @@ Ext.define('MyApp.view.comp.AppList', {
         disableSelection: true,
         allowDeselect: false,  
 		flex: 1,
+		scrollable : {
+			directionLock : true,
+			direction : 'vertical',
+			indicators: false
+		},
 		//height: '100%',
 		emptyText: AppConfig.textData.NO_DATA//Chưa có dữ liệu
 		/*localize:true,

@@ -18,7 +18,18 @@ Ext.define('MyApp.view.apppopup.AutoHideAlert', {
 	    	xtype: 'label',
 	    	cls: 'message',
 	    	html: ''
-	    }]
+	    }],
+        listeners: [
+            {
+                element: 'element',
+                event: 'tap',
+                fn: function() {
+                    var me = this;
+                    me.hide();
+                    me._interval = null;
+                }
+            }
+        ]
     },
 
     initialize: function() {

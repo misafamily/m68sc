@@ -124,9 +124,9 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							name : 'outtype',
 							//label: 'Tên tài khoản ',
 							cls : 'form-textfield verhical',
-							//placeHolder : AppConfig.type.DI_CHO,
+							placeHolder : AppConfig.textData.KIEU_CHI_TIEU,
 							autoCapitalize : false,
-							value : AppConfig.type.DI_CHO,
+							//value : AppConfig.type.DI_CHO,
 							readOnly: true
 						}, /*{
 							xtype: 'comp_pathmenu',
@@ -263,9 +263,9 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			'textfield[name="outtype"]' : {
 				focus : function(tf) {
 					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_EXPENSE_CHOSEN, tf.getValue(), function(money) {
-						me.amount = money;
-						tf.setValue(AppUtil.formatMoneyWithUnit(money));
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_EXPENSE_CHOSEN, AppConfig.type.CHI, tf.getValue(), function(value) {
+						//me.amount = money;
+						tf.setValue(value);
 					}, null);
 				}
 			},

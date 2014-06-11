@@ -41,9 +41,23 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 		}, {
 			xtype: 'container',
 			cls : 'main fullwidth-container',
+			layout: {
+				type: 'vbox'
+			},
 			flex: 1,
 			items: [{
-				xclass: 'MyApp.view.comp.AppList'
+				xclass: 'MyApp.view.comp.AppList',
+				cls : 'recorditem-list nobg',
+				itemTpl: new Ext.XTemplate(
+					'<div class="info">', 
+						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
+						'<div class="content">', 
+							'<div class="title">{name}</div>',
+						'</div>', 
+						'<div class= "check {selected}"></div>', 
+					'</div>'
+				),
+				itemHeight: 40
 			}]
 		}, {
 
@@ -56,8 +70,8 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done2',
-				title : 'addincomebutton'
+				cls : 'button-icon toolbar-button-done',
+				title : 'donebutton'
 			}]
 		}],
 			
@@ -68,90 +82,38 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 					this.hide();
 				}
 			},
-			'textfield[name="amount"]' : {
-				focus : function(tf) {
+			'button[title = "donebutton"]' : {
+				tap : function() {
 					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
-						me.amount = money;
-						tf.setValue(AppUtil.formatMoneyWithUnit(money));
-					}, null);
-				}
-			},
-			'textfield[name="outtradedate"]' : {
-				focus : function(tf) {
-					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_DATE_CHOOSER, me._selectedDate, function(date) {
-						me._selectedDate = date;
-						//tf.setValue(me._selectedDate.tradeDateFormat());
-						var todayDateFormat = me._selectedDate.tradeDateFormat();
-		
-						me._outtrade.setValue(todayDateFormat);	
-						me._intrade.setValue(todayDateFormat);
-					});
-				}
-			},
-			'textfield[name="intradedate"]' : {
-				focus : function(tf) {
-					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_DATE_CHOOSER, me._selectedDate, function(date) {
-						me._selectedDate = date;
-						//tf.setValue(me._selectedDate.tradeDateFormat());
-						var todayDateFormat = me._selectedDate.tradeDateFormat();
-		
-						me._outtrade.setValue(todayDateFormat);	
-						me._intrade.setValue(todayDateFormat);
-					});
-				}
-			},
-			'button[title = "addoutcomebutton"]' : {
-				tap : 'onOutcomeButtonClicked'
-			},
-			'button[title = "addincomebutton"]' : {
-				tap : 'onIncomeButtonClicked'
-			},
-			'carousel': {
-				activeitemchange : function(carousel, value, oldValue, eOpts) {
-					//log('activeitemchange');
-					var me = this;
-					var sb = me.getSegmentedButton();
-					sb.setPressedButtons(carousel.activeIndex);
-				}
-			},
-			'segmentedbutton': {
-				toggle : function(segmentbutton, button, pressed) {
-
-					var me = this;
-					if (pressed == true) {
-						var newIndex = button.config.viewIndex;
-						var oldIndex = me.getCarousel().activeIndex;
-						if (newIndex != oldIndex)
-							me.getCarousel().setActiveItem(newIndex);
+					if (typeof me._callback === 'function') {
+						me._callback(me._selectedText);
+						me.hide();
 					}
+				}
+			},
+			'list': {
+				itemtap: function(list, target, index, record) {
+					var me = this;
+					if (me._selectedRec) me._selectedRec.data.selected = 'no';
 
-				}//end toogle
+					me._selectedRec = record;
+					me._selectedRec.data.selected = 'yes';
+
+					me._selectedText = me._selectedRec.data.name;
+
+					me._list.refresh();
+					//console.log('itemtap', record);
+				}
 			}
 		}
-	},
-	
-	getSegmentedButton: function() {
-		var me = this;
-		if (!me._sb) me._sb = me.down('segmentedbutton');
-		return me._sb;
-	},
-	
-	getCarousel: function() {
-		var me = this;
-		if (!me._cs) me._cs = me.down('carousel');
-		return me._cs;
 	},
 
 	initialize : function() {
 		var me = this;
 		me.callParent(arguments);
-
 	},
 
-	onOutcomeButtonClicked : function() {
+	onDoneButtonClicked : function() {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
@@ -159,19 +121,14 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 			me.hide();
 		}
 	},
-	
-	onIncomeButtonClicked: function() {
-		var me = this;
-		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
 
-			me.hide();
-		}
-	},
-
-	showView : function(value, callback) {
+	showView : function(type, value, callback) {
 		var me = this;
-		//me.resetView();
+		me._type = type;
+		me._value = value;
+		me._callback = callback;
+		me._selectedText = value;
+		me.resetView();
 		//me.amount = money;
 		//me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
 		me.show();
@@ -179,30 +136,26 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 
 	resetView : function() {
 		var me = this;
-		if (!me._amount)
-			me._amount = me.down('textfield[name = "amount"]');
-		me._amount.reset();
-		me.amount = 0;
-		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
-		me._selectedDate = new Date();
-		var todayDateFormat = me._selectedDate.tradeDateFormat();
-		
-		if (!me._outtype)
-			me._outtype = me.down('textfield[name = "outtype"]');
-		if (!me._outnote)
-			me._outnote = me.down('textfield[name = "outnote"]');
-		if (!me._outtrade)
-			me._outtrade = me.down('textfield[name = "outtradedate"]');
-		
-		if (!me._intype)
-			me._intype = me.down('textfield[name = "intype"]');
-		if (!me._innote)
-			me._innote = me.down('textfield[name = "innote"]');
-		if (!me._intrade)
-			me._intrade = me.down('textfield[name = "intradedate"]');
-		
-		me._outtrade.setValue(todayDateFormat);	
-		me._intrade.setValue(todayDateFormat);
-		me.getCarousel().setActiveItem(0);
+		AppUtil.showLoading();
+		if (!me._store) me._store = Ext.create('MyApp.store.ExpenseTypes');
+		if (!me._list) me._list = me.down('list');
+		if (!me._list.getStore()) me._list.setStore(me._store);
+
+		me._list.getScrollable().getScroller().scrollToTop();
+		me._store.changeQueryByType(me._type);
+		me._store.load(function(records){
+			Ext.defer(function(){
+				if (me._value) {
+					for (var i = 0; i < records.length; i++) {
+						if (records[i].data.name == me._value) {
+							records[i].data.selected = 'yes';
+							break;
+						}
+					}
+					me._list.refresh();
+				}
+				AppUtil.hideLoading();
+			},20);
+		});
 	}
 });

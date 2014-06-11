@@ -127,11 +127,11 @@ Ext.define('MyApp.controller.Main', {
 		view.showView(amount, type, model);
 	},
 
-	onShowExpenseChosen: function(value, callback) {
+	onShowExpenseChosen: function(type, value, callback) {
 		var me = this;
 		var view = me.getExpenseChosenView();
 		Ext.Viewport.add(view);
-		view.showView(value);
+		view.showView(type, value, callback);
 	},
 
 	//GET FUNCS

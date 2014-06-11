@@ -89,7 +89,8 @@
             "name": "Khác",
             "uname": "chi_khac",
             "thumb": "",
-            "type": "chi"
+            "type": "chi",
+            "stat": "-1"
         }, {
             "name": "Tiền lương",
             "uname": "tien_luong",
@@ -119,7 +120,8 @@
             "name": "Khác",
             "uname": "thu_khac",
             "thumb": "",
-            "type": "thu"
+            "type": "thu",
+            "stat": "-1"
         }
     ]
 }

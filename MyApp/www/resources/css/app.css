@@ -426,7 +426,8 @@ body {
 }
 
 .recorditem-list .info .thumb, .recorditem-list .info .date, 
-.recorditem-list .info .content, .recorditem-list .info .total {
+.recorditem-list .info .content, .recorditem-list .info .total,
+.recorditem-list .info .check {
 	display: inline-block;
 	/* height: 100%; */
 	vertical-align: middle;
@@ -467,12 +468,20 @@ body {
 	
 }
 
-.recorditem-list .info .total {
+.recorditem-list .info .total, .recorditem-list .info .check {
 	right: 12px;
 	position: absolute;
 	margin-top: 12px;
 	text-align: right;
 	font-size: 14px;
+}
+
+.recorditem-list .info .check.yes {
+	background-image: url('../images/check.png');
+	width: 35px;
+	height: 35px; 
+	background-size: contain;
+	margin-top: 2px;
 }
 
 .recorditem-list .info .total.income, .recorditem-header-amount.income, .balance-lbl.income {
