@@ -20,18 +20,50 @@ Ext.define('MyApp.util.AppUtil', {
 		
 	},
 
-	initAppData: function() {
+	initAppData: function(callback) {
 		var me = this;
-		var store = Ext.create('MyApp.store.InitData');
-		store.getProxy().setUrl('resources/data/InitData.json');
-		store.load(function(records) {
-			console.log(records);
-			/*Ext.Array.each(records, function(item, index){
-				//console.log(item);
-				//item.data.lang = lang;
-				item.save();
-			});*/
+		var datastore = Ext.create('MyApp.store.InitExpenseData');
+		var localstore = Ext.create('MyApp.store.ExpenseTypes');
+		datastore.getProxy().setUrl('resources/data/InitData.json');
+		datastore.load(function(records) {
+			//console.log('records', records);
+			localstore.load(function(localRecords){
+				//console.log('localRecords', localRecords);
+				if (localRecords.length < 1) {
+					localstore.setData(records);
+					localstore.sync({
+						callback: function() {
+							if (typeof callback == 'function') callback();
+						}
+					});
+				} else {
+					//check for new item
+					Ext.each(records, function(dataitem, i) {
+						var check = me.checkExist(dataitem, localRecords);						
+						if (check) {
+							if (check.data.name != dataitem.data.name) {
+								check.data.name = dataitem.data.name;
+								check.save();
+							}
+						} else {
+							dataitem.save();
+						}
+					});
+
+					if (typeof callback == 'function') callback();
+				}
+			});			
 		});
+	},
+
+	checkExist: function(model, localModels) {
+		for (var j = 0; j < localModels.length; j++) {
+			var item = localModels[j];
+			if (item.data.uname == model.data.uname) {
+				return item;
+			}
+		}
+		return null;
 	},
 
 	initLocalStorage : function() {

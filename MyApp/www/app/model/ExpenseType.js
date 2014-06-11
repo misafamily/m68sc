@@ -3,11 +3,15 @@ Ext.define('MyApp.model.ExpenseType', {
     config: {
         fields: [
         	{
-            	name:'name',
+            	name:'name',//Di cho, Du lich,...
             	type:'string'
-           },
+            },
             {
-            	name:'thumb', //Di cho, Du lich,...
+                name:'uname', //unique name
+                type:'string'
+            },
+            {
+            	name:'thumb', 
             	type:'string'
             },
            {

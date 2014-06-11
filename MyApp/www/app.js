@@ -19,7 +19,7 @@ Ext.application({
     
     models:['Hunter', 'Trade'],
     
-    stores:['Hunters', 'Trades', 'InitData'],
+    stores:['Hunters', 'Trades', 'InitExpenseData', 'ExpenseTypes'],
 
     views: [
         'Main'
@@ -60,9 +60,11 @@ Ext.application({
 		Ext.Date.monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 		Ext.Date.dayNames = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
 		
-		AppUtil.initAppData();
-		 Ext.fly('appLoadingIndicator').destroy();	
-		 Ext.Viewport.add(Ext.create('MyApp.view.Main'));
+		AppUtil.initAppData(function(){
+			Ext.fly('appLoadingIndicator').destroy();	
+		 	Ext.Viewport.add(Ext.create('MyApp.view.Main'));	
+		});
+		 
 		 
 		 //return;banner height: 48px
 		 if( window.plugins && window.plugins.AdMob ) {

@@ -1,4 +1,4 @@
-Ext.define('MyApp.store.InitData', {
+Ext.define('MyApp.store.InitExpenseData', {
     extend: 'Ext.data.Store',
     requires: ['MyApp.model.ExpenseType'],
     config: {	
