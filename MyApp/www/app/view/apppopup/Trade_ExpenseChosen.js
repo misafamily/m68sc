@@ -179,11 +179,13 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 						if (records[i].data.name == me._value) {
 							records[i].data.selected = 'yes';
 							me._selectedRec = records[i];
+
 							break;
 						}
 					}					
 				}
 			}
+			me._list.scrollToRecord(me._selectedRec);
 			me._list.refresh();
 		}
 		

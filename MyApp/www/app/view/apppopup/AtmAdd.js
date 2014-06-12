@@ -86,7 +86,8 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					//label: 'Tên tài khoản ',
 					cls : 'form-textfield verhical',
 					placeHolder : AppConfig.placeholderData.TEN_CHU_THE,					
-					value : ''
+					value : '',
+					maxLength: 25
 				}, /*{
 					xtype: 'comp_pathmenu',
 					zIndex: 2
@@ -95,7 +96,8 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					name : 'bank',
 					placeHolder : AppConfig.placeholderData.NGAN_HANG,	
 					cls : 'form-textfield expensetype',
-					value : ''
+					value : '',
+					maxLength: 25
 				}, {
 					xtype : 'textfield',
 					name : 'amount',
@@ -107,7 +109,8 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					xtype : 'textfield',
 					name : 'note',
 					placeHolder : AppConfig.placeholderData.GHI_CHU,
-					cls : 'form-textfield expensetype'
+					cls : 'form-textfield expensetype',
+					maxLength: 100
 				}]
 			}]
 

@@ -84,9 +84,9 @@ AppConfig.textData.ERROR_TITLE = 'Lỗi';
 AppConfig.textData.GIAO_DICH_OK = 'Giao dịch xong';
 AppConfig.textData.TAO_ATM_OK = 'Thêm ATM xong';
 AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
-AppConfig.textData.KIEU_CHI_TIEU = 'Chọn chi tiêu';
-AppConfig.textData.KIEU_THU_NHAP = 'Chọn thu nhập';
-AppConfig.textData.KIEU_CASH_ATM = 'Chọn tiền mặt hay thẻ ATM';
+AppConfig.textData.KIEU_CHI_TIEU = 'Chọn chi tiêu *';
+AppConfig.textData.KIEU_THU_NHAP = 'Chọn thu nhập *';
+AppConfig.textData.KIEU_CASH_ATM = 'Chọn tiền mặt hay ATM';
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';

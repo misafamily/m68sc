@@ -387,6 +387,9 @@ body {
 .recorditem-header-day {
 	font-size: 14px;
 	margin-top: 0px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .recorditem-header-day.today {
@@ -397,6 +400,9 @@ body {
 
 .recorditem-header-month {
 	font-size: 10px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .recorditem-header-month.today {
@@ -454,6 +460,10 @@ body {
 
 .recorditem-list .info .content .title {
     font-size: 14px;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 175px;
 }
 
 .recorditem-list .info .date {
@@ -465,6 +475,10 @@ body {
 
 .recorditem-list .info .content .description {
     font-size: 10px;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 175px;
 	
 }
 

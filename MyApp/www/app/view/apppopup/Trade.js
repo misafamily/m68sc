@@ -135,7 +135,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							xtype : 'textfield',
 							name : 'outnote',
 							placeHolder : AppConfig.placeholderData.GHI_CHU_CHI,
-							cls : 'form-textfield expensetype'
+							cls : 'form-textfield expensetype',
+							maxLength: 50
 						}, {
 							xtype : 'textfield',
 							name : 'outpaidby',
@@ -211,7 +212,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							xtype : 'textfield',
 							name : 'innote',
 							placeHolder : AppConfig.placeholderData.GHI_CHU_THU,
-							cls : 'form-textfield expensetype'
+							cls : 'form-textfield expensetype',
+							maxLength: 50
 						}, {
 							xtype : 'textfield',
 							name : 'inpaidby',
@@ -274,11 +276,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			'textfield[name="intype"]' : {
 				focus : function(tf) {
 					var me = this;
-					var idata = {};
-					idata.name = tf.getValue();
-					idata.id = '';
-
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, idata, function(value) {
+					
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, tf.getValue(), function(value) {
 						//me.amount = money;
 						tf.setValue(value);
 					}, null);
@@ -287,22 +286,32 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			'textfield[name="outpaidby"]' : {
 				focus : function(tf) {
 					var me = this;
-					var idata = {};
-					idata.name = tf.getValue();
-					idata.id = '';
+					if (!me._selectedPaid) me._selectedPaid = null;
 
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.CHI, idata, function(data) {
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.CHI, me._selectedPaid, function(data) {
 						//me.amount = money;
 						//tf.setValue(value);
+						me._selectedPaid = data;
+						var displayname = data.data.name;
+						if (data.data.typename != '') displayname = data.data.typename + ' ' + displayname;
+						me._outpaidtrade.setValue(displayname);
+						me._inpaidtrade.setValue(displayname);
 					}, null);
 				}
 			},
 			'textfield[name="inpaidby"]' : {
 				focus : function(tf) {
 					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.THU, tf.getValue(), function(data) {
+					if (!me._selectedPaid) me._selectedPaid = null;
+
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.THU, me._selectedPaid, function(data) {
 						//me.amount = money;
 						//tf.setValue(value);
+						me._selectedPaid = data;
+						var displayname = data.data.name;
+						if (data.data.typename != '') displayname = data.data.typename + ' ' + displayname;
+						me._outpaidtrade.setValue(displayname);
+						me._inpaidtrade.setValue(displayname);
 					}, null);
 				}
 			},
@@ -382,6 +391,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 
 	onOutcomeButtonClicked : function() {
 		var me = this;
+		var typename = me._outtype.getValue();
+		if (typename == '') {
+			AppUtil.alert('Chon chi tieu di ku');
+			return;
+		}
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
 
@@ -391,6 +405,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	
 	onIncomeButtonClicked: function() {
 		var me = this;
+		var typename = me._outtype.getValue();
+		if (typename == '') {
+			AppUtil.alert('Chon thu nhap di ku');
+			return;
+		}
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
 
@@ -422,6 +441,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			me._outnote = me.down('textfield[name = "outnote"]');
 		if (!me._outtrade)
 			me._outtrade = me.down('textfield[name = "outtradedate"]');
+		if (!me._outpaidtrade)
+			me._outpaidtrade = me.down('textfield[name = "outpaidby"]');
 		
 		if (!me._intype)
 			me._intype = me.down('textfield[name = "intype"]');
@@ -429,11 +450,15 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			me._innote = me.down('textfield[name = "innote"]');
 		if (!me._intrade)
 			me._intrade = me.down('textfield[name = "intradedate"]');
+		if (!me._inpaidtrade)
+			me._inpaidtrade = me.down('textfield[name = "inpaidby"]');
 		
 		me._outtype.setValue('');
 		me._intype.setValue('');
 		me._outnote.setValue('');
 		me._innote.setValue('');
+		me._outpaidtrade.setValue(AppConfig.textData.TIEN_MAT);
+		me._inpaidtrade.setValue(AppConfig.textData.TIEN_MAT);
 		me._outtrade.setValue(todayDateFormat);	
 		me._intrade.setValue(todayDateFormat);
 		me.getCarousel().setActiveItem(0);

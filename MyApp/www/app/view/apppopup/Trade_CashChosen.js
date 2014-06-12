@@ -24,14 +24,14 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 			},
 			cls : 'viewbase-toolbar-top',
 			width : '100%',
-			items : [{
+			items : [/*{
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-back',
 				title : 'backbtn'
 			}, {
 				xtype : 'container',
 				cls : 'apppopup-line'
-			}, {
+			}, */{
 				xtype : 'spacer'
 			}, {
 				xtype : 'label',
@@ -39,10 +39,10 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 				cls : 'apppopup-title'
 			}, {
 				xtype : 'spacer'
-			}, {
+			}/*, {
 				xtype : 'spacer',
 				width : 31
-			}]
+			}*/]
 		},{
     		xtype: 'container',
 			cls : 'main fullwidth-container',
@@ -58,6 +58,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
 						'<div class="content">', 
 							'<div class="title">{name}</div>',
+							'<div class="description">{typename}</div>',
 						'</div>', 
 						'<div class= "check {selected}"></div>', 
 					'</div>'
@@ -78,7 +79,36 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 				cls : 'button-icon toolbar-button-done',
 				title : 'donebutton'
 			}]
-		}]
+		}],
+
+		control : {
+
+			'button[title = "donebutton"]' : {
+				tap : function() {
+					var me = this;
+					if (typeof me._callback === 'function') {
+						//me._callback(me._value);
+						me.hide();
+					}
+				}
+			},
+			'list': {
+				itemtap: function(list, target, index, record) {
+					var me = this;
+					if (me._selectedRec) me._selectedRec.data.selected = 'no';
+
+					me._selectedRec = record;
+					me._selectedRec.data.selected = 'yes';
+
+					//me._value = me._selectedRec.data.name;
+					me._callback(Ext.clone(me._selectedRec));
+
+					me._list.refresh();
+					//console.log('itemtap', record);
+					//console.log('_selectedRec', me._selectedRec);
+				}
+			}
+		}
 	},
 
 	showView : function(type, value, callback) {
@@ -86,9 +116,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 		me._type = type;
 		me._value = value;
 		me._callback = callback;		
-		//me.resetView();
-		//me.amount = money;
-		//me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
+		me.resetView();
 		me.show();
 	},
 
@@ -98,7 +126,23 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 		if (!me._store) {
 			firstRun = true;
 			AppUtil.showLoading();
-			me._store = Ext.create('MyApp.store.ExpenseTypes');
+			me._store = Ext.create('Ext.data.Store', {
+				fields: ['id', 'name', 'type', 'selected', 'typename']
+			});
+
+			me._atmStore = Ext.create('Ext.data.Store', {
+				fields: ['id', 'name'],
+				proxy : {
+					type : 'sqlitestorage',
+					dbConfig : {
+						tablename : 'hunter',
+						dbQuery : 'SELECT id, owner as name from hunter  WHERE status = "active"' //+ '" ORDER BY time DESC
+					},
+					reader : {
+						type : 'array'
+					}
+				}
+			});
 		}
 		if (!me._list) me._list = me.down('list');
 		if (!me._list.getStore()) me._list.setStore(me._store);
@@ -106,26 +150,35 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 		me._list.getScrollable().getScroller().scrollToTop();
 
 		if (firstRun) {
-			me._store.changeQueryByType(me._type);
-			me._store.load(function(records){
+			//me._store.changeQueryByType(me._type);
+			var datas = [];
+			datas.push({id: 0, type: AppConfig.type.TIEN_MAT, name: AppConfig.textData.TIEN_MAT, selected: 'yes', typename: ''});
+			
+
+			me._atmStore.load(function(records){
 				Ext.defer(function(){
-					if (me._value) {
+					//if (me._value) {
 						for (var i = 0; i < records.length; i++) {
-							if (records[i].data.name == me._value) {
+							/*if (records[i].data.name == me._value) {
 								records[i].data.selected = 'yes';
 								me._selectedRec = records[i];
 								break;
-							}
+							}*/
+							datas.push({id: records[i].data.id, type: AppConfig.type.ATM, name: records[i].data.name, selected: 'no', typename: AppConfig.textData.ATM_ONLY});
 						}
+						me._store.setData(datas);
+
+						me._selectedRec = me._store.data.items[0];
+
 						me._list.refresh();
-					}
+					//}
 					AppUtil.hideLoading();
 				},20);
 			});	
 		} else {
 			var needChanged = true;
 			if (me._selectedRec) {
-				if (me._selectedRec.data.name != me._value)
+				if (me._selectedRec.data.name != me._value.data.name)
 					me._selectedRec.data.selected = 'no';
 				else
 					needChanged = false;
@@ -135,14 +188,17 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 				if (me._value) {
 					var records = me._store.data.items;
 					for (var i = 0; i < records.length; i++) {
-						if (records[i].data.name == me._value) {
+						if (records[i].data.name == me._value.data.name) {
 							records[i].data.selected = 'yes';
 							me._selectedRec = records[i];
+
+
 							break;
 						}
 					}					
 				}
 			}
+			me._list.scrollToRecord(me._selectedRec);
 			me._list.refresh();
 		}
 		
