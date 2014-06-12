@@ -139,8 +139,10 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						}, {
 							xtype : 'textfield',
 							name : 'outpaidby',
-							placeHolder : 'Tien mat hoac ATM',
-							cls : 'form-textfield expensetype'
+							//placeHolder : 'Tien mat hoac ATM',
+							cls : 'form-textfield expensetype',
+							readOnly: true,
+							value: AppConfig.textData.TIEN_MAT
 							//label: 'Số tiền hiện có  '
 						}, {
 							xtype : 'textfield',
@@ -213,8 +215,10 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						}, {
 							xtype : 'textfield',
 							name : 'inpaidby',
-							placeHolder : 'Tien mat hoac ATM',
-							cls : 'form-textfield expensetype'
+							//placeHolder : 'Tien mat hoac ATM',
+							cls : 'form-textfield expensetype',
+							readOnly: true,
+							value: AppConfig.textData.TIEN_MAT
 							//label: 'Số tiền hiện có  '
 						},{
 							xtype : 'textfield',
@@ -266,13 +270,39 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						tf.setValue(value);
 					}, null);
 				}
-			},
+			},			
 			'textfield[name="intype"]' : {
 				focus : function(tf) {
 					var me = this;
-					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, tf.getValue(), function(value) {
+					var idata = {};
+					idata.name = tf.getValue();
+					idata.id = '';
+
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, idata, function(value) {
 						//me.amount = money;
 						tf.setValue(value);
+					}, null);
+				}
+			},
+			'textfield[name="outpaidby"]' : {
+				focus : function(tf) {
+					var me = this;
+					var idata = {};
+					idata.name = tf.getValue();
+					idata.id = '';
+
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.CHI, idata, function(data) {
+						//me.amount = money;
+						//tf.setValue(value);
+					}, null);
+				}
+			},
+			'textfield[name="inpaidby"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_CASH_CHOSEN, AppConfig.type.THU, tf.getValue(), function(data) {
+						//me.amount = money;
+						//tf.setValue(value);
 					}, null);
 				}
 			},

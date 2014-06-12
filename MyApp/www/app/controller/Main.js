@@ -143,6 +143,12 @@ Ext.define('MyApp.controller.Main', {
 		view.showView(type, value, callback);
 	},
 
+	onShowCashChosen: function(type, value, callback) {
+		var me = this;
+		var view = me.getCashChosenView();
+		Ext.Viewport.add(view);
+		view.showView(type, value, callback);
+	},
 	//GET FUNCS
 	getMoneyInputerView : function() {
 		var me = this;
@@ -213,4 +219,12 @@ Ext.define('MyApp.controller.Main', {
 
 		return me._incomeChosen;
 	},
+
+	getCashChosenView: function() {
+		var me = this;
+		if (!me._cashChosen)
+			me._cashChosen = Ext.create('MyApp.view.apppopup.Trade_CashChosen');
+
+		return me._cashChosen;
+	}
 });
