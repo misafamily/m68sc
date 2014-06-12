@@ -134,9 +134,8 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						},*/{
 							xtype : 'textfield',
 							name : 'outnote',
-							placeHolder : 'Mua gi ?',
-							cls : 'form-textfield expensetype',
-							value : 'Thit ca'
+							placeHolder : AppConfig.placeholderData.GHI_CHU_CHI,
+							cls : 'form-textfield expensetype'
 						}, {
 							xtype : 'textfield',
 							name : 'outpaidby',
@@ -203,15 +202,14 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							name : 'intype',
 							//label: 'Tên tài khoản ',
 							cls : 'form-textfield verhical',
-							//placeHolder : AppConfig.type.LUONG,
+							placeHolder : AppConfig.textData.KIEU_THU_NHAP,
 							autoCapitalize : false,
-							value : AppConfig.type.LUONG
+							//value : AppConfig.type.LUONG
 						}, {
 							xtype : 'textfield',
 							name : 'innote',
-							placeHolder : 'Mua gi ?',
-							cls : 'form-textfield expensetype',
-							value : 'Luong thang'
+							placeHolder : AppConfig.placeholderData.GHI_CHU_THU,
+							cls : 'form-textfield expensetype'
 						}, {
 							xtype : 'textfield',
 							name : 'inpaidby',
@@ -264,6 +262,15 @@ Ext.define('MyApp.view.apppopup.Trade', {
 				focus : function(tf) {
 					var me = this;
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_EXPENSE_CHOSEN, AppConfig.type.CHI, tf.getValue(), function(value) {
+						//me.amount = money;
+						tf.setValue(value);
+					}, null);
+				}
+			},
+			'textfield[name="intype"]' : {
+				focus : function(tf) {
+					var me = this;
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, tf.getValue(), function(value) {
 						//me.amount = money;
 						tf.setValue(value);
 					}, null);
@@ -393,6 +400,10 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		if (!me._intrade)
 			me._intrade = me.down('textfield[name = "intradedate"]');
 		
+		me._outtype.setValue('');
+		me._intype.setValue('');
+		me._outnote.setValue('');
+		me._innote.setValue('');
 		me._outtrade.setValue(todayDateFormat);	
 		me._intrade.setValue(todayDateFormat);
 		me.getCarousel().setActiveItem(0);

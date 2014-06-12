@@ -1,6 +1,6 @@
-Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
+Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 	extend : 'Ext.Container',
-	xtype : 'apppopup_trade_expensechosen',
+	xtype : 'apppopup_trade_incomechosen',
 	requires:[],
 	config : {
 		cls : 'popup6-container',
@@ -30,7 +30,7 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'label',
-				html : AppConfig.textData.CHON_CHI_TIEU,
+				html : AppConfig.textData.CHON_THU_NHAP,
 				cls : 'apppopup-title'
 			}, {
 				xtype : 'spacer'

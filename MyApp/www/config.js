@@ -27,6 +27,8 @@ AppConfig.eventData.SHOW_ATM_TRADE_LIST = 'show_atm_trade_list';
 AppConfig.eventData.SHOW_ATM_ADD = 'show_atm_add';
 AppConfig.eventData.SHOW_INCOME_ADD = 'show_income_add';
 AppConfig.eventData.SHOW_EXPENSE_CHOSEN = 'show_expense_chosen';
+AppConfig.eventData.SHOW_INCOME_CHOSEN = 'show_income_chosen';
+AppConfig.eventData.SHOW_CASH_CHOSEN = 'show_cash_chosen';
 
 AppConfig.eventData.ATM_ADDED = 'atm_added';
 AppConfig.eventData.APP_MASK = 'app_mask';
@@ -42,6 +44,8 @@ AppConfig.placeholderData.TEN_CHU_THE = 'Tền chủ thẻ';
 AppConfig.placeholderData.NGAN_HANG = 'Ngân hàng';
 AppConfig.placeholderData.TIEN_HIEN_CO = 'Tền hiện có trong thẻ';
 AppConfig.placeholderData.GHI_CHU = 'Ghi chú';
+AppConfig.placeholderData.GHI_CHU_CHI = 'Chi cho việc gì?';
+AppConfig.placeholderData.GHI_CHU_THU = 'Thu từ đâu?';
 
 AppConfig.textData = {};
 AppConfig.textData.TAI_DATA = 'Tải dữ liệu ..';
@@ -80,8 +84,8 @@ AppConfig.textData.ERROR_TITLE = 'Lỗi';
 AppConfig.textData.GIAO_DICH_OK = 'Giao dịch xong';
 AppConfig.textData.TAO_ATM_OK = 'Thêm ATM xong';
 AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
-AppConfig.textData.KIEU_CHI_TIEU = 'Chọn kiểu chi tiêu';
-AppConfig.textData.KIEU_THU_NHAP = 'Chọn kiểu thu nhập';
+AppConfig.textData.KIEU_CHI_TIEU = 'Chọn chi tiêu';
+AppConfig.textData.KIEU_THU_NHAP = 'Chọn thu nhập';
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';
