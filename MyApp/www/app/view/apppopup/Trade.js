@@ -405,7 +405,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	
 	onIncomeButtonClicked: function() {
 		var me = this;
-		var typename = me._outtype.getValue();
+		var typename = me._intype.getValue();
 		if (typename == '') {
 			AppUtil.alert('Chon thu nhap di ku');
 			return;
