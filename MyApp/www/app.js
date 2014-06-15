@@ -71,20 +71,20 @@ Ext.application({
 
 
 		var onBackKeyDown = function() {
-			alert('onBackKeyDown');
+			//alert('onBackKeyDown');
 			MyApp.app.fireEvent('backbutton');
 		}
 
 		var onResume = function() {
 		   setTimeout(function() {
 	          // TODO: do your thing!
-	          alert('onResume');
+	          //alert('onResume');
 	          MyApp.app.fireEvent('resume');
 	        }, 100);
 		}
 
 		var onPause = function() {
-			 MyApp.app.fireEvent('pause');
+			//MyApp.app.fireEvent('pause');
     	}
 
 		document.addEventListener("backbutton", onBackKeyDown, false);

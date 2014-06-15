@@ -11,10 +11,10 @@ Ext.define('MyApp.view.Main', {
 			xtype : 'toolbar',
 			//ui : 'light',
 			//docked : 'top',
-			items : [{
+			items : [/*{
 				iconCls : 'toolbar-icon-menu',
 				cls : 'toolbar-button'
-			}, {
+			}, */{
 				xtype : 'segmentedbutton',
 				flex : 1,
 

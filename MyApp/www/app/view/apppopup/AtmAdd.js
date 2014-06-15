@@ -66,11 +66,11 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					type : 'vbox'
 				},
 				flex : 1,
-				/*scrollable : {
+				scrollable : {
 					directionLock : true,
 					direction : 'vertical',
 					indicators : false
-				},*/
+				},
 				
 				defaults : {
 					required : true,

@@ -7,6 +7,8 @@ Ext.define('MyApp.util.AppUtil', {
 	CASH : 0,
 	CASH_MODEL : null,
 	RELEASE: true,
+
+	popupAdded: [],
 	
 	constructor : function() {
 		var me = this;
@@ -335,9 +337,11 @@ Ext.define('MyApp.util.AppUtil', {
 	alert: function(msg, title) {
 		MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
 		title = title || '';
-		Ext.Msg.alert(title, msg, function() {
+		var alert = Ext.Msg.alert(title, msg, function() {
 			MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
 		});
+
+		this.popupAdded.push(alert);
 	},
 
 	autoAlert: function (msg) {
@@ -350,11 +354,13 @@ Ext.define('MyApp.util.AppUtil', {
 
 	confirm: function(msg, title, callback) {
     	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
-    	Ext.Msg.confirm(title, msg, function(code){
+    	var alert = Ext.Msg.confirm(title, msg, function(code){
     		MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
     		if (code == 'yes') 
     			if (typeof callback === 'function') callback();
     	});
+
+    	this.popupAdded.push(alert);
     },
 
     showLoading: function (msg) {

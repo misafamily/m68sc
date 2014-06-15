@@ -40,7 +40,7 @@ AppConfig.eventData.APP_UNMASK = 'app_unmask';
 AppConfig.placeholderData = {};
 AppConfig.placeholderData.TYPE = 'Loại hình';
 AppConfig.placeholderData.AMOUNT = 'Số tiền đ';
-AppConfig.placeholderData.TEN_CHU_THE = 'Tền chủ thẻ';
+AppConfig.placeholderData.TEN_CHU_THE = 'Tên chủ thẻ';
 AppConfig.placeholderData.NGAN_HANG = 'Ngân hàng';
 AppConfig.placeholderData.TIEN_HIEN_CO = 'Tền hiện có trong thẻ';
 AppConfig.placeholderData.GHI_CHU = 'Ghi chú';
@@ -87,6 +87,7 @@ AppConfig.textData.DIEU_CHINH_OK = 'Điều chỉnh xong';
 AppConfig.textData.KIEU_CHI_TIEU = 'Chọn chi tiêu *';
 AppConfig.textData.KIEU_THU_NHAP = 'Chọn thu nhập *';
 AppConfig.textData.KIEU_CASH_ATM = 'Chọn tiền mặt hay ATM';
+AppConfig.textData.PRESS_BACK_TO_EXIT = "Nhấn thêm lần nữa để thoát";
 
 AppConfig.type = {};
 AppConfig.type.THU = 'thu';

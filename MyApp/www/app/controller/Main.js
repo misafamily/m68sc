@@ -28,6 +28,8 @@ Ext.define('MyApp.controller.Main', {
 
 					MyApp.app.on(AppConfig.eventData.APP_MASK, me.onAppMasked, me);
 					MyApp.app.on(AppConfig.eventData.APP_UNMASK, me.onAppUnMasked, me);
+
+					MyApp.app.on('backbutton', me.onBackButtonTap, me);
 				}
 			},
 
@@ -67,6 +69,35 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.toggleMenu("left");
 	},
 
+	onBackButtonTap: function() {
+		var me = this;
+		if (AppUtil.popupAdded.length > 0) {
+			var view = AppUtil.popupAdded.pop();
+			view.hide();
+		} else {
+			//go back to home
+			if (me.getMainPanel().activeIndex != 0) {
+				me.getMainPanel().setActiveItem(0);
+			} else {
+				if (me.onExiting) {
+					try {
+						navigator.app.exitApp();
+					} catch(e) {
+						AppUtil.alert('no function navigator.app.exitApp()');
+					}
+					
+				} else {
+					AppUtil.autoAlert(AppConfig.textData.PRESS_BACK_TO_EXIT);
+					me.onExiting = true;
+
+					Ext.defer(function() {
+						me.onExiting = false;
+					},2000);
+				}			
+			}
+		}
+	},
+
 	onAppMasked: function() {
 		this.getMain().disable();
 	},
@@ -75,7 +106,7 @@ Ext.define('MyApp.controller.Main', {
 		var me = this;
 		Ext.defer(function() {
 			me.getMain().enable();
-		}, 300);
+		}, 500);
 	},
 
 	onShowInputer : function(defaultValue, callback, atitle) {
@@ -85,6 +116,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getMoneyInputerView();
 		Ext.Viewport.add(view);
 		view.showView(value, callback, atitle);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowTrade : function(money) {
@@ -92,6 +125,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getTradeView();
 		Ext.Viewport.add(view);
 		view.showView(money);
+
+		AppUtil.popupAdded.push(view);
 	},
 	
 	onShowDateChooser: function(date, callback) {
@@ -99,6 +134,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getDateChooserView();
 		Ext.Viewport.add(view);
 		view.showView(date, callback);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowCashTradeList: function() {
@@ -106,6 +143,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getCashTradeListView();
 		Ext.Viewport.add(view);
 		view.showView();
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowAtmTradeList: function(atmModel) {
@@ -113,6 +152,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getAtmTradeListView();
 		Ext.Viewport.add(view);
 		view.showView(atmModel);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowAtmAdd: function() {
@@ -120,6 +161,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getAtmAddView();
 		Ext.Viewport.add(view);
 		view.showView();
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowIncomeAdd: function(amount, type, model) {
@@ -127,6 +170,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getIncomeAddView();
 		Ext.Viewport.add(view);
 		view.showView(amount, type, model);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowExpenseChosen: function(type, value, callback) {
@@ -134,6 +179,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getExpenseChosenView();
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowIncomeChosen: function(type, value, callback) {
@@ -141,6 +188,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getIncomeChosenView();
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
+
+		AppUtil.popupAdded.push(view);
 	},
 
 	onShowCashChosen: function(type, value, callback) {
@@ -148,6 +197,8 @@ Ext.define('MyApp.controller.Main', {
 		var view = me.getCashChosenView();
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
+
+		AppUtil.popupAdded.push(view);
 	},
 	//GET FUNCS
 	getMoneyInputerView : function() {

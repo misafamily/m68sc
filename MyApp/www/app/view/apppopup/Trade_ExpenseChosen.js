@@ -185,7 +185,10 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 					}					
 				}
 			}
-			me._list.scrollToRecord(me._selectedRec);
+			var pos = me._store.data.items.indexOf(me._selectedRec);
+			var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
+			//me._list.scrollToRecord(me._selectedRec);
+			me._list.scrollToRecord(me._store.data.items[newpos]);
 			me._list.refresh();
 		}
 		

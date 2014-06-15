@@ -31,7 +31,9 @@ body {
 }
 
 .x-toolbar {
-	height: 46px;
+	/*height: 46px;*/
+	height: 60px;
+	padding-top: 14px;
 }
 
 .x-toolbar .x-button {
@@ -177,6 +179,9 @@ body {
 	color: #898e91;
 }
 
+input::-webkit-input-placeholder {
+	color: gray;
+}
 
 /*
  .viewbase-container {
@@ -199,6 +204,13 @@ body {
 	padding-left: 12px;
 	width: 100%;
 }
+
+.viewbase-toolbar-top {
+	/*height: 46px;*/
+	height: 60px;
+	padding-top: 14px;
+}
+
 
 .viewbase-toolbar-bottom {
 	background-color: #414141;

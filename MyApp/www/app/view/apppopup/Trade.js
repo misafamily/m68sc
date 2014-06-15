@@ -106,6 +106,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						layout : {
 							type : 'vbox'
 						},
+						scrollable : {
+							directionLock : true,
+							direction : 'vertical',
+							indicators: false
+						},
 						flex : 1,
 						/*scrollable : {
 							directionLock : true,
@@ -188,11 +193,11 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							type : 'vbox'
 						},
 						flex : 1,
-						/*scrollable : {
+						scrollable : {
 							directionLock : true,
 							direction : 'vertical',
-							indicators : false
-						},*/
+							indicators: false
+						},
 						
 						defaults : {
 							required : true,
@@ -207,6 +212,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 							cls : 'form-textfield verhical',
 							placeHolder : AppConfig.textData.KIEU_THU_NHAP,
 							autoCapitalize : false,
+							readOnly: true,
 							//value : AppConfig.type.LUONG
 						}, {
 							xtype : 'textfield',

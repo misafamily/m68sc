@@ -185,7 +185,7 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 					}					
 				}
 			}
-			me._list.scrollToRecord(me._selectedRec);
+			//me._list.scrollToRecord(me._selectedRec);
 			me._list.refresh();
 		}
 		
