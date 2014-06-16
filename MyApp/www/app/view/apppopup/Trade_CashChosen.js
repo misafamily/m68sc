@@ -199,7 +199,9 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 				}
 			}
 			me._list.scrollToRecord(me._selectedRec);
-			me._list.refresh();
+			Ext.defer(function(){
+				me._list.refresh();
+			},30);
 		}
 		
 	}
