@@ -866,7 +866,7 @@ window.Chart = function(context){
 						ctx.lineWidth = 1;
 						dashedLine(ctx, 0, yPos(i,j), width, yPos(i,j), 3);
 						//load pig png
-					    ctx.drawImage(AppConfig.targetArrowImage, width - 10, yPos(i,j) - 6.4);
+					    //ctx.drawImage(AppConfig.targetArrowImage, width - 10, yPos(i,j) - 6.4);
 						break;
 					} else {
 						if (config.bezierCurve){
@@ -880,6 +880,9 @@ window.Chart = function(context){
 									ctx.stroke();
 									ctx.strokeStyle = data.datasets[i].strokeColor2;
 									didStock1 = true;
+									
+									dashedLine(ctx, xPos(j), yPos(i,j), width, yPos(i,j), 6);
+									j = data.datasets[i].data.length - 1;
 								}
 							} else if (isSameMonth) {
 								//console.log('isSameMonth ', j);
@@ -888,6 +891,8 @@ window.Chart = function(context){
 										ctx.stroke();
 										ctx.strokeStyle = data.datasets[i].strokeColor2;
 										didStock1 = true;
+										dashedLine(ctx, xPos(j), yPos(i,j), width, yPos(i,j), 6);
+									j = data.datasets[i].data.length - 1;
 									}
 								} //else ctx.fillStyle = config.passedFontColor;
 							} //else ctx.fillStyle = config.passedFontColor;
@@ -1023,7 +1028,15 @@ window.Chart = function(context){
 							//ctx.font = config.scaleXFontSize+"px " + config.scaleFontFamily;
 							//ctx.fillText(data.labels[i], posx, posy+5);
 	
+						} else { //check weenkend
+							var d = Ext.Date.clone(selectedDate);
+							d.setDate(i+1);
+							if (d.getDay() == 0 || d.getDay() == 6) {
+								ctx.fillStyle  = config.weekendFillColor;
+								ctx.fillRect(posx - valueHop/2, rectY1, valueHop, xAxisPosY - rectY1);
+							}
 						}	
+						
 
 						ctx.font = config.scaleXFontSize+"px " + config.scaleFontFamily;
 						if (isFuture) {

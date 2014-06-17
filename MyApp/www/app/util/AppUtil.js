@@ -274,16 +274,16 @@ Ext.define('MyApp.util.AppUtil', {
 			amount = Math.round(amount / 1000000);
 
 			amount = this.formatMoney(amount).toString() + ' triệu';
-		} /*else if (amount >= 100000) {
+		} else if (amount >= 100000) {
 			amount = Math.round(amount / 100000);
-			amount = amount.toString() + ' trăm ngàn';
+			amount = amount.toString() + ' trăm';
 		} else if (amount >= 10000) {
 			amount = Math.round(amount / 10000);
-			amount = amount.toString() + ' chục ngàn';
+			amount = amount.toString() + ' chục';
 		} else if (amount >= 1000) {
 			amount = Math.round(amount / 1000);
 			amount = amount.toString() + ' ngàn';
-		}*/ else {
+		} else {
 			return this.formatMoneyWithUnit(amount);
 		}
 		return amount;

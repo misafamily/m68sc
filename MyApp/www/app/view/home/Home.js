@@ -6,13 +6,15 @@ Ext.define('MyApp.view.home.Home', {
 		layout : {
 			type : 'vbox'
 		},
+		cls : 'home-container',
 		items : [{
 			xtype : 'container',
-			flex : 3.25,
+			flex : 2.75,
 			layout : {
 				type : 'vbox'
 			},
-			cls : 'app-container',
+			
+
 			items : [{
 				xtype : 'container',
 				layout : {
@@ -20,8 +22,10 @@ Ext.define('MyApp.view.home.Home', {
 					pack : 'center',
 					align : 'center'
 				},
-				flex : 2,
-
+				height: 22,
+				style: {
+					'background-color': '#ebecec',
+				},
 				items : [{
 					xtype : 'container',
 					layout : {
@@ -30,22 +34,47 @@ Ext.define('MyApp.view.home.Home', {
 						align : 'center'
 					},
 					style: {
-						'line-height': '26px',
-						'margin-top': '5px'
+						//'line-height': '26px',
+						//'margin-top': '3px'
 					},
 					items : [{
 						xtype : 'label',
 						html : '..',
 						cls: 'expenseinfo-balance-date'
-					}, {
-						xtype : 'label',
-						html : '..',
-						cls: 'expenseinfo-balance'
 					}]
 				}]
 			}, {
 				xtype : 'home_homechart',
-				flex : 1.25
+				flex : 1,
+				style: {
+					'background-color': '#fff'
+				}
+			}]
+		}, {
+			xtype : 'container',
+			layout : {
+				type : 'vbox',
+				pack : 'center',
+				align : 'center'
+			},
+			style: {
+				'background-color': '#01d660',
+				'margin': '10px',
+				'margin-bottom': '0px'
+			},
+			flex : .75,
+			items : [{
+				xtype : 'label',
+				html : 'SỐ DƯ',
+				cls : 'expenseinfo-text',
+				style: {
+					'color': '#fff',
+					'margin-top': '0px'
+				}
+			}, {
+				xtype : 'label',
+				html : '..',
+				cls: 'expenseinfo-balance'
 			}]
 		}, {
 			//xtype: 'toolbar',
@@ -53,11 +82,12 @@ Ext.define('MyApp.view.home.Home', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack : 'center'
 			},
 			flex : .75,
-			cls : 'expenseinfo-container',
-			defaults : {
+			//cls : 'expenseinfo-container',
+			items : [{
 				xtype : 'container',
 				layout : {
 					type : 'vbox',
@@ -65,29 +95,42 @@ Ext.define('MyApp.view.home.Home', {
 					align : 'center'
 				},
 				flex : 1,
-				height : '100%'
-			},
-			items : [{
+				height : '100%',
 				cls : 'expenseinfo-income',
 				items : [{
 					xtype : 'label',
-					html : '..',
-					cls: 'expenseinfo-income-lbl'
+					html : 'THU NHẬP',
+					cls : 'expenseinfo-text'
 				}, {
 					xtype : 'label',
-					html : 'Tong thu',
-					cls : 'expenseinfo-text'
+					html : '..',
+					cls: 'expenseinfo-income-lbl'
 				}]
 			}, {
+				xtype: 'spacer',
+				width: 1,
+				height : '80%',
+				style: {
+					'background-color': '#a4a4a4'
+				}
+			}, {
+				xtype : 'container',
+				layout : {
+					type : 'vbox',
+					pack : 'center',
+					align : 'center'
+				},
+				flex : 1,
+				height : '100%',
 				cls : 'expenseinfo-outcome',
 				items : [{
 					xtype : 'label',
-					html : '..',
-					cls: 'expenseinfo-outcome-lbl'
+					html : 'CHI TIÊU',
+					cls : 'expenseinfo-text'
 				}, {
 					xtype : 'label',
-					html : 'Tong chi',
-					cls : 'expenseinfo-text'
+					html : '..',
+					cls: 'expenseinfo-outcome-lbl'
 				}]
 			}]
 		}, {

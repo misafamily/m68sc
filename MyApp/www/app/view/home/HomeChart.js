@@ -56,19 +56,20 @@ Ext.define('MyApp.view.home.HomeChart', {
 				bezierCurve : false,
 				animation : false,
 				pointDotRadius : 3,
-				scaleFontColor: "#98bdd8",
+				scaleFontColor: "#a7a8aa",
 				pointDotStrokeWidth : .5,
 				scaleLineWidth: .5,
 				scaleGridLineWidth : .5,
-				scaleGridLineColor :  "rgba(49,144,190,1)",
-				scaleLineColor : "rgba(49,144,190,1)",
+				scaleGridLineColor :  "rgba(242,242,242,1)",
+				scaleLineColor : "rgba(203,204,205,1)",
 				scaleFontFamily : 'ROBOTO-LIGHT',
 				scaleFontSize : 14,
 				scaleXFontSize: 8,
-				passedFontColor: "#fff",
-				futureFontColor: "#3f93c2",
-				todayBgColor: "#013e5d",
-				todayBarFillColor: "rgba(17,131,191,.5)"
+				passedFontColor: "#999da0",
+				futureFontColor: "#e0e0e0",
+				todayBgColor: "#fff",
+				todayBarFillColor: "rgba(57,192,231,.15)",
+				weekendFillColor: "rgba(248,248,248,.8)"
 			};
 			
 			Ext.defer(function() {
@@ -128,7 +129,7 @@ Ext.define('MyApp.view.home.HomeChart', {
 			incomes.push(0);
 			expenses.push(0);
 		}
-		me.getData()['target'].push(0, 1000000);	//need 2 values
+		me.getData()['target'].push(0, 500000);	//need 2 values
 		/*
 		for (var i = 0; i < todayDate; i++) {
 			if (i == 0 || i == 3 || i == 7 | i == 13) {
@@ -314,18 +315,18 @@ Ext.define('MyApp.view.home.HomeChart', {
 			labels : me.getData()['labels'],
 			datasets : [
 				{
-					strokeColor : "rgba(139,246,78,.5)",
-					strokeColor2 : "rgba(139,246,00,.2)",
+					strokeColor : "rgba(1,214,96,.7)",
+					strokeColor2 : "rgba(128,234,175,.5)",
 					data : me.getData()['incomes']
 				},
 				{
-					strokeColor : "rgba(252,42,51,.5)",
-					strokeColor2 : "rgba(252,42,00,.2)",
+					strokeColor : "rgba(193,157,43,.7)",
+					strokeColor2 : "rgba(224,156,149,.5)",
 					data : this.getData()['expenses']
 				},
 				{
 					//fillColor : "rgba(241,155,154,1)",
-					strokeColor : "rgba(255,60,46,1)",
+					strokeColor : "rgba(193,57,43,1)",
 					//pointColor : "rgba(255,60,46,1)",
 					//pointStrokeColor : "#fff",
 					data : this.getData()['target'],
