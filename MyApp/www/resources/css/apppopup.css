@@ -1,0 +1,86 @@
+/* TRADE */
+.popup-container {
+	z-index: 5;
+}
+
+.popup6-container {
+	z-index: 6;
+}
+
+.apppopup-line {
+	width: 1px;
+	height: 80%;
+	background-color: #43809d;
+	/*margin-right: 15px;*/
+}
+
+.apppopup-title {
+	color: #fff;
+}
+
+.trade-amount-container {
+	height: 75px;	
+	padding-left: 12px;
+	padding-right: 12px;
+	width: 100%;
+}
+
+.trade-amount {
+	border-bottom: 1px solid #5494b8;
+	height: 100%;
+}
+	
+
+/*fields*/
+.form-container .x-field {
+	border-bottom:1px solid #5494b8;
+	margin-left: 12px;
+	margin-right: 12px;
+	padding-top: 4px;
+}
+
+.expensetype .x-input-text {
+    background: transparent url('../images/fields/f-user.png') no-repeat 15px 5px;
+    background-size: 27px;
+    color: white;
+}
+
+.amount .x-input-text {
+    background: transparent url('../images/fields/f-user.png') no-repeat 15px 5px;
+    background-size: 27px;
+    color: #ec1f24;
+}
+
+.verhical .x-input-text {
+    background: transparent url('../images/fields/f-xeco.png') no-repeat 15px 5px;
+    background-size: 27px;
+    color: white;
+}
+
+/*date chooser*/
+.datechooser-date-choosen {
+	font-size: 90px;
+	color: #fff;
+	text-align: center;
+}
+
+.datechooser-month-choosen {
+	font-size: 26px;
+	color: #fff;
+	text-align: center;
+}
+
+/*AUTO HIDE ALERT*/
+.autohidealert-container {
+	height: 50px;
+	z-index: 11;
+	width: 100%;
+	background-color: transparent;
+}
+
+.autohidealert-container .message {
+	background-color: rgba(36, 95, 24, 0.9);
+	color: white;	
+	border-radius: 6px;
+	padding: 10px;
+}
