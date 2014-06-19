@@ -944,7 +944,7 @@ window.Chart = function(context){
 		function drawScale(){
 			//X axis line
 			ctx.lineWidth = config.scaleLineWidth;
-			ctx.strokeStyle = config.scaleLineColor;
+			ctx.strokeStyle = config.scaleGridXLineColor;
 			ctx.beginPath();
 			//ctx.moveTo(width-widestXLabel/2+5,xAxisPosY);
 			//ctx.lineTo(width-(widestXLabel/2)-xAxisLength-5,xAxisPosY);
@@ -1096,7 +1096,7 @@ window.Chart = function(context){
 			}
 			ctx.textBaseline = "middle";
 			ctx.fillStyle = config.scaleFontColor;
-			ctx.fillText('0', beginX,xAxisPosY+config.scaleXFontSize);
+			ctx.fillText('0', beginX,xAxisPosY-config.scaleXFontSize/2);
 			
 			for (var j=0; j<calculatedScale.steps; j++){
 				/*if (j == calculatedScale.steps - 1) { //Gioi han
@@ -1112,7 +1112,7 @@ window.Chart = function(context){
 				ctx.moveTo(yAxisPosX-130,xAxisPosY - ((j+1) * scaleHop));
 				if (config.scaleShowGridLines){
 					ctx.lineWidth = config.scaleGridLineWidth;
-					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.strokeStyle = config.scaleGridXLineColor;
 					ctx.lineTo(yAxisPosX + xAxisLength + 5,xAxisPosY - ((j+1) * scaleHop));					
 				}
 				else{
@@ -1180,7 +1180,7 @@ window.Chart = function(context){
 			}
 			
 			//Add a little padding between the x line and the text
-			maxSize -= config.scaleXFontSize;
+			//maxSize -= config.scaleXFontSize;
 			
 			
 			labelHeight = config.scaleFontSize;

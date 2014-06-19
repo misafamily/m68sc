@@ -148,6 +148,7 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			},
@@ -197,7 +198,7 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 					AppUtil.autoAlert(AppConfig.textData.GIAO_DICH_OK);
 				});	
 			}
-				
+			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);	
 			me.hide();
 		}
 	},

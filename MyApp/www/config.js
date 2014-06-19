@@ -2,8 +2,8 @@ AppConfig = {
 	
 };
 
-function log(msg) {
-	AppUtil.log(msg);
+function log() {
+	console.log(arguments);
 }
 
 //AppConfig.pigImage = new Image();
@@ -29,6 +29,7 @@ AppConfig.eventData.SHOW_INCOME_ADD = 'show_income_add';
 AppConfig.eventData.SHOW_EXPENSE_CHOSEN = 'show_expense_chosen';
 AppConfig.eventData.SHOW_INCOME_CHOSEN = 'show_income_chosen';
 AppConfig.eventData.SHOW_CASH_CHOSEN = 'show_cash_chosen';
+AppConfig.eventData.HIDE_POPUP = 'hide_popup';
 
 AppConfig.eventData.ATM_ADDED = 'atm_added';
 AppConfig.eventData.APP_MASK = 'app_mask';

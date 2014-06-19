@@ -1,6 +1,7 @@
 Ext.define('MyApp.view.comp.AppList', {
     extend: 'Ext.List',
     config: {    	
+    	scrollToTopOnRefresh: false,
         variableHeights: true,
         infinite: true,
         disableSelection: true,

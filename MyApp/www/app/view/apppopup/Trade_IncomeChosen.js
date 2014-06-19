@@ -79,6 +79,7 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			},
@@ -87,6 +88,7 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 					var me = this;
 					if (typeof me._callback === 'function') {
 						me._callback(me._value);
+						MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 						me.hide();
 					}
 				}
@@ -117,7 +119,7 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 		var me = this;
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
-
+			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 			me.hide();
 		}
 	},
@@ -144,7 +146,7 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 		if (!me._list) me._list = me.down('list');
 		if (!me._list.getStore()) me._list.setStore(me._store);
 
-		me._list.getScrollable().getScroller().scrollToTop();
+		//me._list.getScrollable().getScroller().scrollToTop();
 
 		if (firstRun) {
 			me._store.changeQueryByType(me._type);
@@ -166,8 +168,11 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 		} else {
 			var needChanged = true;
 			if (me._selectedRec) {
-				if (me._selectedRec.data.name != me._value)
+				if (me._selectedRec.data.name != me._value) {
 					me._selectedRec.data.selected = 'no';
+					me._list.getScrollable().getScroller().scrollToTop();
+					
+				}
 				else
 					needChanged = false;
 			}
@@ -182,16 +187,24 @@ Ext.define('MyApp.view.apppopup.Trade_IncomeChosen', {
 
 							break;
 						}
-					}					
-				}
-			}
-			var pos = me._store.data.items.indexOf(me._selectedRec);
-			var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
-			//me._list.scrollToRecord(me._selectedRec);
-			me._list.scrollToRecord(me._store.data.items[newpos]);
-			Ext.defer(function(){
+					}	
+					var pos = me._store.data.items.indexOf(me._selectedRec);
+					var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
+					//me._list.scrollToRecord(me._selectedRec);
+					me._list.scrollToRecord(me._store.data.items[newpos]);				
+				}			
 				me._list.refresh();
-			},30);
+
+			} /*else if (me._selectedRec) {
+				if (me._selectedRec.data.selected == 'yes') {
+					var pos = me._store.data.items.indexOf(me._selectedRec);
+					var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
+					//me._list.scrollToRecord(me._selectedRec);
+					me._list.scrollToRecord(me._store.data.items[newpos]);	
+					me._list.refresh();
+				}
+			}	*/	
+			
 		}
 		
 	}

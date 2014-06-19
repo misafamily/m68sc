@@ -26,6 +26,8 @@ Ext.define('MyApp.controller.Main', {
 					MyApp.app.on(AppConfig.eventData.SHOW_INCOME_CHOSEN, me.onShowIncomeChosen, me);
 					MyApp.app.on(AppConfig.eventData.SHOW_CASH_CHOSEN, me.onShowCashChosen, me);
 
+					MyApp.app.on(AppConfig.eventData.HIDE_POPUP, me.onHidePopup, me);
+
 					MyApp.app.on(AppConfig.eventData.APP_MASK, me.onAppMasked, me);
 					MyApp.app.on(AppConfig.eventData.APP_UNMASK, me.onAppUnMasked, me);
 
@@ -69,11 +71,20 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.toggleMenu("left");
 	},
 
+	onHidePopup: function() {
+		if (AppUtil.popupAdded.length > 0) AppUtil.popupAdded.shift();
+		log('AppUtil.popupAdded: ', AppUtil.popupAdded);
+	},
+
 	onBackButtonTap: function() {
 		var me = this;
 		if (AppUtil.popupAdded.length > 0) {
 			var view = AppUtil.popupAdded.pop();
 			view.hide();
+			if (me.currentMaskCon) {
+				me.currentMaskCon.setMasked(false);
+				me.currentMaskCon = null;
+			}
 		} else {
 			//go back to home
 			if (me.getMainPanel().activeIndex != 0) {
@@ -99,13 +110,27 @@ Ext.define('MyApp.controller.Main', {
 	},
 
 	onAppMasked: function() {
-		this.getMain().disable();
+		var me = this;
+		me.currentMaskCon = null;
+		console.log('onAppMasked', AppUtil.popupAdded);
+		if (AppUtil.popupAdded.length >= 2) {
+			me.currentMaskCon = AppUtil.popupAdded[1];
+		} else 
+			me.currentMaskCon = me.getMain();
+
+		if (me.currentMaskCon) me.currentMaskCon.setMasked(true);
+
+		console.log('onAppMasked', me.currentMaskCon);
 	},
 
 	onAppUnMasked: function() {
+		log('onAppUnMasked', AppUtil.popupAdded);
 		var me = this;
 		Ext.defer(function() {
-			me.getMain().enable();
+			if (me.currentMaskCon) {
+				me.currentMaskCon.setMasked(false);
+				//me.currentMaskCon = null;
+			}
 		}, 500);
 	},
 
@@ -117,7 +142,8 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(value, callback, atitle);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
+		console.log('onShowInputer', AppUtil.popupAdded);
 	},
 
 	onShowTrade : function(money) {
@@ -126,7 +152,8 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(money);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
+		console.log('onShowTrade', AppUtil.popupAdded);
 	},
 	
 	onShowDateChooser: function(date, callback) {
@@ -135,7 +162,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(date, callback);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowCashTradeList: function() {
@@ -144,7 +171,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView();
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowAtmTradeList: function(atmModel) {
@@ -153,7 +180,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(atmModel);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowAtmAdd: function() {
@@ -162,7 +189,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView();
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowIncomeAdd: function(amount, type, model) {
@@ -171,7 +198,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(amount, type, model);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowExpenseChosen: function(type, value, callback) {
@@ -180,7 +207,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowIncomeChosen: function(type, value, callback) {
@@ -189,7 +216,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 
 	onShowCashChosen: function(type, value, callback) {
@@ -198,7 +225,7 @@ Ext.define('MyApp.controller.Main', {
 		Ext.Viewport.add(view);
 		view.showView(type, value, callback);
 
-		AppUtil.popupAdded.push(view);
+		AppUtil.popupAdded.unshift(view);
 	},
 	//GET FUNCS
 	getMoneyInputerView : function() {

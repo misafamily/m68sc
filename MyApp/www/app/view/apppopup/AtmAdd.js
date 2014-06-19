@@ -141,6 +141,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			},
@@ -197,6 +198,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 			//AppUtil.log(data);
 			var hunter = Ext.create('MyApp.model.Hunter', data);
 			hunter.save(function() {
+				MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 				me.hide();
 				MyApp.app.fireEvent(AppConfig.eventData.ATM_ADDED, hunter);
 				AppUtil.autoAlert(AppConfig.textData.TAO_ATM_OK);

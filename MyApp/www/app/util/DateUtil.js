@@ -231,7 +231,7 @@
 	
 	Date.prototype.homeDateFormat = function() {
 		var s = '';		
-		s += this.getDate() + '.' + this.getMonthName().toUpperCase() + '.' + this.getFullYear();		
+		s += this.getDayName().toUpperCase() + ', ' + this.getDate() + ' ' + this.getMonthName().toUpperCase() + ' ' + this.getFullYear();		
 		return s;
 	};
 	

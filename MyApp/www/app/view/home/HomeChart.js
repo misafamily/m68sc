@@ -61,9 +61,11 @@ Ext.define('MyApp.view.home.HomeChart', {
 				scaleLineWidth: .5,
 				scaleGridLineWidth : .5,
 				scaleGridLineColor :  "rgba(242,242,242,1)",
+				scaleGridXLineColor :  "rgba(214,214,214,1)",
+
 				scaleLineColor : "rgba(203,204,205,1)",
 				scaleFontFamily : 'ROBOTO-LIGHT',
-				scaleFontSize : 14,
+				scaleFontSize : 8,
 				scaleXFontSize: 8,
 				passedFontColor: "#999da0",
 				futureFontColor: "#e0e0e0",
@@ -130,91 +132,6 @@ Ext.define('MyApp.view.home.HomeChart', {
 			expenses.push(0);
 		}
 		me.getData()['target'].push(0, 500000);	//need 2 values
-		/*
-		for (var i = 0; i < todayDate; i++) {
-			if (i == 0 || i == 3 || i == 7 | i == 13) {
-				incomes.push(Math.round(Math.random()*3000000));
-				expenses.push(Math.round(Math.random()*1000000));
-			} else {
-				incomes.push(0);
-				expenses.push(0);
-			}
-			
-			//me.getData()['target'].push(10000);	
-		}
-		
-
-			var thuTotal = incomes[0];
-			var chiTotal = expenses[0];
-			for (var i = 1; i < incomes.length; i++) {
-				thuTotal += incomes[i];
-				incomes[i] = thuTotal;
-				chiTotal += expenses[i];
-				expenses[i] = chiTotal;
-			}
-			MyApp.app.fireEvent('thuchi_changed', thuTotal, chiTotal);
-			var max = thuTotal > chiTotal ? thuTotal : chiTotal;
-			
-			me.getData()['target'].push(max - 1000000);	
-			me.getData()['target'].push(max - 1000000);
-			//AppUtil.log(max);
-			if (max <= 5000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 1000000;
-			} else if (max <= 10000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 2000000;
-			} else if (max <= 15000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 3000000;
-			} else if (max <= 20000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 4000000;
-			} else if (max <= 25000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 5000000;
-			} else if (max <= 30000000) {
-				me._options.scaleSteps = 6;
-				me._options.scaleStepWidth = 5000000;
-			} else if (max <= 35000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 7000000;
-			} else if (max <= 40000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 8000000;
-			} else if (max <= 45000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 9000000;
-			} else if (max <= 50000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 10000000;
-			} else if (max <= 55000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 11000000;
-			} else if (max <= 60000000) {
-				me._options.scaleSteps = 6;
-				me._options.scaleStepWidth = 10000000;
-			} else if (max <= 65000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 13000000;
-			} else if (max <= 70000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 15000000;
-			} else if (max <= 80000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 16000000;
-			} else if (max <= 100000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth = 20000000;
-			} else if (max <= 15000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth =30000000;
-			} else if (max <= 200000000) {
-				me._options.scaleSteps = 5;
-				me._options.scaleStepWidth =40000000;
-			}  else me._options.scaleOverride = false;
-			me.checkGetDataDone();
-		*/	
 		
 		//get expense of this month
 		if (!me._expenseStore) me._expenseStore = Ext.create('MyApp.store.Trades');
@@ -247,8 +164,15 @@ Ext.define('MyApp.view.home.HomeChart', {
 			MyApp.app.fireEvent(AppConfig.eventData.EXPENSE_CHANGED, thuTotal, chiTotal, date);//to HOME
 			var max = thuTotal > chiTotal ? thuTotal : chiTotal;
 			//AppUtil.log(max);
-			if (max <= 1000000) {
-				me._options.scaleOverride = false;
+			if (max <= 100000) {
+				me._options.scaleSteps = 5;
+				me._options.scaleStepWidth = 20000;
+			} else if (max <= 500000) {
+				me._options.scaleSteps = 5;
+				me._options.scaleStepWidth = 100000;
+			} else if (max <= 1000000) {
+				me._options.scaleSteps = 5;
+				me._options.scaleStepWidth = 200000;
 			} else if (max <= 5000000) {
 				me._options.scaleSteps = 5;
 				me._options.scaleStepWidth = 1000000;
@@ -313,16 +237,16 @@ Ext.define('MyApp.view.home.HomeChart', {
 		var me = this;
 		var lineChartData = {
 			labels : me.getData()['labels'],
-			datasets : [
+			datasets : [				
 				{
-					strokeColor : "rgba(1,214,96,.7)",
-					strokeColor2 : "rgba(128,234,175,.5)",
-					data : me.getData()['incomes']
-				},
-				{
-					strokeColor : "rgba(193,157,43,.7)",
+					strokeColor : "rgba(193,157,43,1)",
 					strokeColor2 : "rgba(224,156,149,.5)",
 					data : this.getData()['expenses']
+				},
+				{
+					strokeColor : "rgba(1,214,96,1)",
+					strokeColor2 : "rgba(128,234,175,.5)",
+					data : me.getData()['incomes']
 				},
 				{
 					//fillColor : "rgba(241,155,154,1)",

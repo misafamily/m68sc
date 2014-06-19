@@ -185,6 +185,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			}
@@ -232,8 +233,11 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 		//AppUtil.log('onDoneButtonClicked');
 		var me = this;
 		me._valueNumber = AppUtil.deformatMoneyWithUnit(me._field.getValue());
-		me._callback(me._valueNumber);
+		
+		MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 		me.hide();
+
+		me._callback(me._valueNumber);
 	},
 
 	displayValueFormat : function() {

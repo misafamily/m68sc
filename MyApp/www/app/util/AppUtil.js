@@ -335,13 +335,16 @@ Ext.define('MyApp.util.AppUtil', {
 	},
 	
 	alert: function(msg, title) {
-		MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
+		var me = this;
+		
+		
 		title = title || '';
 		var alert = Ext.Msg.alert(title, msg, function() {
+			me.popupAdded.shift();
 			MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
 		});
-
-		this.popupAdded.push(alert);
+		this.popupAdded.unshift(alert);
+		MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
 	},
 
 	autoAlert: function (msg) {
@@ -349,22 +352,26 @@ Ext.define('MyApp.util.AppUtil', {
        if (!me._autoHideAlert) me._autoHideAlert = Ext.create('MyApp.view.apppopup.AutoHideAlert');
        Ext.Viewport.add(me._autoHideAlert);
        me._autoHideAlert.setMessage(msg);
-       me._autoHideAlert.show();
+       me._autoHideAlert.showMe();
     },
 
 	confirm: function(msg, title, callback) {
-    	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
+		var me = this;
+    	
+
     	var alert = Ext.Msg.confirm(title, msg, function(code){
+    		me.popupAdded.shift();
     		MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
     		if (code == 'yes') 
     			if (typeof callback === 'function') callback();
     	});
 
-    	this.popupAdded.push(alert);
+    	this.popupAdded.unshift(alert);
+    	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
     },
 
     showLoading: function (msg) {
-    	msg = msg || 'Loading ..';
+    	msg = msg || 'Tải dữ liệu..';
         Ext.Viewport.mask({ xtype: 'loadmask', message: msg });
         Ext.Viewport.setMasked(true);
     },

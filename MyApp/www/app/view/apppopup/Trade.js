@@ -258,6 +258,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			},
@@ -404,7 +405,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		}
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
-
+			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 			me.hide();
 		}
 	},
@@ -418,7 +419,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		}
 		if (AppUtil.checkAmount(me.amount)) {
 			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
-
+			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 			me.hide();
 		}
 	},
@@ -468,5 +469,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		me._outtrade.setValue(todayDateFormat);	
 		me._intrade.setValue(todayDateFormat);
 		me.getCarousel().setActiveItem(0);
+
+		me._selectedPaid = null;
 	}
 });

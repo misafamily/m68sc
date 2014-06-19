@@ -76,6 +76,7 @@ Ext.define('MyApp.view.apppopup.AtmTradeList', {
 		control : {
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			}

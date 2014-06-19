@@ -88,6 +88,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 					var me = this;
 					if (typeof me._callback === 'function') {
 						//me._callback(me._value);
+						MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 						me.hide();
 					}
 				}
@@ -115,6 +116,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 		var me = this;
 		me._type = type;
 		me._value = value;
+		if (!me._value) me._value = {data: {name: AppConfig.textData.TIEN_MAT}};
 		me._callback = callback;		
 		me.resetView();
 		me.show();
@@ -147,7 +149,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 		if (!me._list) me._list = me.down('list');
 		if (!me._list.getStore()) me._list.setStore(me._store);
 
-		me._list.getScrollable().getScroller().scrollToTop();
+		//me._list.getScrollable().getScroller().scrollToTop();
 
 		if (firstRun) {
 			//me._store.changeQueryByType(me._type);
@@ -177,9 +179,14 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 			});	
 		} else {
 			var needChanged = true;
+			//console.log(me._selectedRec, me._value);
 			if (me._selectedRec) {
-				if (me._selectedRec.data.name != me._value.data.name)
+				if (me._selectedRec.data.name != me._value.data.name) {
 					me._selectedRec.data.selected = 'no';
+					me._list.getScrollable().getScroller().scrollToTop();
+					
+				}
+					
 				else
 					needChanged = false;
 			}
@@ -195,13 +202,23 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 
 							break;
 						}
-					}					
+					}				
+					var pos = me._store.data.items.indexOf(me._selectedRec);
+					var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
+					//me._list.scrollToRecord(me._selectedRec);
+					me._list.scrollToRecord(me._store.data.items[newpos]);				
 				}
-			}
-			me._list.scrollToRecord(me._selectedRec);
-			Ext.defer(function(){
 				me._list.refresh();
-			},30);
+					
+			} else if (me._selectedRec) {
+				if (me._selectedRec.data.selected == 'yes') {
+					var pos = me._store.data.items.indexOf(me._selectedRec);
+					var newpos = pos - 3 >=0 ? pos - 3 : (pos - 2 >=0 ? pos - 2 : (pos - 1 >=0 ? pos - 1 : pos));
+					//me._list.scrollToRecord(me._selectedRec);
+					me._list.scrollToRecord(me._store.data.items[newpos]);	
+				}
+			}			
+			
 		}
 		
 	}

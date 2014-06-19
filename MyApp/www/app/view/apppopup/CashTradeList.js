@@ -76,6 +76,7 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 		control : {
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			}

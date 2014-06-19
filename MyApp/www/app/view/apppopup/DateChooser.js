@@ -119,6 +119,7 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 
 			'button[title="backbtn"]' : {
 				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 					this.hide();
 				}
 			}
@@ -149,8 +150,11 @@ Ext.define('MyApp.view.apppopup.DateChooser', {
 	onDoneButtonClicked : function() {
 		//AppUtil.log('onDoneButtonClicked');
 		var me = this;
-		me._callback(Ext.Date.clone(me._selectedDate));
+		
+		MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 		me.hide();
+
+		me._callback(Ext.Date.clone(me._selectedDate));
 	},
 
 	displayValueFormat : function() {
