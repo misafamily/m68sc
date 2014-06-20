@@ -3,7 +3,7 @@ Ext.define('MyApp.util.AppUtil', {
 	requires : ['MyApp.model.SavedVar','MyApp.view.apppopup.AutoHideAlert'],
 	singleton : true,
 	dbConnection : null,
-	moneyUnit : 'đ',
+	moneyUnit : 'đ',//<span style="text-decoration: underline">đ</span>',
 	CASH : 0,
 	CASH_MODEL : null,
 	RELEASE: true,
@@ -340,10 +340,10 @@ Ext.define('MyApp.util.AppUtil', {
 		
 		title = title || '';
 		var alert = Ext.Msg.alert(title, msg, function() {
-			me.popupAdded.shift();
+			me.popupAdded.pop();
 			MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
 		});
-		this.popupAdded.unshift(alert);
+		this.popupAdded.push(alert);
 		MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
 	},
 
@@ -360,13 +360,13 @@ Ext.define('MyApp.util.AppUtil', {
     	
 
     	var alert = Ext.Msg.confirm(title, msg, function(code){
-    		me.popupAdded.shift();
+    		me.popupAdded.pop();
     		MyApp.app.fireEvent(AppConfig.eventData.APP_UNMASK);
     		if (code == 'yes') 
     			if (typeof callback === 'function') callback();
     	});
 
-    	this.popupAdded.unshift(alert);
+    	this.popupAdded.push(alert);
     	MyApp.app.fireEvent(AppConfig.eventData.APP_MASK);
     },
 

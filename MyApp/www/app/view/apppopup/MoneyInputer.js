@@ -64,7 +64,8 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					autoComplete : false,
 					autoCorrect : false,
 					cls : 'b-textfield-moneyinput',
-					value : '0'
+					value : '0',
+					styleHtmlContent: true
 				}]
 			}, {
 				xtype : 'container',
