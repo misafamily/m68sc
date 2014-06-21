@@ -16,7 +16,7 @@ body {
 }
 
 .x-android .x-input-el {
-    -webkit-text-fill-color: #fff !important;
+    -webkit-text-fill-color: #fff;
 }
 
 /*LIST*/
@@ -139,6 +139,22 @@ body {
 	height: 44px;
 }
 
+.toolbar-bottom-button {
+	height: 100%;
+	border: 0;
+}
+
+.toolbar-bottom-button.ok {
+	background-color: #01d660;
+	border-top: 2px solid #01c056;
+	
+}
+
+.toolbar-bottom-button.cancel {
+	background-color: #de5959;
+	border-top: 2px solid #c75050;
+}
+
 .toolbar-button-done3.x-button-pressing {
 	background-image: url('../images/buttons/btn-done3-pressing.png');
 }
@@ -179,8 +195,9 @@ body {
 	color: #898e91;
 }
 
-input::-webkit-input-placeholder {
-	color: gray;
+
+.x-android input::-webkit-input-placeholder {
+	color: #ccc;
 }
 
 /*
@@ -198,10 +215,10 @@ input::-webkit-input-placeholder {
 }
 
 .viewbase-toolbar-top, .viewbase-toolbar-bottom {
-	background-color: #0c71a5;
+	background-color: #39c0e7;
 	height: 46px;
-	padding-right: 12px;
-	padding-left: 12px;
+	/*padding-right: 12px;
+	padding-left: 12px;*/
 	width: 100%;
 }
 
@@ -243,33 +260,33 @@ input::-webkit-input-placeholder {
  }
  */
 /*SEGMENTED BUTTON EXPENSE TYPE*/
-.segmentedbutton.expensetype .x-first {
-	background-color: #fd2937;
+.segmentedbutton.expensetype .x-first.x-button-pressed  {
+	background-image: url('../images/bg-trade-active.png');
+	background-size: contain;
 }
 
-.segmentedbutton.expensetype .x-last  {
-	background-color: #6bc63a;
+.segmentedbutton.expensetype .x-last.x-button-pressed  {
+	background-image: url('../images/bg-trade-income-active.png');
+	background-size: contain;
 }
 
 .segmentedbutton.expensetype .x-button.x-button-pressed {
 	/*background-image: url('../images/bg-trade-active.png');*/
-	background-image: url('');
-	background-size: contain;
+	/*background-image: url('');
+	background-size: contain;*/
 }
 .segmentedbutton.expensetype .x-button {
 	background-image: url('../images/bg-trade-inactive.png');
 	background-size: contain;
+	height: 38px;
 }
 .segmentedbutton.expensetype .x-button.x-button-pressed .x-button-label {
-	color: #fff;
+	color: #000;
 	font-family: 'ROBOTO-LIGHT';
 }
 .segmentedbutton.expensetype .x-button .x-button-label {
-	color: #b4b4b4;
+	color: #000;
 	font-family: 'ROBOTO-LIGHT';
-}
-.segmentedbutton.expensetype .x-button {
-	border-right: 1px solid #666;
 }
 
 /*FORM CONTAINER*/
@@ -288,7 +305,7 @@ input::-webkit-input-placeholder {
 }
 
 .x-button {
-	border-radius: 5px;
+	border-radius: 0px;
 }
 .x-button-label, .x-button-normal .x-button-label {
 	color: white;
@@ -301,6 +318,10 @@ input::-webkit-input-placeholder {
 	background-size: contain;
 	
 }
+.main-gray {
+	background-color: #ececec;
+}
+
 .app-container {
 	color: #fff;
 }

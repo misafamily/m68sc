@@ -3,7 +3,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 	xtype : 'apppopup_trade',
 	requires:[],
 	config : {
-		cls : 'main popup-container',
+		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
 			pacK : 'center',
@@ -15,28 +15,15 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
+				pacK : 'center',
 				align : 'center'
 			},
 			cls : 'viewbase-toolbar-top',
 			width : '100%',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.THEM_GIAO_DICH,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype : 'segmentedbutton',
@@ -61,21 +48,27 @@ Ext.define('MyApp.view.apppopup.Trade', {
 				{
 					xtype : 'container',
 					layout : {
-						type : 'hbox',
+						type : 'vbox',
 						pacK : 'center',
 						align : 'center'
 					},					
+					flex: 1,
 					cls: 'trade-amount',
 					items : [{
 						xtype : 'textfield',
-						flex : 1,
+						//flex : 1,
 						clearIcon : false,
 						readOnly : true,
 						autoComplete : false,
 						autoCorrect : false,
-						cls : 'b-textfield-moneyinput',
+						cls : 'b-textfield-moneyinput trade',
 						value : '0',
-						name : 'amount'
+						name : 'amount',
+						styleHtmlContent: true,
+						inputCls: 'outcome'
+					}, {
+						xtype: 'container',
+						cls: 'b-textfield-moneyinput-bottomline trade'
 					}]
 				}
 			]
@@ -170,8 +163,16 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					cls : 'viewbase-toolbar-bottom',
 					items : [{
 						xtype : 'button',
-						cls : 'button-icon toolbar-button-done3',
-						title : 'addoutcomebutton'
+						cls : 'toolbar-bottom-button ok',
+						title : 'addoutcomebutton',
+						text: AppConfig.textData.BUTTON_OK,
+						flex: 1
+					}, {
+						xtype : 'button',
+						cls : 'toolbar-bottom-button cancel',
+						title : 'backbtn',
+						text: AppConfig.textData.BUTTON_CANCEL,
+						flex: 1
 					}]
 				}]
 			}, { //THU
@@ -248,8 +249,16 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					cls : 'viewbase-toolbar-bottom',
 					items : [{
 						xtype : 'button',
-						cls : 'button-icon toolbar-button-done2',
-						title : 'addincomebutton'
+						cls : 'toolbar-bottom-button ok',
+						title : 'addincomebutton',
+						text: AppConfig.textData.BUTTON_OK,
+						flex: 1
+					}, {
+						xtype : 'button',
+						cls : 'toolbar-bottom-button cancel',
+						title : 'backbtn',
+						text: AppConfig.textData.BUTTON_CANCEL,
+						flex: 1
 					}]
 				}]
 			}]
@@ -360,6 +369,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					var me = this;
 					var sb = me.getSegmentedButton();
 					sb.setPressedButtons(carousel.activeIndex);
+					me.toogleAmountInputCls(carousel.activeIndex == 0 ? 'outcome' : 'income');
 				}
 			},
 			'segmentedbutton': {
@@ -371,6 +381,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 						var oldIndex = me.getCarousel().activeIndex;
 						if (newIndex != oldIndex)
 							me.getCarousel().setActiveItem(newIndex);
+						//me._amount.setInputCls(carousel.activeIndex == 0 ? 'outcome' : 'income');
 					}
 
 				}//end toogle
@@ -428,8 +439,19 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		var me = this;
 		me.resetView();
 		me.amount = money;
-		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
+		//me._amount.setValue(AppUtil.formatMoney2WithUnit(me.amount));
+		me.toogleAmountInputCls('outcome');
 		me.show();
+	},
+
+	toogleAmountInputCls: function(type) {
+		var me = this;
+		if (type == 'outcome') {
+			me._amount.setValue('-' + AppUtil.formatMoneyWithUnit(me.amount));
+		} else 
+			me._amount.setValue('+' + AppUtil.formatMoneyWithUnit(me.amount));
+
+		me._amount.setInputCls(type);
 	},
 
 	resetView : function() {
@@ -438,7 +460,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			me._amount = me.down('textfield[name = "amount"]');
 		me._amount.reset();
 		me.amount = 0;
-		me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
+		//me._amount.setValue(AppUtil.formatMoneyWithUnit(me.amount));
 		me._selectedDate = new Date();
 		var todayDateFormat = me._selectedDate.tradeDateFormat();
 		

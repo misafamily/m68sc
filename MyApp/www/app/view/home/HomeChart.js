@@ -239,7 +239,7 @@ Ext.define('MyApp.view.home.HomeChart', {
 			labels : me.getData()['labels'],
 			datasets : [				
 				{
-					strokeColor : "rgba(193,157,43,1)",
+					strokeColor : "rgba(225,73,73,1)",
 					strokeColor2 : "rgba(224,156,149,.5)",
 					data : this.getData()['expenses']
 				},

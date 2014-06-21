@@ -73,7 +73,7 @@ Ext.define('MyApp.controller.Main', {
 
 	onHidePopup: function() {
 		if (AppUtil.popupAdded.length > 0) AppUtil.popupAdded.pop();
-		log('AppUtil.popupAdded: ', AppUtil.popupAdded);
+		//log('AppUtil.popupAdded: ', AppUtil.popupAdded);
 	},
 
 	onBackButtonTap: function() {
@@ -131,7 +131,7 @@ Ext.define('MyApp.controller.Main', {
 				me.currentMaskCon.enable();
 				//me.currentMaskCon = null;
 			}
-		}, 200);
+		}, 400);
 	},
 
 	onShowInputer : function(defaultValue, callback, atitle) {

@@ -19,21 +19,21 @@
 }
 
 .trade-amount-container {
-	height: 75px;	
-	padding-left: 12px;
-	padding-right: 12px;
+	height: 100px;	
+	/*padding-left: 12px;
+	padding-right: 12px;*/
 	width: 100%;
 }
 
 .trade-amount {
-	border-bottom: 1px solid #5494b8;
-	height: 100%;
+	/*border-bottom: 1px solid #5494b8;
+	height: 100%;*/
 }
 	
 
 /*fields*/
 .form-container .x-field {
-	border-bottom:1px solid #5494b8;
+	border-bottom:1px solid #b2b2b2;
 	margin-left: 12px;
 	margin-right: 12px;
 	padding-top: 4px;
@@ -42,19 +42,19 @@
 .expensetype .x-input-text {
     background: transparent url('../images/fields/f-user.png') no-repeat 15px 5px;
     background-size: 27px;
-    color: white;
+    color: #000;
 }
 
 .amount .x-input-text {
     background: transparent url('../images/fields/f-user.png') no-repeat 15px 5px;
     background-size: 27px;
-    color: #ec1f24;
+    color: #000;
 }
 
 .verhical .x-input-text {
     background: transparent url('../images/fields/f-xeco.png') no-repeat 15px 5px;
     background-size: 27px;
-    color: white;
+    color: #000;
 }
 
 /*date chooser*/

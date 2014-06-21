@@ -3,8 +3,11 @@
 }
 
 .moneyinputer-amount-container {
-	background-image: url('../images/bg-moneyinputer-amount.png');
-	background-size: contain;
+	/*background-image: url('../images/bg-moneyinputer-amount.png');
+	background-size: contain;*/
+	background-color: #fff;
+	border-bottom: 2px solid #d4d4d4;
+	border-top: 2px solid #e5e5e5;
 }
 
 .moneyinputer-delete-icon {
@@ -21,20 +24,69 @@
 }
 
 .moneyinputer-button.x-button-pressing {
-	background-color: #03375c;
+	background-color: #39c0e7;
 	border-radius: 0;
-	color: #fff;
+}
+
+.moneyinputer-button.x-button-pressing .x-button-label {
+	color: #000;
+}
+
+.x-android .x-input-el.inputer {
+    -webkit-text-fill-color: #de595a;
+}
+
+.x-android .x-input-el.income,
+.b-textfield-moneyinput .x-input-el.income {
+    -webkit-text-fill-color: #01d660;
+    color: #01d660;
+}
+
+.x-android .x-input-el.outcome,
+.b-textfield-moneyinput .x-input-el.outcome {
+    -webkit-text-fill-color: #de5959;
+    color: #de595a;
 }
 
 .b-textfield-moneyinput .x-input-el {
 	font-family: "ROBOTO-LIGHT";
-	color: #fff;
-	text-align: center;
+	color: #de595a;
+	text-align: right;
 	background-color: transparent;
 	min-height: 29px;
 	border: 0px solid #766f67;
 	border-radius: 10px;
 	padding: 10px;
 	width: 100%;
-	font-size: 32px;
+	font-size: 33px;
+	margin-top: 30px;
+	padding-bottom: 0px;
+	margin-bottom: -15px;
+	max-width: 300px;
+}
+
+.b-textfield-moneyinput.trade .x-input-el {
+	margin-top: 0px;
+}
+
+
+.b-textfield-moneyinput-bottomline {
+	border: 1px solid #de595a;
+	width: 90%;
+	min-width: 288px;
+	height: 5px;
+	border-top: 0;
+	max-width: 300px;
+	/* margin-left: 10px; */
+	/* margin-right: 97px; */
+}
+
+.b-textfield-moneyinput-bottomline.trade {
+	border: 1px solid #b2b2b2;
+	border-top: 0;
+	width: 100%;
+}
+
+.moneyinputer-button .x-button-label, .moneyinputer-button .x-button-normal .x-button-label {
+	color: black;
 }

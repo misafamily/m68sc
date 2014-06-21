@@ -13,32 +13,19 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack: 'center'
 			},
 			cls : 'viewbase-toolbar-top',
 			width : '100%',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.NHAP_SO_TIEN,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype : 'container',
-			cls : 'main',
+			cls : 'main-gray',
 			layout : {
 				type : 'vbox'
 			},
@@ -50,7 +37,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			items : [{
 				xtype : 'container',
 				layout : {
-					type : 'hbox',
+					type : 'vbox',
 					pacK : 'center',
 					align : 'center'
 				},
@@ -58,14 +45,18 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 				cls : 'moneyinputer-amount-container',
 				items : [{
 					xtype : 'textfield',
-					flex : 1,
+					//flex : 1,
 					clearIcon : false,
 					readOnly : true,
 					autoComplete : false,
 					autoCorrect : false,
 					cls : 'b-textfield-moneyinput',
 					value : '0',
-					styleHtmlContent: true
+					styleHtmlContent: true,
+					inputCls: 'inputer'
+				}, {
+					xtype: 'container',
+					cls: 'b-textfield-moneyinput-bottomline'
 				}]
 			}, {
 				xtype : 'container',
@@ -171,8 +162,16 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done',
-				title : 'donebutton'
+				cls : 'toolbar-bottom-button ok',
+				title : 'donebutton',
+				text: AppConfig.textData.BUTTON_OK,
+				flex: 1
+			}, {
+				xtype : 'button',
+				cls : 'toolbar-bottom-button cancel',
+				title : 'backbtn',
+				text: AppConfig.textData.BUTTON_CANCEL,
+				flex: 1
 			}]
 		}],
 		control : {
