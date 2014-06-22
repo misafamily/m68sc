@@ -204,11 +204,11 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 					cls : 'recorditem-header-date-info',
 					items : [{
 						xtype : 'label',
-						html : '..',
+						html : '',
 						cls : 'recorditem-header-day'
 					}, {
 						xtype : 'label',
-						html : '..',
+						html : '',
 						cls : 'recorditem-header-month'
 					}]
 				}, //end shape img
@@ -217,7 +217,7 @@ Ext.define('MyApp.view.ironbox.AtmItem', {
 				}, //end shape img
 				{
 					xtype : 'label',
-					html : '..',
+					html : '',
 					cls : 'recorditem-header-amount'
 				}]
 			});

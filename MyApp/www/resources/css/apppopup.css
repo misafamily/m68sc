@@ -59,14 +59,14 @@
 
 /*date chooser*/
 .datechooser-date-choosen {
-	font-size: 90px;
-	color: #fff;
+	font-size: 80px;
+	color: #000;
 	text-align: center;
 }
 
 .datechooser-month-choosen {
-	font-size: 26px;
-	color: #fff;
+	font-size: 20px;
+	color: #000;
 	text-align: center;
 }
 

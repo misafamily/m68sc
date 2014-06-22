@@ -5,7 +5,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
     	padding: 0,
     	modal: true, 
     	centered: true,
-    	hideOnMaskTap: true,
+    	hideOnMaskTap: false,
     	width: '80%',
     	height: '60%',
     	layout: {
@@ -22,7 +22,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 				type : 'hbox',
 				align : 'center'
 			},
-			cls : 'viewbase-toolbar-top',
+			cls : 'viewbase-toolbar-top no-padding',
 			width : '100%',
 			items : [/*{
 				xtype : 'button',
@@ -52,7 +52,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 			flex: 1,
 			items: [{
 				xclass: 'MyApp.view.comp.AppList',
-				cls : 'recorditem-list nobg',
+				cls : 'recorditem-list nobg cash-chosen',
 				itemTpl: new Ext.XTemplate(
 					'<div class="info">', 
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
@@ -76,18 +76,35 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done',
-				title : 'donebutton'
+				cls : 'toolbar-bottom-button ok',
+				title : 'donebutton',
+				text: AppConfig.textData.BUTTON_OK,
+				flex: 1
+			}, {
+				xtype : 'button',
+				cls : 'toolbar-bottom-button cancel',
+				title : 'backbtn',
+				text: AppConfig.textData.BUTTON_CANCEL,
+				flex: 1
 			}]
 		}],
 
 		control : {
+
+			'button[title="backbtn"]' : {
+				tap : function() {
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
+					this.hide();
+				}
+			},
 
 			'button[title = "donebutton"]' : {
 				tap : function() {
 					var me = this;
 					if (typeof me._callback === 'function') {
 						//me._callback(me._value);
+						me._callback(Ext.clone(me._selectedRec));
+
 						MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 						me.hide();
 					}
@@ -102,7 +119,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 					me._selectedRec.data.selected = 'yes';
 
 					//me._value = me._selectedRec.data.name;
-					me._callback(Ext.clone(me._selectedRec));
+					//
 
 					me._list.refresh();
 					//console.log('itemtap', record);

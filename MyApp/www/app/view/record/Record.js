@@ -9,11 +9,7 @@ Ext.define('MyApp.view.record.Record', {
 		items : [{
 			xtype : 'container',
 			flex : 1,
-			scrollable : {
-				directionLock : true,
-				direction : 'vertical',
-				indicators: false
-			},
+			
 			layout : {
 				type : 'vbox'
 			},
@@ -23,12 +19,12 @@ Ext.define('MyApp.view.record.Record', {
 				layout : {
 					type : 'vbox',
 					pack : 'center',
-					align : 'start'
+					align : 'center'
 				},
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
-					html : '..',
+					html : '',
 					cls : 'record-date'
 				}]
 			}, {
@@ -36,8 +32,12 @@ Ext.define('MyApp.view.record.Record', {
 				layout : {
 					type : 'vbox'
 				},
-				/*flex : 1,*/
-				height: 'auto',
+				scrollable : {
+					directionLock : true,
+					direction : 'vertical',
+					indicators: false
+				},
+				flex : 1,
 				cls : 'record-list-container'
 			}]
 		}, {
@@ -56,7 +56,7 @@ Ext.define('MyApp.view.record.Record', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'label',
-				html: '..',
+				html: '',
 				cls: 'balance-lbl'
 			}]
 		}, {
@@ -69,21 +69,21 @@ Ext.define('MyApp.view.record.Record', {
 				pack : 'center'
 			},
 			cls : 'viewbase-toolbar-bottom',
-			items : [{
+			items : [/*{
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-search'
 			}, {
 				xtype : 'spacer'
-			}, {
+			}, */{
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-add',
 				title : 'addtradebutton'
-			}, {
+			}/*, {
 				xtype : 'spacer'
 			}, {
 				xtype : 'button',
 				cls : 'button-icon toolbar-button-tag'
-			}]
+			}*/]
 		}],
 
 		control: {
@@ -183,11 +183,11 @@ Ext.define('MyApp.view.record.Record', {
 		var me = this;
 		date = Ext.Date.clone(date);
 		date.setDate(1);
-		/*var s = date.format('dd.mm.yyyy');
+		var s = date.format('dd.mm.yyyy');
 		s += ' - ';
 		date.setDate(Ext.Date.getDaysInMonth(date));
-		s += date.format('dd.mm.yyyy');*/
-		var s = 'Giao dịch ' + date.getMonthName() + ' ' + date.getFullYear();
+		s += date.format('dd.mm.yyyy');
+		//var s = 'Giao dịch ' + date.getMonthName() + ' ' + date.getFullYear();
 		
 		if (!me._dateLbl) me._dateLbl = me.down('label[cls="record-date"]');
 		me._dateLbl.setHtml(s);
@@ -197,10 +197,11 @@ Ext.define('MyApp.view.record.Record', {
 		var me = this;
 		me._recordItems = [];
 		me._monthRecords = [];
-		if (!me._scroller)
-			me._scroller = me.down('container[cls = "app-container"]');
+		//if (!me._scroller)
+			//me._scroller = me.down('container[cls = "app-container"]');
 		if (!me._container)
 			me._container = me.down('container[cls = "record-list-container"]');
+		me._scroller = me._container;
 		if (!me._store)
 			me._store = Ext.create('MyApp.store.Trades');
 

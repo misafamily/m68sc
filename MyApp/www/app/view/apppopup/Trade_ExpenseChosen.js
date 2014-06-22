@@ -15,28 +15,15 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack: 'center'
 			},
 			cls : 'viewbase-toolbar-top',
 			width : '100%',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.CHON_CHI_TIEU,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype: 'container',
@@ -47,7 +34,7 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 			flex: 1,
 			items: [{
 				xclass: 'MyApp.view.comp.AppList',
-				cls : 'recorditem-list nobg',
+				cls : 'recorditem-list nobg cash-chosen',
 				itemTpl: new Ext.XTemplate(
 					'<div class="info">', 
 						'<img class= "thumb" src="resources/images/fields/f-xeco.png"></img>', 
@@ -70,8 +57,16 @@ Ext.define('MyApp.view.apppopup.Trade_ExpenseChosen', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done',
-				title : 'donebutton'
+				cls : 'toolbar-bottom-button ok',
+				title : 'donebutton',
+				text: AppConfig.textData.BUTTON_OK,
+				flex: 1
+			}, {
+				xtype : 'button',
+				cls : 'toolbar-bottom-button cancel',
+				title : 'backbtn',
+				text: AppConfig.textData.BUTTON_CANCEL,
+				flex: 1
 			}]
 		}],
 			

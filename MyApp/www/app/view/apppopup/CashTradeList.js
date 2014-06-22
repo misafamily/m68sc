@@ -7,7 +7,7 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
-			pacK : 'center',
+			pack : 'center',
 			align : 'center'
 		},
 		items : [{
@@ -16,36 +16,24 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack: 'center'
 			},
 			cls : 'fullwidth-container viewbase-toolbar-top',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.GIAO_DICH_TIEN_MAT,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype: 'container',
+			flex: 1,
 			cls : 'main fullwidth-container fullheight-container record-list-container',
 			items: [{
 						xclass : 'MyApp.view.comp.AppListPull',
 						store: Ext.create('MyApp.store.Trades_Page'),
 						cls : 'recorditem-list nobg',
-						height: window.innerHeight - 46,
+						height: window.innerHeight - 46 - 14 - 46,
 						itemTpl: new Ext.XTemplate(
 							'<div class="info">', 
 								'<div class= "date">{dd}</div>', 
@@ -72,6 +60,23 @@ Ext.define('MyApp.view.apppopup.CashTradeList', {
 						itemHeight: 49
 					}
 			]
+		}, {
+			//xtype: 'toolbar',
+			//docked: 'bottom',
+			xtype : 'container',
+			layout : {
+				type : 'hbox',
+				align : 'center',
+				pack : 'center'
+			},
+			cls : 'viewbase-toolbar-bottom',
+			items : [{
+				xtype : 'button',
+				cls : 'toolbar-bottom-button cancel',
+				title : 'backbtn',
+				text: AppConfig.textData.BUTTON_CANCEL,
+				flex: 1
+			}]
 		}],
 		control : {
 			'button[title="backbtn"]' : {

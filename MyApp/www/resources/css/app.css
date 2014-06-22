@@ -16,7 +16,7 @@ body {
 }
 
 .x-android .x-input-el {
-    -webkit-text-fill-color: #fff;
+    -webkit-text-fill-color: #000;
 }
 
 /*LIST*/
@@ -70,7 +70,7 @@ body {
 .toolbar-icon-more {
 	background-image: url('../images/icons/ic-more.png');
 	background-size: contain;
-	right: -14px;
+	right: -7px;
 }
 
 .toolbar-icon-menu {
@@ -205,13 +205,13 @@ body {
  background-image: url('../images/bg-main.png');
  }*/
 .viewbase-balance-box {
-	background-color: #002559;
+	background-color: #01d660;
 	height: 40px;
 	width: 100%;
 	color: #fff;
 	font-size: 20px;
-	padding-right:12px;
-	padding-left:16px;
+	padding-right:6px;
+	padding-left:6px;
 }
 
 .viewbase-toolbar-top, .viewbase-toolbar-bottom {
@@ -228,9 +228,19 @@ body {
 	padding-top: 14px;
 }
 
+.viewbase-toolbar-top.no-padding {
+	height: 46px;
+	padding-top: 0px;
+}
+
 
 .viewbase-toolbar-bottom {
 	background-color: #dddcdc;
+}
+
+.viewbase-toolbar-bottom.padding {
+	padding-right: 6px;
+	padding-left: 6px;
 }
 
 /*SEGMENTED BUTTON EXPENSE TYPE*/
@@ -314,8 +324,8 @@ body {
 
 /*HOME*/
 .main {
-	background-image: url('../images/bg-main.png');
-	background-size: contain;
+	/*background-image: url('../images/bg-main.png');
+	background-size: contain;*/
 	
 }
 .main-gray {
@@ -382,36 +392,38 @@ body {
 }
 /*RECORD*/
 .record-date-container {
-	padding-bottom: 13px;
+	/*padding-bottom: 13px;
 	border-bottom: 1px solid #579cc3;
 	margin-left: 12px;
-	margin-right: 12px;
+	margin-right: 12px;*/
+	border-bottom: 1px solid #bec2c3;
+	height: 22px;
+	background-color: #eef2f5;
 }
 
 .record-date {
 	font-size: 14px;
-	color: #46b9cc;
-	margin-top: 15px;
+	color: #5c5a5b;
 }
 
 .record-list-container {
-
+	color: black;
 }
 
 .recorditem-header-container {
 	height: 40px;	
 	background-color: rgba(1,1,1,0);
-	padding-left: 12px;
-	padding-right: 12px;
+	/*padding-left: 12px;
+	padding-right: 12px;*/
 }
 
 .recorditem-header-container.active {
-	background-color: #054e77;/*#065784 055683*/
+	background-color: #f2f6f7;/*#065784 055683*/
 }
 
 .recorditem-header {
 	height: 40px;	
-	border-bottom: 1px solid #579cc3;
+	border-bottom: 1px solid #c1c5c6;
 	width: 100%;
 }
 
@@ -423,8 +435,8 @@ body {
 }
 
 .recorditem-header-date.today {
-	font-size: 30px;
-	padding: 1px 6px;	
+	/*font-size: 30px;
+	padding: 1px 6px;	*/
 }
 
 .recorditem-header-date-info {
@@ -460,10 +472,11 @@ body {
 	font-size: 20px;
 	padding: 8px 0px;
 	
+	margin-right: 6px;
 }
 
 .recorditem-list {
-	background-color: #055683;/*065784;*/
+	background-color: #f2f6f7;/*065784;*/
 }
 
 .recorditem-list.nobg {
@@ -471,7 +484,8 @@ body {
 }
 
 .recorditem-list .x-list-item {
-	color: #fff;
+	/* color: #fff; 
+	background-color: #f2f6f7;*/
 }
 
 .recorditem-list .x-list-item.x-list-item-tpl:before { /*:before*/
@@ -493,16 +507,20 @@ body {
 	margin-left: 18px;
 }
 
+.recorditem-list.cash-chosen .info .thumb {
+	margin-left: 6px;
+}
+
 .recorditem-list .info .content {
 	margin-top: 4px;
 	margin-left: 6px;
 }
 
 .recorditem-list .info {
-	margin-left: 12px;
-	margin-right: 12px;
+	/*margin-left: 12px;
+	margin-right: 12px;*/
 	padding-bottom: 5px;
-	border-bottom: 1px solid #579cc3;
+	border-bottom: 1px solid #c1c5c6;
 }
 
 .recorditem-list .info .content .title {
@@ -530,11 +548,15 @@ body {
 }
 
 .recorditem-list .info .total, .recorditem-list .info .check {
-	right: 12px;
+	right: 6px;
 	position: absolute;
 	margin-top: 12px;
 	text-align: right;
 	font-size: 14px;
+}
+
+.recorditem-list .info .check {
+	right: 0px;
 }
 
 .recorditem-list .info .check.yes {
@@ -545,12 +567,12 @@ body {
 	margin-top: 2px;
 }
 
-.recorditem-list .info .total.income, .recorditem-header-amount.income, .balance-lbl.income {
-	color: #6bc63a;
+.recorditem-list .info .total.income, .recorditem-header-amount.income/*, .balance-lbl.income*/ {
+	color: #00d762;
 }
 
-.recorditem-list .info .total.outcome, .recorditem-header-amount.outcome, .balance-lbl.outcome {
-	color: #ff4f5a;
+.recorditem-list .info .total.outcome, .recorditem-header-amount.outcome/*, .balance-lbl.outcome*/ {
+	color: #ed1e24;
 }
 
 
@@ -567,22 +589,27 @@ body {
 	background: transparent url('../images/fields/f-tienmat.png') no-repeat;
 	background-size: contain;
 	margin: 4px 6px;
-	margin-left: 0px;
+	margin-left: 6px;
 }
 
 .recorditem-header-container.atmitem {
-	background-color: #055683;/*065784;*/
+	background-color: #f2f6f7;/*065784;*/
 }
 
 .recorditem-header.atmitem {
-	padding-left: 18px;
+	padding-left: 12px;
 	
 }
 
 .recorditem-header-container.atmitem.active {
-	background-color: #054e77;/*#065784 055683*/
+	background-color: #edeff0;/*#065784 055683*/
 }
 
 .recorditem-list.atmitem .info {
 	padding-left: 18px;
+}
+
+.recorditem-list.atmitem .x-list-item {
+	/* color: #fff; */
+	background-color: #edeff0;
 }

@@ -27,7 +27,8 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 			xtype : 'container',
 			cls : 'main-gray',
 			layout : {
-				type : 'vbox'
+				type : 'vbox',
+				pack : 'center'
 			},
 			style : {
 				'width' : '100%',
@@ -38,7 +39,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 				xtype : 'container',
 				layout : {
 					type : 'vbox',
-					pacK : 'center',
+					pack : 'center',
 					align : 'center'
 				},
 				flex : 1,
@@ -62,7 +63,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 				xtype : 'container',
 				layout : {
 					type : 'vbox',
-					pacK : 'center',
+					pack : 'center',
 					align : 'center'
 				},
 				flex : 2,
@@ -74,7 +75,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					xtype : 'container',
 					layout : {
 						type : 'hbox',
-						pacK : 'center',
+						pack : 'center',
 						align : 'center'
 					},
 					defaults : {
@@ -94,7 +95,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					xtype : 'container',
 					layout : {
 						type : 'hbox',
-						pacK : 'center',
+						pack : 'center',
 						align : 'center'
 					},
 					defaults : {

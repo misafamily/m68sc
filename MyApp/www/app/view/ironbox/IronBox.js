@@ -9,11 +9,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		items : [{
 			xtype : 'container',
 			flex : 1,
-			scrollable : {
-				directionLock : true,
-				direction : 'vertical',
-				indicators: false
-			},
+			
 			layout : {
 				type : 'vbox'
 			},
@@ -23,12 +19,12 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				layout : {
 					type : 'vbox',
 					pack : 'center',
-					align : 'start'
+					align : 'center'
 				},
 				cls : 'record-date-container',
 				items : [{
 					xtype : 'label',
-					html : '..',
+					html : '',
 					cls : 'record-date'
 				}]
 			}, {
@@ -36,8 +32,14 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				layout : {
 					type : 'vbox'
 				},
+				scrollable : {
+					directionLock : true,
+					direction : 'vertical',
+					indicators: false
+				},
 				/*flex : 1,*/
-				height: 'auto',
+				//height: 'auto',
+				flex: 1,
 				cls : 'record-list-container'
 			}]
 		}, {

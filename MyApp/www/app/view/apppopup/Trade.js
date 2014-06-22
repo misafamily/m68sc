@@ -6,7 +6,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
-			pacK : 'center',
+			pack : 'center',
 			align : 'center'
 		},
 		items : [{
@@ -15,7 +15,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				pacK : 'center',
+				pack : 'center',
 				align : 'center'
 			},
 			cls : 'viewbase-toolbar-top',
@@ -49,7 +49,7 @@ Ext.define('MyApp.view.apppopup.Trade', {
 					xtype : 'container',
 					layout : {
 						type : 'vbox',
-						pacK : 'center',
+						pack : 'center',
 						align : 'center'
 					},					
 					flex: 1,

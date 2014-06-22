@@ -142,7 +142,7 @@ Ext.define('MyApp.view.home.Home', {
 				align : 'center',
 				pack : 'center'
 			},
-			cls : 'viewbase-toolbar-bottom',
+			cls : 'viewbase-toolbar-bottom padding',
 			items : [{
 				xtype : 'spacer',
 				width : 36
