@@ -215,8 +215,13 @@ Ext.define('MyApp.util.AppUtil', {
 		return me.formatMoneyWithUnit(me.CASH);
 	},
 
-	canGetCash : function(amount) {
-		return this.CASH >= amount;
+	canGetCash : function(amount, showalert) {
+		if (showalert == null) showalert = true;
+		var b = this.CASH >= amount;
+		if (!b) {
+			if (showalert) this.alert(Ext.util.Format.format(AppConfig.textData.HET_TIEN_MAT, this.getCashFormat()));
+		}
+		return b;
 	},
 
 	cashPlus : function(amount, fire) {
@@ -224,7 +229,7 @@ Ext.define('MyApp.util.AppUtil', {
 		fire = fire || true;
 		me.CASH += amount;
 		me.saveCashModel();
-		if (fire) MyApp.app.fireEvent('cash_changed', me.CASH, amount);
+		if (fire) MyApp.app.fireEvent(AppConfig.eventData.CASH_CHANGED, me.CASH, amount);
 	},
 
 	cashMinus : function(amount, fire) {
@@ -232,7 +237,7 @@ Ext.define('MyApp.util.AppUtil', {
 		me.CASH -= amount;
 		me.saveCashModel();
 		fire = fire || true;
-		if (fire) MyApp.app.fireEvent('cash_changed', me.CASH, -amount);
+		if (fire) MyApp.app.fireEvent(AppConfig.eventData.CASH_CHANGED, me.CASH, -amount);
 	},
 
 	cashEdit : function(amount) {
@@ -253,7 +258,7 @@ Ext.define('MyApp.util.AppUtil', {
 	checkAmount: function(amount) {
 		var me = this;
 		if (!amount) {
-			me.alert('Nhap tien di ku');
+			me.alert(AppConfig.textData.NHAP_TIEN_SAI);
 			return false;
 		}
 		return true;

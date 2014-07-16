@@ -58,7 +58,7 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 				xtype : 'spacer'
 			}, {
 				xtype : 'label',
-				html: '..',
+				html: '',
 				cls: 'balance-lbl'
 			}]
 		}/*, {
@@ -153,11 +153,11 @@ Ext.define('MyApp.view.ironbox.IronBox', {
 		
 		me._recordItems = [];
 		me._monthRecords = [];
-		if (!me._scroller)
-			me._scroller = me.down('container[cls = "app-container"]');
+		//if (!me._scroller)
+			//me._scroller = me.down('container[cls = "app-container"]');
 		if (!me._container)
 			me._container = me.down('container[cls = "record-list-container"]');
-
+		me._scroller = me._container;
 		me._container.hide();
 		//add tien mat
 		if (!me._tienmat) me._tienmat = new MyApp.view.ironbox.Cash();

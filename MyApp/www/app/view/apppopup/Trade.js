@@ -411,13 +411,23 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		var me = this;
 		var typename = me._outtype.getValue();
 		if (typename == '') {
-			AppUtil.alert('Chon chi tieu di ku');
+			AppUtil.alert(AppConfig.textData.CHUA_CHON_CHI_TIEU);
 			return;
 		}
+		var paidtype = AppConfig.type.TIEN_MAT;
+		if (me._selectedPaid) paidtype = me._selectedPaid.data.type;
+		log('paidtype', me._selectedPaid);
+
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, AppConfig.type.TIEN_MAT, me._outnote.getValue(), me._selectedDate, 'CASH');
-			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
-			me.hide();
+			if (paidtype == AppConfig.type.TIEN_MAT) {
+				if (AppUtil.canGetCash(me.amount)) {
+					AppUtil.cashMinus(me.amount);
+					AppUtil.doTrade(me._outtype.getValue(), AppConfig.type.CHI, me.amount, paidtype, 
+									me._outnote.getValue(), me._selectedDate, 'cash');
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
+					me.hide();
+				}
+			}	
 		}
 	},
 	
@@ -425,11 +435,12 @@ Ext.define('MyApp.view.apppopup.Trade', {
 		var me = this;
 		var typename = me._intype.getValue();
 		if (typename == '') {
-			AppUtil.alert('Chon thu nhap di ku');
+			AppUtil.alert(AppConfig.textData.CHUA_CHON_THU_NHAP);
 			return;
 		}
 		if (AppUtil.checkAmount(me.amount)) {
-			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
+			AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, 
+				me._innote.getValue(), me._selectedDate, 'cash');
 			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
 			me.hide();
 		}

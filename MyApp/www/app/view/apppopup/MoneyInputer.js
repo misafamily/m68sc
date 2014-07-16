@@ -114,7 +114,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					xtype : 'container',
 					layout : {
 						type : 'hbox',
-						pacK : 'center',
+						pack : 'center',
 						align : 'center'
 					},
 					defaults : {
@@ -133,7 +133,7 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 					xtype : 'container',
 					layout : {
 						type : 'hbox',
-						pacK : 'center',
+						pack : 'center',
 						align : 'center'
 					},
 					defaults : {
@@ -234,11 +234,13 @@ Ext.define('MyApp.view.apppopup.MoneyInputer', {
 		//AppUtil.log('onDoneButtonClicked');
 		var me = this;
 		me._valueNumber = AppUtil.deformatMoneyWithUnit(me._field.getValue());
-		
-		MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
-		me.hide();
 
-		me._callback(me._valueNumber);
+		if (AppUtil.checkAmount(me._valueNumber)) {
+			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);
+			me.hide();
+
+			me._callback(me._valueNumber);
+		}		
 	},
 
 	displayValueFormat : function() {

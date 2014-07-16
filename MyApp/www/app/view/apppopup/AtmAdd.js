@@ -6,7 +6,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
-			pacK : 'center',
+			pack : 'center',
 			align : 'center'
 		},
 		items : [{
@@ -15,27 +15,14 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack : 'center'
 			},
 			cls : 'fullwidth-container viewbase-toolbar-top',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.THEM_TAI_KHOAN_ATM,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype : 'container',
@@ -49,7 +36,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				layout : {
 					type : 'vbox',
 					pack : 'center',
-					align : 'start'
+					align : 'center'
 				},
 				cls : 'record-date-container',
 				items : [{
@@ -124,9 +111,17 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 			cls : 'viewbase-toolbar-bottom',
 			items : [{
 				xtype : 'button',
-				cls : 'button-icon toolbar-button-done',
-				title : 'addbutton'
-			}]		
+				cls : 'toolbar-bottom-button ok',
+				title : 'donebutton',
+				text: AppConfig.textData.BUTTON_OK,
+				flex: 1
+			}, {
+				xtype : 'button',
+				cls : 'toolbar-bottom-button cancel',
+				title : 'backbtn',
+				text: AppConfig.textData.BUTTON_CANCEL,
+				flex: 1
+			}]
 		}],
 		control : {
 			'textfield[name="amount"]' : {
@@ -135,7 +130,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INPUTER, tf.getValue(), function(money) {
 						me.amount = money;
 						tf.setValue(AppUtil.formatMoneyWithUnit(money));
-					}, null);
+					}, AppConfig.textData.NHAP_SO_TIEN_ATM);
 				}
 			},
 
@@ -146,7 +141,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				}
 			},
 
-			'button[title="addbutton"]' : {
+			'button[title="donebutton"]' : {
 				tap : function() {
 					this.addAtm();
 				}
@@ -195,7 +190,7 @@ Ext.define('MyApp.view.apppopup.AtmAdd', {
 				note: me.note,
 				type: AppConfig.type.ATM
 			};
-			//AppUtil.log(data);
+			AppUtil.log(data);
 			var hunter = Ext.create('MyApp.model.Hunter', data);
 			hunter.save(function() {
 				MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);

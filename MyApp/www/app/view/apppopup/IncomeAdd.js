@@ -6,7 +6,7 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 		cls : 'popup-container',
 		layout : {
 			type : 'vbox',
-			pacK : 'center',
+			pack : 'center',
 			align : 'center'
 		},
 		items : [{
@@ -15,28 +15,15 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 			xtype : 'container',
 			layout : {
 				type : 'hbox',
-				align : 'center'
+				align : 'center',
+				pack: 'center'
 			},
 			cls : 'viewbase-toolbar-top',
 			width : '100%',
 			items : [{
-				xtype : 'button',
-				cls : 'button-icon toolbar-button-back',
-				title : 'backbtn'
-			}, {
-				xtype : 'container',
-				cls : 'apppopup-line'
-			}, {
-				xtype : 'spacer'
-			}, {
 				xtype : 'label',
 				html : AppConfig.textData.THU_NHAP + ' ' + AppConfig.textData.ATM_ONLY,
 				cls : 'apppopup-title'
-			}, {
-				xtype : 'spacer'
-			}, {
-				xtype : 'spacer',
-				width : 31
 			}]
 		}, {
 			xtype: 'container',
@@ -46,26 +33,34 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 			items:[{
 				xtype: 'container',
 				cls : 'trade-amount-container',
-				items: [{
-					xtype : 'container',
-					layout : {
-						type : 'hbox',
-						pacK : 'center',
-						align : 'center'
-					},					
-					cls: 'trade-amount',
-					items : [{
-						xtype : 'textfield',
-						flex : 1,
-						clearIcon : false,
-						readOnly : true,
-						autoComplete : false,
-						autoCorrect : false,
-						cls : 'b-textfield-moneyinput',
-						value : '0',
-						name : 'amount'
-					}]
-				}]
+				items: [
+					{
+						xtype : 'container',
+						layout : {
+							type : 'vbox',
+							pack : 'center',
+							align : 'center'
+						},					
+						flex: 1,
+						cls: 'trade-amount',
+						items : [{
+							xtype : 'textfield',
+							//flex : 1,
+							clearIcon : false,
+							readOnly : true,
+							autoComplete : false,
+							autoCorrect : false,
+							cls : 'b-textfield-moneyinput trade',
+							value : '0',
+							name : 'amount',
+							styleHtmlContent: true,
+							inputCls: 'income'
+						}, {
+							xtype: 'container',
+							cls: 'b-textfield-moneyinput-bottomline trade'
+						}]
+					}
+				]
 			}, { //THU
 				xtype : 'container',
 				layout : {
@@ -86,11 +81,11 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 							type : 'vbox'
 						},
 						flex : 1,
-						/*scrollable : {
+						scrollable : {
 							directionLock : true,
 							direction : 'vertical',
-							indicators : false
-						},*/
+							indicators: false
+						},
 						
 						defaults : {
 							required : true,
@@ -103,20 +98,23 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 							name : 'intype',
 							//label: 'Tên tài khoản ',
 							cls : 'form-textfield verhical',
-							//placeHolder : AppConfig.type.LUONG,
+							placeHolder : AppConfig.textData.KIEU_THU_NHAP,
 							autoCapitalize : false,
-							value : AppConfig.type.LUONG
+							readOnly: true,
+							//value : AppConfig.type.LUONG
 						}, {
 							xtype : 'textfield',
 							name : 'innote',
-							placeHolder : 'Mua gi ?',
+							placeHolder : AppConfig.placeholderData.GHI_CHU_THU,
 							cls : 'form-textfield expensetype',
-							value : 'Luong thang'
+							maxLength: 50
 						}, {
 							xtype : 'textfield',
 							name : 'inpaidby',
-							placeHolder : 'Tien mat hoac ATM',
-							cls : 'form-textfield expensetype'
+							//placeHolder : 'Tien mat hoac ATM',
+							cls : 'form-textfield expensetype',
+							readOnly: true,
+							value: AppConfig.textData.TIEN_MAT
 							//label: 'Số tiền hiện có  '
 						},{
 							xtype : 'textfield',
@@ -138,8 +136,16 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 					cls : 'viewbase-toolbar-bottom',
 					items : [{
 						xtype : 'button',
-						cls : 'button-icon toolbar-button-done2',
-						title : 'addincomebutton'
+						cls : 'toolbar-bottom-button ok',
+						title : 'donebutton',
+						text: AppConfig.textData.BUTTON_OK,
+						flex: 1
+					}, {
+						xtype : 'button',
+						cls : 'toolbar-bottom-button cancel',
+						title : 'backbtn',
+						text: AppConfig.textData.BUTTON_CANCEL,
+						flex: 1
 					}]
 				}]
 			}]
@@ -173,8 +179,19 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 					});
 				}
 			},
-			'button[title = "addincomebutton"]' : {
+			'button[title = "donebutton"]' : {
 				tap : 'onIncomeButtonClicked'
+			},
+
+			'textfield[name="intype"]' : {
+				focus : function(tf) {
+					var me = this;
+					
+					MyApp.app.fireEvent(AppConfig.eventData.SHOW_INCOME_CHOSEN, AppConfig.type.THU, tf.getValue(), function(value) {
+						//me.amount = money;
+						tf.setValue(value);
+					}, null);
+				}
 			}
 		}
 	},
@@ -187,6 +204,12 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 
 	onIncomeButtonClicked: function() {
 		var me = this;
+		var typename = me._intype.getValue();
+		if (typename == '') {
+			AppUtil.alert('Chon thu nhap di ku');
+			return;
+		}
+
 		if (AppUtil.checkAmount(me.amount)) {
 			if (me.type == AppConfig.type.TIEN_MAT)
 				AppUtil.doTrade(me._intype.getValue(), AppConfig.type.THU, me.amount, AppConfig.type.TIEN_MAT, me._innote.getValue(), me._selectedDate, 'CASH');
@@ -196,10 +219,14 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 				me._model.save(function() {
 					MyApp.app.fireEvent(AppConfig.eventData.ATM_CHANGED, me._model.data.id);
 					AppUtil.autoAlert(AppConfig.textData.GIAO_DICH_OK);
+					MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);	
+					me.hide();
 				});	
+			} else {
+				MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);	
+				me.hide();
 			}
-			MyApp.app.fireEvent(AppConfig.eventData.HIDE_POPUP);	
-			me.hide();
+			
 		}
 	},
 
@@ -233,6 +260,8 @@ Ext.define('MyApp.view.apppopup.IncomeAdd', {
 		if (!me._inpaidby)
 			me._inpaidby = me.down('textfield[name = "inpaidby"]');
 
+		me._intype.reset();
+		me._innote.reset();
 		me._inpaidby.setReadOnly(false);
 		if (me._model) {
 			me._inpaidby.setReadOnly(true);

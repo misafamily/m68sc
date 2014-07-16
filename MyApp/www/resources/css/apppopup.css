@@ -16,6 +16,11 @@
 
 .apppopup-title {
 	color: #fff;
+	margin-top: 14px;
+}
+
+.apppopup-title.normal {
+	margin-top: 0px;
 }
 
 .trade-amount-container {

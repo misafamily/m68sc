@@ -36,7 +36,7 @@ Ext.define('MyApp.view.apppopup.Trade_CashChosen', {
 			}, {
 				xtype : 'label',
 				html : AppConfig.textData.KIEU_CASH_ATM,
-				cls : 'apppopup-title'
+				cls : 'apppopup-title normal'
 			}, {
 				xtype : 'spacer'
 			}/*, {
